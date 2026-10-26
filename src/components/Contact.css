@@ -1,0 +1,198 @@
+.contact__grid {
+  display: grid;
+  gap: 24px;
+}
+
+.contact-email,
+.contact__side {
+  display: grid;
+  align-content: start;
+  gap: 18px;
+  padding: clamp(22px, 4vw, 40px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.contact-email {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Corner accent */
+.contact-email::after {
+  content: '';
+  position: absolute;
+  right: -60px;
+  top: -60px;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  border: 1px solid color-mix(in srgb, var(--violet) 40%, transparent);
+  box-shadow:
+    0 0 0 24px color-mix(in srgb, var(--violet) 6%, transparent),
+    0 0 0 48px color-mix(in srgb, var(--violet) 3%, transparent);
+  pointer-events: none;
+}
+
+.contact-email__label {
+  font-size: 0.74rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--mint);
+}
+
+.contact-email__address {
+  position: relative;
+  z-index: 1;
+  justify-self: start;
+  max-width: 100%;
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 5vw, 2.6rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  overflow-wrap: anywhere;
+  text-decoration: none;
+  background: linear-gradient(var(--violet), var(--violet)) 0 100% / 0 2px no-repeat;
+  transition: background-size 0.45s var(--ease), color 0.2s var(--ease);
+}
+
+a.contact-email__address:hover {
+  color: var(--violet);
+  background-size: 100% 2px;
+}
+
+.contact-email__address .todo {
+  font-size: 0.6em;
+}
+
+.contact-email__actions {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding-top: 6px;
+}
+
+.copy-btn.is-copied {
+  --btn-border: var(--mint);
+  color: var(--mint);
+}
+
+.copy-btn.is-copied .icon {
+  animation: pop 0.4s var(--ease-spring);
+}
+
+.copy-btn.is-error {
+  --btn-border: #e5484d;
+}
+
+@keyframes pop {
+  from {
+    transform: scale(0.4);
+  }
+}
+
+/* Links */
+.contact-links {
+  display: grid;
+}
+
+.contact-link {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 64px;
+  padding-block: 10px;
+  border-bottom: 1px solid var(--border);
+  text-decoration: none;
+}
+
+.contact-links > li:first-child .contact-link,
+.contact-links > .contact-link:first-child {
+  border-top: 1px solid var(--border);
+}
+
+.contact-link__icon {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  flex: none;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg-soft);
+  transition:
+    color 0.25s var(--ease),
+    border-color 0.25s var(--ease),
+    transform 0.35s var(--ease-spring);
+}
+
+.contact-link__text {
+  display: grid;
+  min-width: 0;
+}
+
+.contact-link__label {
+  font-weight: 700;
+}
+
+.contact-link__href {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 0.78rem;
+  color: var(--text-faint);
+}
+
+.contact-link__arrow {
+  margin-left: auto;
+  flex: none;
+  color: var(--text-faint);
+  transition: transform 0.3s var(--ease-spring), color 0.25s var(--ease);
+}
+
+a.contact-link:hover .contact-link__icon,
+a.contact-link:focus-visible .contact-link__icon {
+  color: var(--violet);
+  border-color: var(--violet);
+  transform: rotate(-8deg);
+}
+
+a.contact-link:hover .contact-link__arrow,
+a.contact-link:focus-visible .contact-link__arrow {
+  color: var(--violet);
+  transform: translateX(4px) rotate(-45deg);
+}
+
+.contact-link.is-unavailable {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.contact-link.is-unavailable .contact-link__icon {
+  border-style: dashed;
+}
+
+.contact__location {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  color: var(--text-muted);
+  font-size: 0.92rem;
+}
+
+.contact__location .icon {
+  flex: none;
+  margin-top: 4px;
+  color: var(--mint);
+}
+
+@media (min-width: 900px) {
+  .contact__grid {
+    grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+  }
+}

@@ -2,7 +2,17 @@
 
 Personal developer portfolio for internship/OJT applications, built with React + Vite.
 
-> Status: setup complete, portfolio UI not built yet. Progress is tracked in [system/TRACKER.md](system/TRACKER.md).
+> Status: UI complete; personal content still being added. Progress is tracked in [system/TRACKER.md](system/TRACKER.md).
+
+## Editing content
+
+All text lives in `src/data/` — no layout code needs to change:
+
+- `profile.js` — name, intro, about, email, résumé, links, education
+- `projects.js` — projects (`draft: true` entries are placeholders)
+- `skills.js` — skill groups
+
+Anything still marked `todo(...)` shows on the site as a dashed **TODO** placeholder.
 
 ## Commands
 
