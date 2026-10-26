@@ -36,20 +36,24 @@ function useCursorGlow(ref, enabled) {
   }, [ref, enabled])
 }
 
-// True once the page has loaded and the browser is idle, so the physics chunk
-// never competes with the first render.
+// True once the page has loaded, web fonts have swapped in, and the browser is idle,
+// so the physics chunk never competes with first render or font reflows.
 function useAfterLoadIdle() {
   const [ready, setReady] = useState(false)
   useEffect(() => {
     let idle = 0
-    const go = () => {
+    let cancelled = false
+    const go = async () => {
+      await document.fonts?.ready
+      if (cancelled) return
       idle = window.requestIdleCallback
-        ? window.requestIdleCallback(() => setReady(true), { timeout: 2000 })
+        ? window.requestIdleCallback(() => setReady(true), { timeout: 4000 })
         : window.setTimeout(() => setReady(true), 300)
     }
     if (document.readyState === 'complete') go()
     else window.addEventListener('load', go, { once: true })
     return () => {
+      cancelled = true
       window.removeEventListener('load', go)
       if (window.cancelIdleCallback) window.cancelIdleCallback(idle)
       else window.clearTimeout(idle)
@@ -106,10 +110,21 @@ export default function Hero({ profile, skills }) {
             )}
           </div>
 
-          <p className="hero__meta mono" data-reveal style={{ '--delay': 5 }}>
-            <Icon name="pin" size={16} />
-            <Field value={profile.location} />
-          </p>
+          <dl className="hero__facts" data-reveal style={{ '--delay': 5 }}>
+            {profile.facts?.map((fact) => (
+              <div key={fact.label} className="hero__fact">
+                <dt>{fact.label}</dt>
+                <dd>{fact.value}</dd>
+              </div>
+            ))}
+            <div className="hero__fact">
+              <dt>Based in</dt>
+              <dd>
+                <Icon name="pin" size={14} />
+                <Field value={profile.location} />
+              </dd>
+            </div>
+          </dl>
         </div>
 
         <div className="hero__visual">
@@ -125,8 +140,8 @@ export default function Hero({ profile, skills }) {
               'use “Flip” to see the back'
             ) : (
               <>
-                drag the badge · <span className="hint-fine">click</span>
-                <span className="hint-touch">tap</span> to flip
+                <span className="hint-fine">drag the badge · click to flip</span>
+                <span className="hint-touch">swipe sideways to swing · tap to flip</span>
               </>
             )}
           </p>

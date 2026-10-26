@@ -12,9 +12,9 @@
 | Item | Value |
 |---|---|
 | Purpose | Personal developer portfolio for internship/OJT applications |
-| Tech stack | React 19 + Vite 8 (JavaScript/JSX), ESLint 10, plain CSS (per-component files), Google Fonts. **No runtime deps beyond React.** |
+| Tech stack | React 19 + Vite 8 (JavaScript/JSX), ESLint 10, plain CSS (per-component files), self-hosted fonts in `public/fonts/`. **No runtime deps beyond React.** |
 | Runtime (dev machine) | Node v26.8.1, npm 11.19.0 |
-| Current stage | Cosmic restyle + lanyard badge done; waiting on owner content |
+| Current stage | Layout polished; site filled with **SAMPLE content** (owner requested 2026-10-26) — replace before sharing |
 | Repository URL | https://github.com/fernandezkassandra226-creator/my-portfolio (from `git remote`) |
 | Deployment | Not deployed. Host: TBD |
 
@@ -38,15 +38,18 @@
 | Interactions | Card lift/glow + sliding pink arrow; staggered reveals; skill glass tiles; scroll-filled timeline; hero cursor glow (desktop) | Built + verified |
 | Responsiveness | 320px → 1920px, no horizontal overflow | Verified |
 | Accessibility | Keyboard, visible focus (pink), skip link, labels, reduced motion, WCAG AA contrast | Verified (see Checklist) |
-| Performance | Lighthouse mobile ≥ pre-upgrade score (85) | Verified: 85 |
+| Performance | Lighthouse mobile ≥ pre-upgrade score (85) | Verified: median 92 (5 runs) |
 | QR code on badge back | Skipped until résumé PDF + live URL exist | Deferred |
-| Personal content | Must come from owner — never invented | **Pending** |
+| Sample content | Owner asked for editable sample info. Every sample value is marked `// SAMPLE`; `SAMPLE_CONTENT` flag in `profile.js` shows an on-page notice until set to `false`. Sample email uses reserved `example.com`; project links + LinkedIn left as `todo()` so no fake URLs | Built |
+| Personal content | Real details must come from owner | **Pending** |
 
 ## 4. Project Structure
 
 | Path | Responsibility |
 |---|---|
-| `src/data/profile.js` | **Edit here:** name, intro, about, `photo`, email, résumé, links, location, education |
+| `src/data/profile.js` | **Edit here:** `SAMPLE_CONTENT` flag, name, intro, hero `facts`, about, `photo`, email, résumé, links, location, education |
+| `src/components/SampleNotice.jsx` | Dismissible "sample content" pill, shown while `SAMPLE_CONTENT` is true |
+| `public/fonts/` | Self-hosted latin WOFF2 (Bricolage Grotesque, Manrope, Playfair Display italic, JetBrains Mono) + `LICENSE.md` (OFL 1.1) |
 | `src/data/projects.js` | **Edit here:** projects (`draft: true` = placeholder slot) |
 | `src/data/skills.js` | **Edit here:** skill groups (non-"learning" items also appear on the badge back) |
 | `src/index.css` | **All color tokens** (dark + `[data-theme='light']`), base, `.glass`, buttons, `.tick-list`, `.pulse-dot`, motion |
@@ -91,12 +94,28 @@
 - [ ] Contact form send path + copy email (needs real email)
 - [ ] Test badge on a real phone (only emulated touch tested)
 
-**Content (owner)**
-- [ ] Name, location, email, LinkedIn, **badge photo** → `src/data/profile.js`
+**Layout + sample content (2026-10-26)** — checkpoint before it: commit `065448a`
+- [x] Tighter section spacing; two-column section heads on desktop (page 6926 → 5685 px tall at 1440)
+- [x] Hero facts strip (Studying / Year / Focus / Based in)
+- [x] Projects: featured = full-width horizontal card, others in 3-col row; tech filters only for techs used by 2+ projects; shorter placeholder covers on phones
+- [x] Skills: bento of glass panels (first full width), new line glyphs (PHP, MySQL, Figma, TS, Node, Testing)
+- [x] Sample data in all data files + `SampleNotice`
+- [x] Fixed 320px overflow from long coursework chips
+- [x] Perf: found via trace that late web-font swaps forced full relayouts (0.36 s + 0.93 s at 4× CPU); self-hosted + preloaded fonts, badge waits for `document.fonts.ready`, badge layout coalesced/skipped when unchanged
+- [x] Verified: build + lint; 69/69 browser checks incl. **copy email → clipboard**, **form validation + mailto URL** (address/subject/body), sample notice dismiss; Lighthouse mobile perf 94/72/92/91/92 (median 92), A11y/BP/SEO 100
+
+**Mobile hero (2026-10-26)** — owner: "show the ID first on mobile; desktop is good"
+- [x] < 960 px: badge first (`order: -1`), strap hangs from page top (all widths), intro centred under it on tablets; desktop unchanged
+- [x] Touch: `touch-action: pan-y` on badge — vertical swipe scrolls page, sideways drag swings, tap flips; swing-in nudge desktop-only
+- [x] ≤ 360 px badge footer fits on one line; sample notice compact on phones
+- [x] Verified: 71/71 browser checks incl. badge-above-intro, strap at page top, vertical swipe on card scrolls (0 → 344 px), sideways touch drag, no overflow at 320 px
+
+**Content (owner)** — replace everything marked `// SAMPLE`, then set `SAMPLE_CONTENT = false`
+- [ ] Name, location, email, LinkedIn, hero facts, **badge photo** → `src/data/profile.js`
 - [ ] Degree, school, years, details, coursework, real certifications → `education`
-- [ ] Real projects (2–4) with screenshots → `src/data/projects.js`; delete draft slots
-- [ ] Confirm skills in `src/data/skills.js` + add "Currently learning"
-- [ ] Review About copy for accuracy
+- [ ] Real projects with screenshots + links → `src/data/projects.js` (sample: Campus Library System, Pocket Budget, Student Org Website)
+- [ ] Confirm skills in `src/data/skills.js` (sample adds: PHP, MySQL, Figma, learning list)
+- [ ] Review About copy (paragraphs 1 and 3 are sample)
 - [ ] Add `public/resume.pdf`, set `resume: '/resume.pdf'`
 - [ ] Confirm GitHub URL is your public profile and the repo is public
 - [ ] Put name in `index.html` `<title>`/`og:title`; retake `portfolio.webp`
@@ -116,7 +135,8 @@
 | Badge loads after `load` + `requestIdleCallback`; static badge shows first | Cut TBT 400 ms → 0 ms; no layout shift |
 | Badge card stays dark in light mode | Reads as a physical ID card; keeps contrast |
 | Contact form uses `mailto` | No backend/accounts; no fake form; owner approved |
-| Google Fonts loaded via preload + onload (non-blocking) | FCP; system fallbacks set |
+| Fonts self-hosted (latin subset) + `<link rel=preload>` | Trace showed late Google-Fonts swaps caused full relayouts; preloading makes them ready before first render. Lighthouse median 85 → 92 |
+| Sample content flagged in code + on page (`SAMPLE_CONTENT`) | Owner wanted editable sample info; notice prevents shipping fake details by accident |
 | `todo()` placeholders instead of fake data | Never invent personal info |
 | Browser tests/Lighthouse run from scratchpad (playwright-core, system Edge/Chrome) | Keep project deps minimal |
 
@@ -124,17 +144,18 @@
 
 | Issue | Next action |
 |---|---|
-| Personal content missing (name, photo, email, school, projects, résumé, LinkedIn, location) | Owner to supply; edit `src/data/*` |
-| Site shows TODO placeholders — not ready to send to recruiters | Fill content before sharing/deploying |
-| FCP ~3.4 s on Lighthouse mobile (SPA must download JS before render; same as before upgrade) | Optional later: prerender/SSG if needed |
-| Upgrade changes not committed | Owner to review, then commit |
+| Site shows **sample** person/projects — must not be sent to recruiters as-is | Replace `// SAMPLE` values, set `SAMPLE_CONTENT = false` |
+| Lighthouse perf varies run to run (one outlier 72 in 5 runs) | Re-check on deployed host |
+| Layout + sample changes not committed | Owner to review, then commit |
 
 ## 9. Progress Log
 
 - **2026-10-26** — Verified scaffold; created tracker + README.
 - **2026-10-26** — Built v1 portfolio UI (6 sections, themes, nav, filters, dialog, contact). Committed as `92d8314`.
-- **2026-10-26** — Cosmic restyle + lanyard ID badge + interactive touches + glass mailto form. 62/62 browser checks; Lighthouse mobile 85/100/100/100.
+- **2026-10-26** — Cosmic restyle + lanyard ID badge + interactive touches + glass mailto form. Committed as `065448a`.
+- **2026-10-26** — Layout pass (spacing, section heads, featured project, skills bento, hero facts) + sample content + self-hosted fonts. 69/69 checks; Lighthouse median 92.
+- **2026-10-26** — Mobile/tablet hero: ID badge first, strap from page top, swipe-friendly touch handling. 71/71 checks.
 
 ## 10. Next Action
 
-**Owner fills `src/data/profile.js`** (name, photo, email, location, LinkedIn, education) and sends real project details — then replace draft slots, retake the screenshot, and test the badge on a real phone.
+**Owner replaces every `// SAMPLE` value** in `src/data/` with real details (start with `profile.js`: name, email, photo, location), then sets `SAMPLE_CONTENT = false` and retakes the project screenshot.

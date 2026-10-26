@@ -14,6 +14,9 @@ All text lives in `src/data/` — no layout code needs to change:
 
 Anything still marked `todo(...)` shows on the site as a dashed **TODO** placeholder.
 
+The site currently ships with **sample content** (a made-up student, "Alex Santos"). Every sample value is marked
+`// SAMPLE` — replace them, then set `SAMPLE_CONTENT = false` in `src/data/profile.js` to remove the on-page notice.
+
 Colors and theme tokens (dark + light) live at the top of `src/index.css`.
 
 ## Commands

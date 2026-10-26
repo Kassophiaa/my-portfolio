@@ -40,6 +40,42 @@ const glyphs = {
     </>
   ),
   vite: <path d="M13 3L6 13.5h5L10 21l8-11.5h-5.5L13 3z" />,
+  php: (
+    <>
+      <ellipse cx="12" cy="12" rx="9.5" ry="6" />
+      <path d="M7 14.5l1-5h2a1.3 1.3 0 0 1 0 2.6H8.5M12 8.5l-1.2 6M11.4 11.5h2.2a1 1 0 0 1 1 1.2l-.4 1.8M16 14.5l1-5h2a1.3 1.3 0 0 1 0 2.6h-1.5" />
+    </>
+  ),
+  mysql: (
+    <>
+      <ellipse cx="12" cy="6" rx="7" ry="2.8" />
+      <path d="M5 6v12c0 1.5 3.1 2.8 7 2.8s7-1.3 7-2.8V6M5 12c0 1.5 3.1 2.8 7 2.8s7-1.3 7-2.8" />
+    </>
+  ),
+  figma: (
+    <>
+      <path d="M12 3H9a3 3 0 0 0 0 6h3V3zM12 3h3a3 3 0 0 1 0 6h-3V3zM12 9H9a3 3 0 0 0 0 6h3V9zM12 15H9a3 3 0 1 0 3 3v-3z" />
+      <circle cx="15" cy="12" r="3" />
+    </>
+  ),
+  typescript: (
+    <>
+      <rect x="3.5" y="3.5" width="17" height="17" rx="3" />
+      <path d="M7.5 10.5h5M10 10.5V17M18 11a2 2 0 0 0-3.4.4c-.6 1.6 3.6 1.5 3.4 3.6a2 2 0 0 1-3.8.5" />
+    </>
+  ),
+  'node.js': (
+    <>
+      <path d="M12 2.8l8 4.6v9.2l-8 4.6-8-4.6V7.4l8-4.6z" />
+      <path d="M10 9.5v5.2a1.5 1.5 0 0 1-2.6 1M16 10.3a1.8 1.8 0 0 0-3 .3c-.4 1.3 3.2 1.2 3 3a1.8 1.8 0 0 1-3.3.4" />
+    </>
+  ),
+  testing: (
+    <>
+      <path d="M9 3h6M10 3v6L4.8 18a2 2 0 0 0 1.7 3h11a2 2 0 0 0 1.7-3L14 9V3" />
+      <path d="M9 15l2 2 4-4" />
+    </>
+  ),
   npm: (
     <>
       <path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3z" />
@@ -93,19 +129,19 @@ export default function Skills({ groups, index }) {
           {groups.map((group, i) => (
             <div
               key={group.id}
-              className={`skill-row${group.live ? ' skill-row--live' : ''}`}
+              className={`skill-group glass${group.live ? ' skill-group--live' : ''}`}
               data-reveal
               style={{ '--delay': i }}
             >
-              <div className="skill-row__head">
-                <h3 className="skill-row__label">
+              <div className="skill-group__head">
+                <h3 className="skill-group__label">
                   {group.live && <span className="pulse-dot" aria-hidden="true" />}
                   {group.label}
                 </h3>
-                <p className="skill-row__note">{group.note}</p>
+                <p className="skill-group__note">{group.note}</p>
               </div>
               {group.items.length > 0 ? (
-                <ul className="skill-row__items">
+                <ul className="skill-group__items">
                   {group.items.map((item) => (
                     <li key={item} className="skill">
                       <span className="skill__icon">
@@ -116,7 +152,7 @@ export default function Skills({ groups, index }) {
                   ))}
                 </ul>
               ) : (
-                <p className="skill-row__empty">
+                <p>
                   <Field label="Add what you are currently learning" />
                 </p>
               )}

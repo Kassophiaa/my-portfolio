@@ -108,10 +108,30 @@
   .project-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
+}
 
-  .project-grid > li.is-featured {
-    grid-column: span 2;
-    grid-row: span 2;
+/* Featured project: full-width, screenshot left / details right */
+@media (min-width: 820px) {
+  .is-featured .project-card {
+    flex-direction: row;
+  }
+
+  .is-featured .cover {
+    flex: 0 0 56%;
+    aspect-ratio: auto;
+    min-height: 340px;
+    border-bottom: 0;
+    border-right: 1px solid var(--border);
+  }
+
+  .is-featured .project-card__body {
+    justify-content: center;
+    gap: 16px;
+    padding: clamp(28px, 3.5vw, 44px);
+  }
+
+  .is-featured .project-card__open {
+    margin-top: 12px;
   }
 }
 
@@ -283,11 +303,6 @@
   transform: scale(1.035);
 }
 
-.is-featured .cover {
-  flex: 1;
-  min-height: 220px;
-}
-
 .cover--generated {
   --hue: var(--violet);
   display: grid;
@@ -300,6 +315,17 @@
       color-mix(in srgb, var(--hue) 9%, transparent) 23px 24px
     ),
     var(--surface-2);
+}
+
+/* Phones: the placeholder art doesn't need a full 16:10 frame */
+@media (max-width: 679px) {
+  .cover--generated:not(.cover--large) {
+    aspect-ratio: 16 / 6;
+  }
+
+  .cover--generated:not(.cover--large) .cover__glyph {
+    font-size: 3.4rem;
+  }
 }
 
 .cover--generated[data-category='Academic'] {

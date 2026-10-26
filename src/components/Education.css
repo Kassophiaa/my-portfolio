@@ -98,6 +98,17 @@
   padding-top: 8px;
 }
 
+/* Course names can be long: let them wrap on small phones */
+.timeline__group .chip {
+  max-width: 100%;
+  white-space: normal;
+}
+
+.timeline__item,
+.timeline__body {
+  min-width: 0;
+}
+
 .timeline__group h4 {
   font-family: var(--font-body);
   font-size: 0.7rem;

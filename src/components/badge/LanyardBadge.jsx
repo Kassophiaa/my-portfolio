@@ -49,13 +49,26 @@ export default function LanyardBadge(props) {
     let acc = 0
     let visible = true
 
-    function layout() {
+    // CSS sizes only change at breakpoints, so read them once per media change.
+    let css = null
+    const readCss = () => {
+      css = { clipY: readPx(stage, '--clip-y', 48), ringR: readPx(stage, '--ring-r', 9) }
+    }
+    let lastKey = ''
+
+    function layout(force = false) {
       const rect = stage.getBoundingClientRect()
+      const pageTop = rect.top + window.scrollY
+      // Skip when nothing that affects the rope changed (e.g. unrelated reflows).
+      const key = `${rect.width}|${pageTop}|${wide.matches}`
+      if (!force && key === lastKey) return
+      lastKey = key
+      if (!css) readCss()
       const cx = rect.width / 2
-      const clipY = readPx(stage, '--clip-y', 48)
-      // On wide screens the strap hangs from the top of the page; otherwise from the stage.
-      const anchorY = wide.matches ? -(rect.top + window.scrollY) : 0
-      ringR = readPx(stage, '--ring-r', 9)
+      const clipY = css.clipY
+      // The strap hangs from the top of the page (the badge is first on phones, beside the intro on desktop).
+      const anchorY = -pageTop
+      ringR = css.ringR
       badgeW = badge.offsetWidth
       cardLen = badge.offsetHeight - ringR
       segLen = (clipY - anchorY) / SEGMENTS
@@ -66,8 +79,9 @@ export default function LanyardBadge(props) {
         const y = i <= SEGMENTS ? anchorY + segLen * i : clipY + cardLen
         points.push({ x: cx, y, px: cx, py: y, inv: i === 0 ? 0 : i >= SEGMENTS ? 0.35 : 1 })
       }
-      // A small sideways nudge so the badge swings in on load.
-      points[SEGMENTS + 1].px -= coarse ? 4 : 9
+      // A small sideways nudge so the badge swings in on load (desktop only: on
+      // narrow screens the short strap would swing the card past the screen edge).
+      if (wide.matches) points[SEGMENTS + 1].px -= coarse ? 4 : 9
       render()
     }
 
@@ -235,12 +249,21 @@ export default function LanyardBadge(props) {
       if (visible) start()
       else stop()
     })
-    const ro = new ResizeObserver(() => layout())
+    // Coalesce resize bursts (e.g. several fonts swapping in) into one layout per frame.
+    let pending = 0
+    const scheduleLayout = () => {
+      if (!pending) pending = requestAnimationFrame(() => ((pending = 0), layout()))
+    }
+    const onMedia = () => {
+      readCss()
+      layout(true)
+    }
+    const ro = new ResizeObserver(scheduleLayout)
 
-    layout()
+    layout(true)
     io.observe(stage)
     ro.observe(stage.closest('section') ?? stage)
-    wide.addEventListener('change', layout)
+    wide.addEventListener('change', onMedia)
     document.addEventListener('visibilitychange', onVisibility)
     badge.addEventListener('pointerdown', onDown)
     badge.addEventListener('pointermove', onMove)
@@ -252,9 +275,10 @@ export default function LanyardBadge(props) {
 
     return () => {
       stop()
+      cancelAnimationFrame(pending)
       io.disconnect()
       ro.disconnect()
-      wide.removeEventListener('change', layout)
+      wide.removeEventListener('change', onMedia)
       document.removeEventListener('visibilitychange', onVisibility)
       badge.removeEventListener('pointerdown', onDown)
       badge.removeEventListener('pointermove', onMove)
