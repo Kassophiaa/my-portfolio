@@ -1,13 +1,48 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="dark">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>my-portfolio</title>
+    <!-- TODO: put your name in the title and og:title -->
+    <title>IT Student Portfolio — Internship & OJT</title>
+    <meta
+      name="description"
+      content="Portfolio of an IT student seeking a software development internship or OJT: projects, skills, education, and contact details."
+    />
+    <meta name="theme-color" content="#111113" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="IT Student Portfolio — Internship & OJT" />
+    <meta
+      property="og:description"
+      content="Projects, skills, and contact details of an IT student looking for a software development internship or OJT."
+    />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Instrument+Serif:ital@1&family=JetBrains+Mono:wght@400..600&family=Manrope:wght@400..700&display=swap"
+    />
+
+    <!-- Apply the saved or system theme before first paint to avoid a flash -->
+    <script>
+      try {
+        var stored = localStorage.getItem('portfolio-theme')
+        var theme =
+          stored === 'light' || stored === 'dark'
+            ? stored
+            : matchMedia('(prefers-color-scheme: light)').matches
+              ? 'light'
+              : 'dark'
+        document.documentElement.dataset.theme = theme
+        document.documentElement.style.colorScheme = theme
+      } catch (e) {}
+    </script>
   </head>
   <body>
     <div id="root"></div>
+    <noscript>This portfolio needs JavaScript enabled to display.</noscript>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
