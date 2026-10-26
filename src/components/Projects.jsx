@@ -47,7 +47,8 @@ export default function Projects({ projects, index }) {
             </>
           }
         >
-          Academic and personal work. Open a project for details, technologies, and links.
+          Academic projects, personal projects, and prototypes. Open a project for details,
+          technologies, and links.
         </SectionHeading>
 
         <div className="filters" role="group" aria-label="Filter projects" data-reveal>

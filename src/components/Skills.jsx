@@ -4,8 +4,8 @@ import './Skills.css'
 
 // Simple line glyphs (not brand logos). Unknown skills fall back to their initials.
 const glyphs = {
-  html: <path d="M8 8l-4 4 4 4M16 8l4 4-4 4M13.5 6l-3 12" />,
-  css: (
+  html5: <path d="M8 8l-4 4 4 4M16 8l4 4-4 4M13.5 6l-3 12" />,
+  css3: (
     <>
       <path d="M9 4L7 20M17 4l-2 16" />
       <path d="M4.5 9h16M3.5 15h16" />
@@ -25,7 +25,7 @@ const glyphs = {
       <ellipse cx="12" cy="12" rx="9" ry="3.6" transform="rotate(120 12 12)" />
     </>
   ),
-  'git & github': (
+  git: (
     <>
       <circle cx="6.5" cy="5.5" r="2" />
       <circle cx="6.5" cy="18.5" r="2" />
@@ -33,7 +33,7 @@ const glyphs = {
       <path d="M6.5 7.5v9M17.5 10.5c0 4-5 3.5-9.5 6.5" />
     </>
   ),
-  'vs code': (
+  'visual studio code': (
     <>
       <rect x="3.5" y="4.5" width="17" height="15" rx="2.5" />
       <path d="M3.5 8.5h17M9 12.5l-2 2 2 2M13 16.5h3" />
@@ -82,10 +82,29 @@ const glyphs = {
       <path d="M4 7.5l8 4.5 8-4.5M12 12v9" />
     </>
   ),
+  'responsive web design': (
+    <>
+      <rect x="2.5" y="4.5" width="14" height="10" rx="1.5" />
+      <path d="M6.5 18.5h6M9.5 14.5v4" />
+      <rect x="15.5" y="9.5" width="6" height="10" rx="1.5" />
+    </>
+  ),
+  'rest api fundamentals': (
+    <path d="M8 4.5c-2 0-2.5 1-2.5 2.5v2.5c0 1.2-.8 2-2 2.5 1.2.5 2 1.3 2 2.5V17c0 1.5.5 2.5 2.5 2.5M16 4.5c2 0 2.5 1 2.5 2.5v2.5c0 1.2.8 2 2 2.5-1.2.5-2 1.3-2 2.5V17c0 1.5-.5 2.5-2.5 2.5" />
+  ),
+}
+
+// Skills that share another skill's glyph.
+const aliases = {
+  github: 'git',
+  'github desktop': 'git',
+  sql: 'mysql',
+  'database design': 'mysql',
 }
 
 function SkillGlyph({ name }) {
-  const glyph = glyphs[name.toLowerCase()]
+  const key = name.toLowerCase()
+  const glyph = glyphs[aliases[key] ?? key]
   if (!glyph) {
     return <span className="skill__initials">{name.slice(0, 2)}</span>
   }
@@ -107,7 +126,33 @@ function SkillGlyph({ name }) {
   )
 }
 
-export default function Skills({ groups, index }) {
+function SkillList({ items, compact }) {
+  if (compact) {
+    return (
+      <ul className="project-card__tech">
+        {items.map((item) => (
+          <li key={item.name} className="chip">
+            {item.name}
+          </li>
+        ))}
+      </ul>
+    )
+  }
+  return (
+    <ul className="skill-group__items">
+      {items.map((item) => (
+        <li key={item.name} className="skill">
+          <span className="skill__icon">
+            <SkillGlyph name={item.name} />
+          </span>
+          <span className="skill__name">{item.name}</span>
+        </li>
+      ))}
+    </ul>
+  )
+}
+
+export default function Skills({ groups, levels, index }) {
   return (
     <section id="skills" className="section" aria-labelledby="skills-title">
       <div className="container">
@@ -121,39 +166,34 @@ export default function Skills({ groups, index }) {
             </>
           }
         >
-          An honest snapshot — no percentage bars, just what I’ve actually used and what I’m
-          learning next.
+          An honest snapshot — no percentage bars. Each group shows what I’ve used in projects,
+          what I’m familiar with, and what I’m currently learning.
         </SectionHeading>
 
         <div className="skills">
           {groups.map((group, i) => (
-            <div
-              key={group.id}
-              className={`skill-group glass${group.live ? ' skill-group--live' : ''}`}
-              data-reveal
-              style={{ '--delay': i }}
-            >
+            <div key={group.id} className="skill-group glass" data-reveal style={{ '--delay': i }}>
               <div className="skill-group__head">
-                <h3 className="skill-group__label">
-                  {group.live && <span className="pulse-dot" aria-hidden="true" />}
-                  {group.label}
-                </h3>
-                <p className="skill-group__note">{group.note}</p>
+                <h3 className="skill-group__label">{group.label}</h3>
+                {group.note && <p className="skill-group__note">{group.note}</p>}
               </div>
               {group.items.length > 0 ? (
-                <ul className="skill-group__items">
-                  {group.items.map((item) => (
-                    <li key={item} className="skill">
-                      <span className="skill__icon">
-                        <SkillGlyph name={item} />
-                      </span>
-                      <span className="skill__name">{item}</span>
-                    </li>
-                  ))}
-                </ul>
+                levels.map((level) => {
+                  const items = group.items.filter((item) => item.level === level.id)
+                  if (items.length === 0) return null
+                  return (
+                    <div key={level.id} className={`skill-level skill-level--${level.id}`}>
+                      <h4 className="skill-level__label mono">
+                        {level.live && <span className="pulse-dot" aria-hidden="true" />}
+                        {level.label}
+                      </h4>
+                      <SkillList items={items} compact={group.compact} />
+                    </div>
+                  )
+                })
               ) : (
                 <p>
-                  <Field label="Add what you are currently learning" />
+                  <Field label="Add skills for this group" />
                 </p>
               )}
             </div>

@@ -14,7 +14,7 @@
 | Purpose | Personal developer portfolio for internship/OJT applications |
 | Tech stack | React 19 + Vite 8 (JavaScript/JSX), ESLint 10, plain CSS (per-component files), self-hosted fonts in `public/fonts/`. **No runtime deps beyond React.** |
 | Runtime (dev machine) | Node v26.8.1, npm 11.19.0 |
-| Current stage | Layout polished; site filled with **SAMPLE content** (owner requested 2026-10-26) — replace before sharing |
+| Current stage | Real content in place (2026-10-27); a few items still `todo()` (email, LinkedIn, project roles/links/years, photo, résumé) |
 | Repository URL | https://github.com/fernandezkassandra226-creator/my-portfolio (from `git remote`) |
 | Deployment | Not deployed. Host: TBD |
 
@@ -40,8 +40,10 @@
 | Accessibility | Keyboard, visible focus (pink), skip link, labels, reduced motion, WCAG AA contrast | Verified (see Checklist) |
 | Performance | Lighthouse mobile ≥ pre-upgrade score (85) | Verified: median 92 (5 runs) |
 | QR code on badge back | Skipped until résumé PDF + live URL exist | Deferred |
-| Sample content | Owner asked for editable sample info. Every sample value is marked `// SAMPLE`; `SAMPLE_CONTENT` flag in `profile.js` shows an on-page notice until set to `false`. Sample email uses reserved `example.com`; project links + LinkedIn left as `todo()` so no fake URLs | Built |
-| Personal content | Real details must come from owner | **Pending** |
+| Sample content | Replaced 2026-10-27; `SAMPLE_CONTENT = false` (flag + `SampleNotice` kept) | Done |
+| Personal content | Name, role, CLSU 4th-year BSIT, location (Philippines), about, 4 real projects (DARIS, StudySync, Bloom Journal, StockLite) + this portfolio, skills, coursework, GitHub. Remaining gaps are `todo()` — see Content checklist | Mostly done |
+| Skills levels | Each skill tagged `used` / `familiar` / `learning` in `skills.js`, shown as labelled rows per group; levels are Claude's conservative defaults — **owner to confirm** | Built |
+| Project categories | Academic (DARIS), Personal (StudySync, Bloom Journal, Portfolio), Prototype (StockLite) | Built |
 
 ## 4. Project Structure
 
@@ -51,7 +53,7 @@
 | `src/components/SampleNotice.jsx` | Dismissible "sample content" pill, shown while `SAMPLE_CONTENT` is true |
 | `public/fonts/` | Self-hosted latin WOFF2 (Bricolage Grotesque, Manrope, Playfair Display italic, JetBrains Mono) + `LICENSE.md` (OFL 1.1) |
 | `src/data/projects.js` | **Edit here:** projects (`draft: true` = placeholder slot) |
-| `src/data/skills.js` | **Edit here:** skill groups (non-"learning" items also appear on the badge back) |
+| `src/data/skills.js` | **Edit here:** `skillLevels`, skill groups (`compact` = chips), `badgeSkills` (badge back) |
 | `src/index.css` | **All color tokens** (dark + `[data-theme='light']`), base, `.glass`, buttons, `.tick-list`, `.pulse-dot`, motion |
 | `src/components/badge/` | `BadgeCard` (faces), `StaticLanyard` (fallback/reduced motion), `LanyardBadge` (lazy physics chunk), `Badge.css` |
 | `src/components/Hero.jsx` | Loads badge after `load` + idle; cursor glow |
@@ -110,15 +112,17 @@
 - [x] ≤ 360 px badge footer fits on one line; sample notice compact on phones
 - [x] Verified: 71/71 browser checks incl. badge-above-intro, strap at page top, vertical swipe on card scrolls (0 → 344 px), sideways touch drag, no overflow at 320 px
 
-**Content (owner)** — replace everything marked `// SAMPLE`, then set `SAMPLE_CONTENT = false`
-- [ ] Name, location, email, LinkedIn, hero facts, **badge photo** → `src/data/profile.js`
-- [ ] Degree, school, years, details, coursework, real certifications → `education`
-- [ ] Real projects with screenshots + links → `src/data/projects.js` (sample: Campus Library System, Pocket Budget, Student Org Website)
-- [ ] Confirm skills in `src/data/skills.js` (sample adds: PHP, MySQL, Figma, learning list)
-- [ ] Review About copy (paragraphs 1 and 3 are sample)
-- [ ] Add `public/resume.pdf`, set `resume: '/resume.pdf'`
-- [ ] Confirm GitHub URL is your public profile and the repo is public
-- [ ] Put name in `index.html` `<title>`/`og:title`; retake `portfolio.webp`
+**Real content (2026-10-27)** — verified: lint + build; Playwright/Edge vs preview: no overflow 320/390/768/1440, no console errors, no "Alex/Santos/Sample State/example.com" in page text, filters (All 5, Academic 1, Personal 3, Prototype 1, #CSS/#JavaScript/#React/#PHP), dialog open/close, form disabled without email, badge back fits 8 skills, 6 skill groups (last spans full width)
+- [x] Name, role, location, intro, hero facts, about, interests, seeking → `profile.js`
+- [x] Education: CLSU, BSIT, fourth year, coursework (no dates/awards)
+- [x] Projects: DARIS (featured), StudySync, Bloom Journal, StockLite + portfolio; dialog hides missing year
+- [x] Skills regrouped by area with level rows; new glyphs (responsive, REST) + aliases
+- [x] `index.html` title/meta with name; `portfolio.webp` retaken (dark, 960×600)
+- [ ] **Email** → `profile.email` (form + copy stay disabled until set)
+- [ ] LinkedIn URL (or remove the entry), badge photo, `public/resume.pdf`
+- [ ] Per project: role, year, repo/demo links, screenshots
+- [ ] Confirm skill levels (esp. Database Design, CRUD, SQL as "used"; C/C++/Java/Python, XAMPP, Postman as "familiar"; REST API, Python for Data Analysis, Testing as "learning")
+- [ ] Optional: city/province and work arrangement (on-site/hybrid/remote)
 
 **Deployment**
 - [ ] Choose host (Vercel / Netlify / GitHub Pages) and deploy
@@ -144,9 +148,9 @@
 
 | Issue | Next action |
 |---|---|
-| Site shows **sample** person/projects — must not be sent to recruiters as-is | Replace `// SAMPLE` values, set `SAMPLE_CONTENT = false` |
+| Contact form disabled — no email yet | Owner provides email |
 | Lighthouse perf varies run to run (one outlier 72 in 5 runs) | Re-check on deployed host |
-| Layout + sample changes not committed | Owner to review, then commit |
+| Layout + sample + real-content changes not committed | Owner to review, then commit |
 
 ## 9. Progress Log
 
@@ -155,7 +159,8 @@
 - **2026-10-26** — Cosmic restyle + lanyard ID badge + interactive touches + glass mailto form. Committed as `065448a`.
 - **2026-10-26** — Layout pass (spacing, section heads, featured project, skills bento, hero facts) + sample content + self-hosted fonts. 69/69 checks; Lighthouse median 92.
 - **2026-10-26** — Mobile/tablet hero: ID badge first, strap from page top, swipe-friendly touch handling. 71/71 checks.
+- **2026-10-27** — Replaced all sample content with owner's real details; skills now show used/familiar/learning levels; screenshot retaken.
 
 ## 10. Next Action
 
-**Owner replaces every `// SAMPLE` value** in `src/data/` with real details (start with `profile.js`: name, email, photo, location), then sets `SAMPLE_CONTENT = false` and retakes the project screenshot.
+**Owner provides email** (`profile.email`), confirms skill levels, and adds per-project role/year/links — then commit and choose a host.

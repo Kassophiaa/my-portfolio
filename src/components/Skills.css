@@ -94,9 +94,42 @@
   box-shadow: 0 0 22px -4px rgb(244 114 182 / 0.55);
 }
 
-.skill-group--live .skill__icon {
+/* Level rows inside a group: used in projects / familiar with / currently learning */
+.skill-level {
+  display: grid;
+  gap: 10px;
+}
+
+.skill-level__label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+.skill-level--used .skill-level__label {
+  color: var(--lavender);
+}
+
+.skill-level--familiar .skill {
+  background: transparent;
+}
+
+.skill-level--familiar .skill__icon {
+  color: var(--text-muted);
+}
+
+.skill-level--learning .skill__icon {
   background: var(--pink-wash);
   color: var(--pink-text);
+}
+
+.skill-level--learning .chip {
+  border-color: color-mix(in srgb, var(--pink-text) 40%, var(--border));
 }
 
 @media (min-width: 820px) {
@@ -104,7 +137,9 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .skill-group:first-child {
+  /* First group spans the row; so does the last one when it would sit alone */
+  .skill-group:first-child,
+  .skill-group:last-child:nth-child(even) {
     grid-column: 1 / -1;
   }
 }
