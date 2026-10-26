@@ -33,9 +33,18 @@ export default function Projects({ projects, index }) {
   const realCount = projects.filter((project) => !project.draft).length
 
   return (
-    <section id="projects" className="section" aria-labelledby="projects-title">
+    <section id="projects" className="section section--glow" aria-labelledby="projects-title">
       <div className="container">
-        <SectionHeading index={index} label="Projects" id="projects-title" title="Things I’ve built">
+        <SectionHeading
+          index={index}
+          label="Featured projects"
+          id="projects-title"
+          title={
+            <>
+              Things I’ve <em className="accent-serif">built</em>
+            </>
+          }
+        >
           Academic and personal work. Open a project for details, technologies, and links.
         </SectionHeading>
 

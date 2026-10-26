@@ -58,7 +58,7 @@ export default function Header({ sections, active, theme, onToggleTheme }) {
   return (
     <header className={`site-header${scrolled ? ' is-scrolled' : ''}${open ? ' is-open' : ''}`}>
       <div className="site-header__bar container">
-        <a className="brand" href="#top" onClick={() => close()} aria-label="Back to top">
+        <a className="brand" href="#top" onClick={() => close()} title="Back to top">
           <span className="brand__mark" aria-hidden="true">
             <span>~</span>/
           </span>

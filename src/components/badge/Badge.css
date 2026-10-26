@@ -1,0 +1,459 @@
+.lanyard {
+  --badge-w: 264px;
+  --card-h: 372px;
+  --clip-y: 56px;
+  --ring-r: 9px;
+  position: relative;
+  height: calc(var(--clip-y) + var(--card-h) + 80px);
+  max-width: 460px;
+  margin-inline: auto;
+}
+
+/* ---- Strap ---- */
+.lanyard__svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.lanyard__strap {
+  fill: none;
+  stroke: url(#strap-gradient);
+  stroke-width: 13;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter: drop-shadow(0 0 8px rgb(167 139 250 / 0.4));
+}
+
+.lanyard__stitch {
+  fill: none;
+  stroke: rgb(255 255 255 / 0.4);
+  stroke-width: 1;
+  stroke-dasharray: 3 5;
+}
+
+.lanyard__strap-static {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% - var(--clip-y));
+  width: 13px;
+  height: var(--clip-y);
+  margin-left: -6.5px;
+  border-radius: 7px;
+  background: linear-gradient(var(--violet), var(--pink));
+  box-shadow: 0 0 14px rgb(167 139 250 / 0.4);
+}
+
+/* ---- Badge ---- */
+.badge {
+  /* The card stays a dark badge in both themes */
+  --text: #f5f0ff;
+  --text-muted: #cfc6e3;
+  --text-faint: #a79cc2;
+  --pink-text: #f9a8d4;
+  --lavender: #c4b5fd;
+  --border-strong: rgb(196 167 255 / 0.3);
+  --pink-wash: rgb(244 114 182 / 0.14);
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  width: var(--badge-w);
+  padding-top: calc(var(--ring-r) * 2 + 8px);
+  transform-origin: 50% var(--ring-r);
+  perspective: 900px;
+  color: var(--text-muted);
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  will-change: transform;
+}
+
+.badge.is-dragging {
+  cursor: grabbing;
+}
+
+.lanyard.is-static .badge {
+  top: calc(var(--clip-y) - var(--ring-r));
+  left: 50%;
+  transform: translateX(-50%);
+  cursor: auto;
+  touch-action: auto;
+}
+
+/* Metal ring + clip where the strap attaches */
+.badge__ring {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: calc(var(--ring-r) * 2);
+  height: calc(var(--ring-r) * 2);
+  margin-left: calc(var(--ring-r) * -1);
+  border-radius: 50%;
+  border: 3px solid #d9d1ea;
+  box-shadow:
+    0 0 0 1px rgb(0 0 0 / 0.25),
+    inset 0 0 0 1px rgb(0 0 0 / 0.2);
+}
+
+.badge__clip {
+  position: absolute;
+  z-index: 3;
+  top: calc(var(--ring-r) * 1.5);
+  left: 50%;
+  width: 34px;
+  height: 24px;
+  margin-left: -17px;
+  border-radius: 6px 6px 5px 5px;
+  background: linear-gradient(180deg, #f4f0fb 0%, #b9b0cc 45%, #8e84a8 60%, #ddd6ea 100%);
+  box-shadow:
+    0 4px 10px rgb(0 0 0 / 0.35),
+    inset 0 1px 0 rgb(255 255 255 / 0.8);
+}
+
+.badge__clip::after {
+  content: '';
+  position: absolute;
+  left: 7px;
+  right: 7px;
+  top: 8px;
+  height: 3px;
+  border-radius: 2px;
+  background: rgb(60 45 90 / 0.45);
+}
+
+/* 3D tilt toward the cursor (vars set from JS) */
+.badge__tilt {
+  transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transform-style: preserve-3d;
+  transition: transform 0.3s var(--ease);
+}
+
+.badge__flipper {
+  position: relative;
+  height: var(--card-h);
+  transform-style: preserve-3d;
+  transition: transform 0.8s var(--ease-spring);
+}
+
+.badge__flipper.is-flipped {
+  transform: rotateY(180deg);
+}
+
+.badge__face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 18px 18px 16px;
+  border-radius: 20px;
+  background:
+    radial-gradient(120% 60% at 50% 0%, rgb(167 139 250 / 0.22), transparent 70%),
+    linear-gradient(165deg, #34205a 0%, #1d1135 55%, #150b28 100%);
+  box-shadow:
+    0 30px 60px -24px rgb(0 0 0 / 0.75),
+    0 0 40px -18px rgb(244 114 182 / 0.35);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  overflow: hidden;
+  transition: box-shadow 0.35s var(--ease);
+}
+
+.badge__face--back {
+  transform: rotateY(180deg);
+}
+
+.badge:hover .badge__face {
+  box-shadow:
+    0 34px 70px -24px rgb(0 0 0 / 0.8),
+    0 0 60px -14px rgb(244 114 182 / 0.5);
+}
+
+/* Pink→violet gradient edge */
+.badge__face::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  padding: 1.5px;
+  border-radius: inherit;
+  background: linear-gradient(145deg, #f9a8d4, #a78bfa 40%, rgb(196 181 253 / 0.15) 65%, #f472b6);
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Holographic shimmer that follows the cursor */
+.badge__face::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background:
+    radial-gradient(circle at var(--mx, 50%) var(--my, 30%), rgb(255 255 255 / 0.14), transparent 42%),
+    linear-gradient(
+      115deg,
+      transparent 25%,
+      rgb(249 168 212 / 0.16) 38%,
+      rgb(167 139 250 / 0.18) 47%,
+      rgb(125 211 252 / 0.12) 56%,
+      transparent 70%
+    );
+  background-size:
+    100% 100%,
+    260% 260%;
+  background-position:
+    0 0,
+    var(--mx, 50%) var(--my, 30%);
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+.badge__face > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ---- Front ---- */
+.badge__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.68rem;
+  color: var(--text-faint);
+}
+
+.badge__slot {
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  width: 46px;
+  height: 9px;
+  margin-left: -23px;
+  border-radius: 5px;
+  background: #0d0818;
+  box-shadow: inset 0 1px 2px rgb(0 0 0 / 0.8);
+}
+
+.badge__photo {
+  width: 124px;
+  aspect-ratio: 1;
+  margin: 20px auto 0;
+  padding: 3px;
+  border-radius: 26px;
+  background: linear-gradient(145deg, #f9a8d4, #a78bfa);
+  box-shadow: 0 10px 30px -10px rgb(244 114 182 / 0.55);
+}
+
+.badge__photo img,
+.badge__monogram {
+  width: 100%;
+  height: 100%;
+  border-radius: 23px;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+.badge__monogram {
+  display: grid;
+  place-items: center;
+  background: radial-gradient(circle at 30% 20%, #3b2566, #1a0f30);
+  font-family: var(--font-display);
+  font-size: 2.6rem;
+  font-weight: 800;
+  color: var(--lavender);
+}
+
+.badge__info {
+  display: grid;
+  justify-items: center;
+  gap: 4px;
+  margin-top: 16px;
+  text-align: center;
+}
+
+.badge__name {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+.badge__name .todo {
+  font-size: 0.72em;
+}
+
+.badge__role {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--pink-text);
+}
+
+.badge__tagline {
+  font-size: 0.92rem;
+}
+
+.badge__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px dashed rgb(196 167 255 / 0.22);
+}
+
+.badge__status {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.badge__flip-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 32px;
+  padding: 0 12px;
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  background: rgb(255 255 255 / 0.04);
+  color: var(--lavender);
+  font-size: 0.74rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: border-color 0.2s var(--ease), color 0.2s var(--ease);
+}
+
+.badge__flip-btn:hover {
+  border-color: var(--pink);
+  color: var(--text);
+}
+
+/* ---- Back ---- */
+.badge__back-body {
+  display: grid;
+  align-content: start;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.badge__label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--pink-text);
+}
+
+.badge__label:not(:first-child) {
+  margin-top: 6px;
+}
+
+.badge__skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.badge__skills li {
+  padding: 4px 9px;
+  border: 1px solid rgb(196 167 255 / 0.2);
+  border-radius: 7px;
+  background: rgb(167 139 250 / 0.12);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--lavender);
+}
+
+.badge__links {
+  display: grid;
+  gap: 6px;
+}
+
+.badge__links a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 40px;
+  padding: 0 12px;
+  border: 1px solid rgb(196 167 255 / 0.2);
+  border-radius: 10px;
+  background: rgb(255 255 255 / 0.03);
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text);
+  text-decoration: none;
+  transition: border-color 0.2s var(--ease), color 0.2s var(--ease);
+}
+
+.badge__links a:hover {
+  border-color: var(--pink);
+  color: var(--pink-text);
+}
+
+.badge__contact {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--pink-text);
+  text-underline-offset: 3px;
+}
+
+/* ---- Smaller screens: shorter strap hanging from the stage, smaller card ---- */
+@media (max-width: 959px) {
+  .lanyard {
+    --badge-w: 236px;
+    --card-h: 344px;
+    --clip-y: 70px;
+    height: calc(var(--clip-y) + var(--card-h) + 60px);
+  }
+
+  /* Hook the strap hangs from */
+  .lanyard::before {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: 50%;
+    width: 48px;
+    height: 10px;
+    margin-left: -24px;
+    border-radius: 6px;
+    background: linear-gradient(180deg, #e6e0f2, #8e84a8);
+    box-shadow: 0 2px 6px rgb(0 0 0 / 0.4);
+  }
+}
+
+@media (max-width: 360px) {
+  .lanyard {
+    --badge-w: 214px;
+    --card-h: 326px;
+  }
+
+  .badge__photo {
+    width: 104px;
+  }
+}
+
+@media (min-width: 960px) {
+  /* Strap runs all the way up to the top of the page */
+  .lanyard__strap-static {
+    height: 200vh;
+  }
+}

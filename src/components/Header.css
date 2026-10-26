@@ -39,7 +39,7 @@
 }
 
 .brand__mark span {
-  color: var(--mint);
+  color: var(--pink-text);
 }
 
 .brand__text {
@@ -57,7 +57,9 @@
   padding: 5px;
   border: 1px solid var(--border);
   border-radius: 999px;
-  background: color-mix(in srgb, var(--surface) 80%, transparent);
+  background: var(--surface);
+  backdrop-filter: var(--blur);
+  -webkit-backdrop-filter: var(--blur);
 }
 
 .nav__list {
@@ -71,8 +73,9 @@
   bottom: 5px;
   left: 0;
   border-radius: 999px;
-  background: var(--violet-wash);
-  border: 1px solid color-mix(in srgb, var(--violet) 40%, transparent);
+  background: var(--pink-wash);
+  border: 1px solid color-mix(in srgb, var(--pink) 40%, transparent);
+  box-shadow: 0 0 18px -6px var(--pink);
   transition:
     transform 0.45s var(--ease-spring),
     width 0.45s var(--ease-spring);
@@ -97,7 +100,7 @@
 }
 
 .nav__link.is-active {
-  color: var(--violet);
+  color: var(--pink-text);
 }
 
 .site-header__actions {
@@ -167,13 +170,13 @@
 }
 
 .mobile-menu__list a.is-active {
-  color: var(--violet);
+  color: var(--pink-text);
 }
 
 .mobile-menu__index {
   font-family: var(--font-mono);
   font-size: 0.75rem;
-  color: var(--mint);
+  color: var(--pink-text);
   min-width: 1.8em;
 }
 
