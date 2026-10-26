@@ -34,7 +34,7 @@
 
 .filter--tech > span[aria-hidden] {
   margin-right: -6px;
-  color: var(--mint);
+  color: var(--pink-text);
 }
 
 .filter:hover {
@@ -48,8 +48,9 @@
 
 .filter[aria-pressed='true'] {
   color: var(--on-accent);
-  background: var(--violet);
-  border-color: var(--violet);
+  background: var(--pink-gradient);
+  border-color: transparent;
+  box-shadow: 0 8px 22px -12px rgb(244 114 182 / 0.8);
 }
 
 .filter[aria-pressed='true'] > span[aria-hidden] {
@@ -119,11 +120,7 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  background: var(--surface);
   overflow: hidden;
-  box-shadow: var(--shadow);
   transition:
     transform 0.35s var(--ease),
     border-color 0.35s var(--ease),
@@ -132,11 +129,11 @@
 
 .project-card:hover,
 .project-card:focus-within {
-  transform: translateY(-4px);
-  border-color: color-mix(in srgb, var(--violet) 60%, var(--border));
+  transform: translateY(-6px);
+  border-color: color-mix(in srgb, var(--pink) 45%, var(--border));
   box-shadow:
     var(--shadow),
-    0 24px 50px -30px var(--violet-strong);
+    var(--glow-shadow);
 }
 
 .project-card--draft {
@@ -173,8 +170,8 @@
 .project-card__draft {
   padding: 0 8px;
   border-radius: 4px;
-  background: var(--mint-wash);
-  color: var(--mint);
+  background: var(--pink-wash);
+  color: var(--pink-text);
 }
 
 .project-card__title {
@@ -196,17 +193,56 @@
 }
 
 .project-card__open {
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  gap: 8px;
+  justify-content: space-between;
+  gap: 12px;
   margin-top: auto;
-  padding: 10px 0 0;
+  padding: 12px 0 0;
   border: 0;
   background: none;
   font-weight: 700;
   font-size: 0.9rem;
-  color: var(--violet);
+  color: var(--lavender);
   cursor: pointer;
+  transition: color 0.25s var(--ease);
+}
+
+.project-card:hover .project-card__open,
+.project-card:focus-within .project-card__open {
+  color: var(--text);
+}
+
+/* Pink arrow button that slides in on hover / focus */
+.project-card__arrow {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--pink-gradient);
+  color: var(--on-accent);
+  box-shadow: 0 8px 22px -8px rgb(244 114 182 / 0.7);
+  opacity: 0;
+  transform: translateX(-14px) scale(0.85);
+  transition:
+    opacity 0.3s var(--ease),
+    transform 0.4s var(--ease-spring);
+}
+
+.project-card:hover .project-card__arrow,
+.project-card:focus-within .project-card__arrow {
+  opacity: 1;
+  transform: none;
+}
+
+/* No hover on touch screens: keep the arrow visible */
+@media (hover: none) {
+  .project-card__arrow {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 /* The whole card is clickable via the button's stretched hit area */
@@ -222,16 +258,8 @@
 }
 
 .project-card:has(.project-card__open:focus-visible) {
-  outline: 2px solid var(--mint);
+  outline: 2px solid var(--pink-text);
   outline-offset: 3px;
-}
-
-.project-card__open .icon {
-  transition: transform 0.3s var(--ease-spring);
-}
-
-.project-card:hover .project-card__open .icon {
-  transform: translateX(5px);
 }
 
 /* Cover */
@@ -275,7 +303,7 @@
 }
 
 .cover--generated[data-category='Academic'] {
-  --hue: var(--mint);
+  --hue: var(--pink-text);
 }
 
 .cover--draft {
@@ -336,9 +364,11 @@
   padding: 0;
   border: 1px solid var(--border-strong);
   border-radius: var(--radius-lg);
-  background: var(--surface);
-  color: var(--text);
-  box-shadow: 0 40px 80px -30px rgb(0 0 0 / 0.6);
+  background: var(--surface-solid);
+  color: var(--text-muted);
+  box-shadow:
+    0 40px 80px -30px rgb(0 0 0 / 0.6),
+    0 0 60px -20px rgb(167 139 250 / 0.35);
   overflow: auto;
   overscroll-behavior: contain;
 }
@@ -348,7 +378,7 @@
 }
 
 .project-dialog::backdrop {
-  background: rgb(8 8 10 / 0.62);
+  background: rgb(9 5 18 / 0.66);
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
 }
@@ -415,7 +445,7 @@
   font-weight: 500;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--mint);
+  color: var(--pink-text);
 }
 
 .project-dialog__facts dd {

@@ -38,7 +38,7 @@ export default function ProjectCard({ project, onOpen }) {
   const titleText = textOf(project.title, 'Untitled project')
 
   return (
-    <article className={`project-card${project.draft ? ' project-card--draft' : ''}`}>
+    <article className={`project-card glass${project.draft ? ' project-card--draft' : ''}`}>
       <ProjectCover project={project} />
       <div className="project-card__body">
         <p className="project-card__meta mono">
@@ -69,7 +69,9 @@ export default function ProjectCard({ project, onOpen }) {
           aria-label={`View details: ${titleText}`}
         >
           <span>View details</span>
-          <Icon name="arrow" />
+          <span className="project-card__arrow" aria-hidden="true">
+            <Icon name="arrow" size={18} />
+          </span>
         </button>
       </div>
     </article>

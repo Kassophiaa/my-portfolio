@@ -8,11 +8,13 @@ Personal developer portfolio for internship/OJT applications, built with React +
 
 All text lives in `src/data/` — no layout code needs to change:
 
-- `profile.js` — name, intro, about, email, résumé, links, education
+- `profile.js` — name, intro, about, badge photo, email, résumé, links, education
 - `projects.js` — projects (`draft: true` entries are placeholders)
 - `skills.js` — skill groups
 
 Anything still marked `todo(...)` shows on the site as a dashed **TODO** placeholder.
+
+Colors and theme tokens (dark + light) live at the top of `src/index.css`.
 
 ## Commands
 

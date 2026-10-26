@@ -22,6 +22,10 @@ export const profile = {
     'On-site in or near my city, or hybrid',
   ],
 
+  // Badge photo: import an image from src/assets (e.g. `import photo from '../assets/me.webp'`)
+  // and set `photo: photo`. Square, ~480×480 px, WebP keeps it light.
+  photo: null,
+
   // Set to e.g. 'you@example.com'
   email: todo('Your email address'),
   // Put the PDF in public/ (e.g. public/resume.pdf) and set this to '/resume.pdf'

@@ -1,15 +1,15 @@
 /* ------------------------------------------------------------------
-   Design tokens
+   Design tokens — "cosmic" theme. Tweak colors here only.
    ------------------------------------------------------------------ */
 :root {
   --font-display: 'Bricolage Grotesque', 'Segoe UI', system-ui, sans-serif;
   --font-body: 'Manrope', 'Segoe UI', system-ui, sans-serif;
-  --font-serif: 'Instrument Serif', Georgia, serif;
+  --font-serif: 'Playfair Display', Georgia, serif;
   --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', Consolas, monospace;
 
-  --radius-sm: 8px;
-  --radius: 14px;
-  --radius-lg: 22px;
+  --radius-sm: 10px;
+  --radius: 16px;
+  --radius-lg: 20px;
   --gutter: clamp(16px, 4vw, 40px);
   --max: 1180px;
   --header-h: 68px;
@@ -17,47 +17,62 @@
   --ease-spring: cubic-bezier(0.34, 1.4, 0.5, 1);
 
   /* Dark (default) */
-  --bg: #111113;
-  --bg-soft: #151518;
-  --surface: #1a1a1e;
-  --surface-2: #212126;
-  --border: #2a2a31;
-  --border-strong: #3b3b44;
-  --text: #eeedf2;
-  --text-muted: #a3a2ad;
-  --text-faint: #75747f;
-  --violet: #a996ff;
-  --violet-strong: #8467f5;
-  --violet-wash: rgb(132 103 245 / 0.14);
-  --mint: #6fe8c8;
-  --mint-wash: rgb(111 232 200 / 0.12);
-  --on-accent: #120d24;
-  --shadow: 0 1px 0 rgb(255 255 255 / 0.04) inset, 0 18px 40px -24px rgb(0 0 0 / 0.7);
-  --grid-line: rgb(255 255 255 / 0.035);
-  --glow: rgb(132 103 245 / 0.22);
+  --bg: #0d0818;
+  --bg-soft: #140c24;
+  --glow-core: #2a1745;
+  --surface: rgb(40 24 66 / 0.55);
+  --surface-2: rgb(52 32 84 / 0.6);
+  --surface-solid: #1a1030;
+  --border: rgb(196 167 255 / 0.15);
+  --border-strong: rgb(196 167 255 / 0.3);
+  --text: #f5f0ff;
+  --text-muted: #cfc6e3;
+  --text-faint: #8e84a8;
+
+  --pink: #f472b6;
+  --pink-soft: #f9a8d4;
+  --pink-text: #f9a8d4;
+  --pink-gradient: linear-gradient(135deg, #f9a8d4, #f472b6);
+  --pink-wash: rgb(244 114 182 / 0.12);
+  --violet: #a78bfa;
+  --lavender: #c4b5fd;
+  --violet-wash: rgb(167 139 250 / 0.14);
+  --on-accent: #2b0b20;
+
+  --shadow: 0 1px 0 rgb(255 255 255 / 0.05) inset, 0 20px 50px -28px rgb(0 0 0 / 0.8);
+  --glow-shadow: 0 0 0 1px rgb(244 114 182 / 0.35), 0 18px 50px -18px rgb(244 114 182 / 0.45);
+  --star: rgb(232 222 255 / 0.5);
+  --blur: blur(14px) saturate(1.3);
 
   color-scheme: dark;
 }
 
+/* "Daylight" variant: same palette, re-tuned for contrast on light lavender */
 :root[data-theme='light'] {
-  --bg: #f5f3ee;
-  --bg-soft: #efece5;
-  --surface: #fffefb;
-  --surface-2: #f3f0e9;
-  --border: #e2ddd3;
-  --border-strong: #cdc6b9;
-  --text: #17161b;
-  --text-muted: #55535e;
-  --text-faint: #7b7884;
-  --violet: #5b3fd6;
-  --violet-strong: #5b3fd6;
-  --violet-wash: rgb(91 63 214 / 0.09);
-  --mint: #0b7a5f;
-  --mint-wash: rgb(11 122 95 / 0.1);
-  --on-accent: #ffffff;
-  --shadow: 0 1px 0 rgb(255 255 255 / 0.8) inset, 0 18px 40px -26px rgb(40 30 10 / 0.28);
-  --grid-line: rgb(23 22 27 / 0.045);
-  --glow: rgb(91 63 214 / 0.12);
+  --bg: #f6f2fc;
+  --bg-soft: #efe8fa;
+  --glow-core: #e3d4fb;
+  --surface: rgb(255 255 255 / 0.62);
+  --surface-2: rgb(246 240 255 / 0.85);
+  --surface-solid: #ffffff;
+  --border: rgb(91 63 170 / 0.16);
+  --border-strong: rgb(91 63 170 / 0.32);
+  --text: #1e1433;
+  --text-muted: #463c5e;
+  --text-faint: #6b6185;
+
+  --pink: #db2777;
+  --pink-soft: #f9a8d4;
+  --pink-text: #be185d;
+  --pink-wash: rgb(219 39 119 / 0.09);
+  --violet: #6d4ad8;
+  --lavender: #7c5ce6;
+  --violet-wash: rgb(109 74 216 / 0.09);
+  --on-accent: #3b0a2a;
+
+  --shadow: 0 1px 0 rgb(255 255 255 / 0.9) inset, 0 20px 44px -28px rgb(60 30 120 / 0.3);
+  --glow-shadow: 0 0 0 1px rgb(219 39 119 / 0.3), 0 18px 44px -20px rgb(219 39 119 / 0.35);
+  --star: transparent;
 
   color-scheme: light;
 }
@@ -87,7 +102,7 @@ body {
   margin: 0;
   min-width: 320px;
   background: var(--bg);
-  color: var(--text);
+  color: var(--text-muted);
   font-family: var(--font-body);
   font-size: 1rem;
   line-height: 1.65;
@@ -97,18 +112,23 @@ body {
   transition: background-color 0.35s var(--ease), color 0.35s var(--ease);
 }
 
-/* Faint blueprint grid + a single soft glow behind the hero */
+/* Sparse starfield + one soft top glow, fixed behind everything */
 body::before {
   content: '';
   position: fixed;
   inset: 0;
-  z-index: -1;
+  z-index: -2;
   pointer-events: none;
   background:
-    radial-gradient(60rem 32rem at 82% -8%, var(--glow), transparent 65%),
-    linear-gradient(var(--grid-line) 1px, transparent 1px) 0 0 / 56px 56px,
-    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px) 0 0 / 56px 56px;
-  mask-image: linear-gradient(to bottom, #000 0%, #000 40%, transparent 95%);
+    radial-gradient(1px 1px at 12% 18%, var(--star), transparent 60%),
+    radial-gradient(1px 1px at 68% 9%, var(--star), transparent 60%),
+    radial-gradient(1.5px 1.5px at 84% 42%, var(--star), transparent 60%),
+    radial-gradient(1px 1px at 33% 61%, var(--star), transparent 60%),
+    radial-gradient(1px 1px at 52% 83%, var(--star), transparent 60%),
+    radial-gradient(1.5px 1.5px at 7% 76%, var(--star), transparent 60%),
+    radial-gradient(1px 1px at 91% 88%, var(--star), transparent 60%),
+    radial-gradient(1px 1px at 44% 31%, var(--star), transparent 60%),
+    radial-gradient(70rem 36rem at 80% -10%, var(--glow-core), transparent 70%);
 }
 
 img {
@@ -122,6 +142,7 @@ h2,
 h3,
 h4 {
   margin: 0;
+  color: var(--text);
   font-family: var(--font-display);
   font-weight: 700;
   line-height: 1.08;
@@ -145,18 +166,20 @@ ol {
   list-style: none;
 }
 
-button {
+button,
+input,
+textarea {
   font: inherit;
   color: inherit;
 }
 
 ::selection {
-  background: var(--violet);
+  background: var(--pink);
   color: var(--on-accent);
 }
 
 :focus-visible {
-  outline: 2px solid var(--mint);
+  outline: 2px solid var(--pink);
   outline-offset: 3px;
   border-radius: 6px;
 }
@@ -180,7 +203,7 @@ button {
   z-index: 100;
   padding: 10px 16px;
   border-radius: var(--radius-sm);
-  background: var(--violet);
+  background: var(--pink-gradient);
   color: var(--on-accent);
   font-weight: 700;
   text-decoration: none;
@@ -203,12 +226,23 @@ button {
   font-family: var(--font-mono);
 }
 
+/* One italic serif accent word per headline */
 .accent-serif {
   font-family: var(--font-serif);
   font-style: italic;
-  font-weight: 400;
+  font-weight: 500;
   letter-spacing: -0.01em;
-  color: var(--violet);
+  color: var(--pink-text);
+}
+
+/* Frosted glass surface for cards and panels */
+.glass {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  backdrop-filter: var(--blur);
+  -webkit-backdrop-filter: var(--blur);
+  box-shadow: var(--shadow);
 }
 
 /* ------------------------------------------------------------------
@@ -217,6 +251,21 @@ button {
 .section {
   position: relative;
   padding-block: clamp(72px, 11vw, 128px);
+}
+
+/* Soft violet glow behind key sections */
+.section--glow::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  top: 8%;
+  left: 50%;
+  width: min(1100px, 100%);
+  height: 70%;
+  transform: translateX(-50%);
+  background: radial-gradient(closest-side, var(--glow-core), transparent);
+  opacity: 0.85;
+  pointer-events: none;
 }
 
 .section + .section {
@@ -232,28 +281,32 @@ button {
 .eyebrow {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  font-family: var(--font-mono);
-  font-size: 0.78rem;
-  letter-spacing: 0.08em;
+  gap: 12px;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--text-faint);
+  color: var(--pink-text);
 }
 
 .eyebrow__num {
-  color: var(--mint);
+  font-family: var(--font-mono);
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  color: var(--lavender);
 }
 
 .eyebrow::after {
   content: '';
   width: 42px;
   height: 1px;
-  background: var(--border-strong);
+  background: linear-gradient(90deg, var(--pink), transparent);
 }
 
 .section-title {
   font-size: clamp(2rem, 5.2vw, 3.4rem);
-  max-width: 18ch;
+  max-width: 20ch;
 }
 
 .section-lede {
@@ -298,7 +351,7 @@ button {
 }
 
 .btn:hover {
-  border-color: var(--violet);
+  border-color: var(--lavender);
   transform: translateY(-2px);
 }
 
@@ -311,30 +364,31 @@ button {
 }
 
 .btn--primary {
-  --btn-bg: var(--violet);
+  --btn-bg: var(--pink-gradient);
   --btn-fg: var(--on-accent);
-  --btn-border: var(--violet);
-  box-shadow: 0 10px 30px -14px var(--violet-strong);
+  --btn-border: transparent;
+  background: var(--pink-gradient);
+  box-shadow: 0 10px 30px -12px rgb(244 114 182 / 0.6);
 }
 
-/* A mint sweep that slides in on hover */
+/* A light sheen that sweeps across on hover */
 .btn--primary::before {
   content: '';
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: var(--mint);
-  transform: translateX(-101%);
-  transition: transform 0.45s var(--ease);
+  background: linear-gradient(110deg, transparent 30%, rgb(255 255 255 / 0.45) 50%, transparent 70%);
+  transform: translateX(-110%);
+  transition: transform 0.6s var(--ease);
 }
 
 .btn--primary:hover {
-  --btn-fg: #06261d;
-  border-color: var(--mint);
+  border-color: transparent;
+  box-shadow: 0 14px 36px -10px rgb(244 114 182 / 0.75);
 }
 
 .btn--primary:hover::before {
-  transform: none;
+  transform: translateX(110%);
 }
 
 .btn--ghost {
@@ -348,6 +402,11 @@ button {
   transform: none;
   border-style: dashed;
   box-shadow: none;
+}
+
+.btn--primary[aria-disabled='true'],
+.btn--primary:disabled {
+  border-color: var(--pink);
 }
 
 .btn[aria-disabled='true']::before,
@@ -364,13 +423,16 @@ button {
   border: 1px solid var(--border);
   border-radius: 12px;
   background: var(--surface);
+  color: var(--lavender);
   cursor: pointer;
-  transition: border-color 0.2s var(--ease), color 0.2s var(--ease), transform 0.2s var(--ease);
+  transition: border-color 0.2s var(--ease), color 0.2s var(--ease), transform 0.2s var(--ease),
+    box-shadow 0.2s var(--ease);
 }
 
 .icon-button:hover {
-  border-color: var(--violet);
-  color: var(--violet);
+  border-color: var(--lavender);
+  color: var(--text);
+  box-shadow: 0 0 18px -4px var(--violet);
 }
 
 .icon-button:active {
@@ -384,26 +446,26 @@ button {
   padding: 5px 11px;
   border: 1px solid var(--border);
   border-radius: 999px;
-  background: var(--bg-soft);
+  background: var(--violet-wash);
   font-family: var(--font-mono);
   font-size: 0.78rem;
   line-height: 1.4;
-  color: var(--text-muted);
+  color: var(--lavender);
   white-space: nowrap;
 }
 
 .text-link {
   color: var(--text);
   text-decoration: underline;
-  text-decoration-color: var(--violet);
+  text-decoration-color: var(--pink);
   text-decoration-thickness: 1.5px;
   text-underline-offset: 4px;
   transition: color 0.2s var(--ease), text-decoration-color 0.2s var(--ease);
 }
 
 .text-link:hover {
-  color: var(--violet);
-  text-decoration-color: var(--mint);
+  color: var(--pink-text);
+  text-decoration-color: var(--lavender);
 }
 
 /* Visible placeholder for content the owner has not provided yet */
@@ -427,8 +489,74 @@ button {
   align-self: center;
   padding: 0.15em 0.5em;
   border-radius: 4px;
-  background: var(--mint-wash);
-  color: var(--mint);
+  background: var(--pink-wash);
+  color: var(--pink-text);
+}
+
+/* Diamond / check bullet lists (About, project dialog) */
+.tick-list {
+  display: grid;
+  gap: 8px;
+}
+
+.tick-list li {
+  position: relative;
+  padding-left: 22px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.tick-list li::before {
+  content: '';
+  position: absolute;
+  left: 2px;
+  top: 0.62em;
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  background: var(--violet);
+  box-shadow: 0 0 10px var(--violet);
+  transform: rotate(45deg);
+}
+
+.tick-list--check li::before {
+  top: 0.5em;
+  width: 10px;
+  height: 6px;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  border-left: 2px solid var(--pink);
+  border-bottom: 2px solid var(--pink);
+  transform: rotate(-45deg);
+}
+
+/* Status dot ("Available for OJT") */
+.pulse-dot {
+  position: relative;
+  width: 8px;
+  height: 8px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--pink);
+  box-shadow: 0 0 10px var(--pink);
+}
+
+.pulse-dot::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: inherit;
+  animation: pulse 2.2s var(--ease) infinite;
+}
+
+@keyframes pulse {
+  70%,
+  100% {
+    transform: scale(2.8);
+    opacity: 0;
+  }
 }
 
 /* ------------------------------------------------------------------
@@ -436,11 +564,11 @@ button {
    ------------------------------------------------------------------ */
 .reveal-ready [data-reveal] {
   opacity: 0;
-  transform: translateY(22px);
+  transform: translateY(18px);
   transition:
-    opacity 0.7s var(--ease),
-    transform 0.7s var(--ease);
-  transition-delay: calc(var(--delay, 0) * 90ms);
+    opacity 0.55s var(--ease),
+    transform 0.55s var(--ease);
+  transition-delay: calc(var(--delay, 0) * 70ms);
 }
 
 .reveal-ready [data-reveal].is-visible {

@@ -12,9 +12,9 @@
 | Item | Value |
 |---|---|
 | Purpose | Personal developer portfolio for internship/OJT applications |
-| Tech stack | React 19 + Vite 8 (JavaScript/JSX), ESLint 10, plain CSS (per-component files), Google Fonts |
+| Tech stack | React 19 + Vite 8 (JavaScript/JSX), ESLint 10, plain CSS (per-component files), Google Fonts. **No runtime deps beyond React.** |
 | Runtime (dev machine) | Node v26.8.1, npm 11.19.0 |
-| Current stage | Phase 5 — Implementation done with placeholder content; waiting on owner content |
+| Current stage | Cosmic restyle + lanyard badge done; waiting on owner content |
 | Repository URL | https://github.com/fernandezkassandra226-creator/my-portfolio (from `git remote`) |
 | Deployment | Not deployed. Host: TBD |
 
@@ -29,111 +29,112 @@
 
 | Area | Requirement | Status |
 |---|---|---|
-| Sections | Hero, About, Projects, Skills, Education, Contact (no blog, stats, testimonials) | Agreed + built |
-| Design | Dark charcoal base, violet + mint accents, expressive type, polished light theme, no template look | Agreed + built |
-| Interactions | Mobile menu, active nav, smooth scroll, persistent theme, project filter + detail dialog, copy email, résumé download, unavailable/missing states, reduced motion | Agreed + built |
-| Responsiveness | Mobile-first; 320px → 1920px with no horizontal overflow | Agreed + verified |
-| Accessibility | Semantic HTML, keyboard nav, visible focus, skip link, labels, reduced motion, WCAG AA target | Agreed + partially verified |
-| Performance | Minimal deps (none added), lazy images | Agreed |
-| SEO | Title, description, OG tags, favicon | Done (title has no name yet) |
-| Contact | Direct `mailto:` + copy; no fake form, no backend | Agreed + built |
-| Personal content | Must come from owner — never invented | **Pending (see Blockers)** |
+| Sections | Hero, About, Projects, Skills, Education, Contact (no blog, stats, testimonials) | Built |
+| Theme | "Cosmic UX": plum `#0D0818`, violet glows, purple glass cards, pink gradient accent, violet/lavender secondary, Playfair italic accent word, pink uppercase section labels. Tokens in `src/index.css` `:root` | Built |
+| Light mode | Kept as lavender "daylight" variant (owner chose 2026-10-26) | Built |
+| Hero badge | Lanyard ID card: drag + swing/settle physics, idle sway, 3D tilt, holo shimmer, click/button flip (back = skills + links), lazy-loaded; touch drag w/ heavier damping; static under reduced motion | Built + verified |
+| Badge tech | 2D hand-written Verlet rope, no deps (owner chose 2026-10-26) | Decided |
+| Contact form | Glass form that opens the visitor's email app via `mailto` — no backend (owner chose 2026-10-26). Disabled until email is set | Built |
+| Interactions | Card lift/glow + sliding pink arrow; staggered reveals; skill glass tiles; scroll-filled timeline; hero cursor glow (desktop) | Built + verified |
+| Responsiveness | 320px → 1920px, no horizontal overflow | Verified |
+| Accessibility | Keyboard, visible focus (pink), skip link, labels, reduced motion, WCAG AA contrast | Verified (see Checklist) |
+| Performance | Lighthouse mobile ≥ pre-upgrade score (85) | Verified: 85 |
+| QR code on badge back | Skipped until résumé PDF + live URL exist | Deferred |
+| Personal content | Must come from owner — never invented | **Pending** |
 
 ## 4. Project Structure
 
 | Path | Responsibility |
 |---|---|
-| `src/data/profile.js` | **Edit here:** name, intro, about, email, résumé, links, location, education |
+| `src/data/profile.js` | **Edit here:** name, intro, about, `photo`, email, résumé, links, location, education |
 | `src/data/projects.js` | **Edit here:** projects (`draft: true` = placeholder slot) |
-| `src/data/skills.js` | **Edit here:** skill groups |
-| `src/lib/content.js` | `todo()` marker + `isMissing()` helper for missing content |
-| `src/components/Field.jsx` | Renders value or dashed "TODO" placeholder |
-| `src/components/*.jsx` + `*.css` | One component + stylesheet per section (Header, Hero, About, Projects/ProjectCard/ProjectDialog, Skills, Education, Contact, Footer, SectionHeading, Icon) |
-| `src/hooks/` | `useTheme` (localStorage `portfolio-theme`), `useActiveSection` (scroll spy), `useReveal` (entrance animation), `useCopy` (clipboard) |
-| `src/index.css` | Design tokens (both themes), base, buttons, chips, `.todo`, motion + reduced-motion |
-| `src/App.jsx` / `App.css` | Section order + nav list; footer styles |
-| `src/assets/projects/portfolio.jpg` | Real screenshot of this site (still shows TODO placeholders) |
-| `index.html` | Meta/OG tags, fonts, pre-paint theme script |
-| `public/favicon.svg` | Custom `< _ >` mark |
+| `src/data/skills.js` | **Edit here:** skill groups (non-"learning" items also appear on the badge back) |
+| `src/index.css` | **All color tokens** (dark + `[data-theme='light']`), base, `.glass`, buttons, `.tick-list`, `.pulse-dot`, motion |
+| `src/components/badge/` | `BadgeCard` (faces), `StaticLanyard` (fallback/reduced motion), `LanyardBadge` (lazy physics chunk), `Badge.css` |
+| `src/components/Hero.jsx` | Loads badge after `load` + idle; cursor glow |
+| `src/components/Skills.jsx` | Glass tiles + line-glyph map (unknown skills show initials) |
+| `src/components/Contact.jsx` | `ContactForm` (mailto), email card, links |
+| `src/hooks/` | `useTheme`, `useActiveSection`, `useReveal`, `useCopy`, `useReducedMotion`, `useScrollFill` (timeline) |
+| `src/assets/projects/portfolio.webp` | 960px screenshot of the new hero (still shows TODO placeholders) |
+| `index.html` | Meta/OG, non-blocking Google Fonts, pre-paint theme script |
+| `public/robots.txt`, `public/favicon.svg` | SEO + icon |
 
 ## 5. Development Phases
 
 | # | Phase | Status |
 |---|---|---|
-| 1 | Setup | Done |
-| 2 | Planning | Done (sections agreed in brief) |
-| 3 | Design | Done |
+| 1–3 | Setup, planning, design | Done |
 | 4 | Content | **Blocked on owner** |
-| 5 | Implementation | Done (with placeholders) |
-| 6 | Testing | Automated browser checks done; Lighthouse + real-device check pending |
+| 5 | Implementation (v1 + cosmic upgrade) | Done |
+| 6 | Testing | Automated browser + Lighthouse done; real-device check pending |
 | 7 | Deployment | Not started |
 | 8 | Maintenance | Not started |
 
 ## 6. Task Checklist
 
-**Setup**
-- [x] React + Vite scaffold, build/lint/dev server verified
-- [x] Git repo with GitHub remote (found 2026-10-26)
+**Cosmic upgrade (2026-10-26)** — checkpoint before it: commit `92d8314`
+- [x] Palette/typography tokens, glass surfaces, section glows, pink labels, accent words
+- [x] Lanyard badge (physics, flip, tilt, shimmer, clip/ring, lazy chunk ~2.5 KB gz)
+- [x] Project card glow + sliding arrow; skill glass tiles; timeline scroll fill; hero cursor glow
+- [x] Contact glass form (mailto)
+- [x] Perf fixes: deferred physics, async fonts, WebP image, robots.txt
 
-**Implementation (2026-10-26)**
-- [x] Removed template boilerplate (`src/assets/*.png/svg`, `public/icons.svg`)
-- [x] Content separated into `src/data/*`; missing info rendered as visible TODO placeholders
-- [x] Header: sliding active pill, scroll spy, mobile menu (Esc, focus, scroll lock), theme toggle
-- [x] Hero with data-driven code card; About; Projects (filters + `<dialog>` details); Skills; Education timeline; Contact (mailto, copy, résumé, links); Footer
-- [x] SEO meta, OG tags, favicon, skip link, reduced-motion support
-
-**Verified 2026-10-26** (`npm run build`, `npm run lint`, Playwright + Edge against `vite preview`)
-- [x] No horizontal overflow at 320/390/768/1280/1920 px, dark + light
-- [x] Theme follows system, toggles, persists across reload
-- [x] Mobile menu open/close/Escape/focus return/link navigation
-- [x] Active nav + indicator alignment; filters (All/Academic/#React) + live announcement
-- [x] Dialog: keyboard open, Escape + backdrop close, focus return, unavailable live link
-- [x] Reduced motion: content visible, no smooth scroll, animations disabled
-- [x] Skip link, single h1, no duplicate ids, no console errors
-- [ ] Copy-email success path (untestable until a real email is set)
-- [ ] Résumé download (no PDF yet)
-- [ ] Lighthouse audit; check on a real phone
+**Verified 2026-10-26** (`npm run build`, `npm run lint`, Playwright + Edge vs `vite preview`: 62/62 checks)
+- [x] No horizontal overflow 320–1920 px, dark + light
+- [x] Theme toggle/persistence; mobile menu; active nav; filters; dialog; skip link; no console errors
+- [x] Badge: lazy chunk loads after idle; strap anchored at page top (desktop) / stage (mobile); drag follows pointer; swings and settles (≈4 s); click + keyboard flip; hidden face inert; hover tilt
+- [x] Badge touch drag via emulated touch events (CDP) in mobile context; settles
+- [x] Reduced motion: static badge, physics never loaded, no cursor glow, flip still works
+- [x] Card arrow slide-in, timeline fill on scroll, form disabled without email
+- [x] Lighthouse mobile: Perf 85 (baseline 85), A11y 100, Best Practices 100, SEO 100 (light theme)
+- [x] Dark-theme contrast computed: lowest pair muted on glass 4.61:1 (AA)
+- [ ] Contact form send path + copy email (needs real email)
+- [ ] Test badge on a real phone (only emulated touch tested)
 
 **Content (owner)**
-- [ ] Name, location, email, LinkedIn → `src/data/profile.js`
-- [ ] Degree, school, years, details, coursework, real certifications → `education` in `profile.js`
-- [ ] Real projects (2–4) with summary, tech, links, screenshots → `src/data/projects.js`; delete draft slots
-- [ ] Confirm/adjust skills in `src/data/skills.js` (pre-filled from this project's stack) + add "Currently learning"
-- [ ] Review About copy (written from the brief) for accuracy
-- [ ] Add `public/resume.pdf` and set `resume: '/resume.pdf'`
+- [ ] Name, location, email, LinkedIn, **badge photo** → `src/data/profile.js`
+- [ ] Degree, school, years, details, coursework, real certifications → `education`
+- [ ] Real projects (2–4) with screenshots → `src/data/projects.js`; delete draft slots
+- [ ] Confirm skills in `src/data/skills.js` + add "Currently learning"
+- [ ] Review About copy for accuracy
+- [ ] Add `public/resume.pdf`, set `resume: '/resume.pdf'`
 - [ ] Confirm GitHub URL is your public profile and the repo is public
-- [ ] Put name in `index.html` `<title>`/`og:title`; retake `portfolio.jpg` screenshot
+- [ ] Put name in `index.html` `<title>`/`og:title`; retake `portfolio.webp`
 
 **Deployment**
 - [ ] Choose host (Vercel / Netlify / GitHub Pages) and deploy
 - [ ] Set project `links.live`; record URL here and in README
+- [ ] Optional: QR code to résumé on badge back (needs live URL)
 
 ## 7. Technical Decisions
 
 | Decision | Reason |
 |---|---|
-| React + Vite (JS) | Requested stack |
-| Plain CSS, one file per component, tokens on `:root` / `[data-theme]` | No deps, easy theming |
-| No new runtime dependencies | Performance; native `<dialog>`, IntersectionObserver, Clipboard API suffice |
-| `todo()` placeholders instead of fake data | Never invent personal info; missing items are obvious |
-| Theme set by inline script in `index.html` before paint | Prevents light/dark flash |
-| `mailto:` + copy button, no contact form | No backend needed; avoid fake form |
-| Google Fonts: Bricolage Grotesque, Manrope, Instrument Serif, JetBrains Mono | Expressive, distinctive type; system fallbacks set |
-| Browser tests run from scratchpad (playwright-core + system Edge), not added to project | Keep project deps minimal |
+| React + Vite (JS), plain CSS, tokens on `:root` / `[data-theme]` | Requested stack; easy theming |
+| No new runtime dependencies | Performance; native `<dialog>`, IntersectionObserver, Clipboard API, hand-written physics suffice |
+| Badge: 2D Verlet rope (11 particles) + 2-particle card pendulum, fixed 60 Hz step | ~2.5 KB vs ~1 MB for R3F + Rapier; owner approved |
+| Badge loads after `load` + `requestIdleCallback`; static badge shows first | Cut TBT 400 ms → 0 ms; no layout shift |
+| Badge card stays dark in light mode | Reads as a physical ID card; keeps contrast |
+| Contact form uses `mailto` | No backend/accounts; no fake form; owner approved |
+| Google Fonts loaded via preload + onload (non-blocking) | FCP; system fallbacks set |
+| `todo()` placeholders instead of fake data | Never invent personal info |
+| Browser tests/Lighthouse run from scratchpad (playwright-core, system Edge/Chrome) | Keep project deps minimal |
 
 ## 8. Issues and Blockers
 
 | Issue | Next action |
 |---|---|
-| Personal content missing (name, email, school, projects, résumé, LinkedIn, location) | Owner to supply; edit `src/data/*` |
+| Personal content missing (name, photo, email, school, projects, résumé, LinkedIn, location) | Owner to supply; edit `src/data/*` |
 | Site shows TODO placeholders — not ready to send to recruiters | Fill content before sharing/deploying |
-| Changes not committed | Owner to review, then commit |
+| FCP ~3.4 s on Lighthouse mobile (SPA must download JS before render; same as before upgrade) | Optional later: prerender/SSG if needed |
+| Upgrade changes not committed | Owner to review, then commit |
 
 ## 9. Progress Log
 
 - **2026-10-26** — Verified scaffold; created tracker + README.
-- **2026-10-26** — Built full portfolio UI (6 sections, themes, nav, filters, dialog, contact). Build + lint pass; automated browser checks pass (see Checklist).
+- **2026-10-26** — Built v1 portfolio UI (6 sections, themes, nav, filters, dialog, contact). Committed as `92d8314`.
+- **2026-10-26** — Cosmic restyle + lanyard ID badge + interactive touches + glass mailto form. 62/62 browser checks; Lighthouse mobile 85/100/100/100.
 
 ## 10. Next Action
 
-**Owner fills `src/data/profile.js`** (name, email, location, LinkedIn, education) and sends real project details — then replace the draft project slots and retake the screenshot.
+**Owner fills `src/data/profile.js`** (name, photo, email, location, LinkedIn, education) and sends real project details — then replace draft slots, retake the screenshot, and test the badge on a real phone.

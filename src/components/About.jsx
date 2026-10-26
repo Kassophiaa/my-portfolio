@@ -7,7 +7,7 @@ export default function About({ profile, index }) {
       <div className="container about">
         <SectionHeading
           index={index}
-          label="About"
+          label="About me"
           id="about-title"
           title={
             <>
@@ -25,11 +25,11 @@ export default function About({ profile, index }) {
             ))}
           </div>
 
-          <dl className="about__facts" data-reveal style={{ '--delay': 1 }}>
+          <dl className="about__facts glass" data-reveal style={{ '--delay': 1 }}>
             <div className="about__fact">
               <dt className="mono">Interested in</dt>
               <dd>
-                <ul className="about__list">
+                <ul className="tick-list">
                   {profile.interests.map((item) => (
                     <li key={item}>{item}</li>
                   ))}
@@ -39,7 +39,7 @@ export default function About({ profile, index }) {
             <div className="about__fact">
               <dt className="mono">Looking for</dt>
               <dd>
-                <ul className="about__list about__list--check">
+                <ul className="tick-list tick-list--check">
                   {profile.seeking.map((item) => (
                     <li key={item}>{item}</li>
                   ))}

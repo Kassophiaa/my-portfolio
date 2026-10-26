@@ -23,6 +23,7 @@ const sections = [
 ]
 
 const spyIds = ['top', ...sections.map((section) => section.id)]
+const badgeSkills = skillGroups.filter((group) => !group.live).flatMap((group) => group.items)
 
 export default function App() {
   const { theme, toggle } = useTheme()
@@ -36,7 +37,7 @@ export default function App() {
       </a>
       <Header sections={sections} active={active} theme={theme} onToggleTheme={toggle} />
       <main id="main" tabIndex={-1}>
-        <Hero profile={profile} />
+        <Hero profile={profile} skills={badgeSkills} />
         <About profile={profile} index={1} />
         <Projects projects={projects} index={2} />
         <Skills groups={skillGroups} index={3} />

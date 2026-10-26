@@ -9,7 +9,7 @@
       name="description"
       content="Portfolio of an IT student seeking a software development internship or OJT: projects, skills, education, and contact details."
     />
-    <meta name="theme-color" content="#111113" />
+    <meta name="theme-color" content="#0d0818" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="IT Student Portfolio — Internship & OJT" />
     <meta
@@ -20,10 +20,19 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Fonts load without blocking first paint; system fallbacks show until they swap in -->
     <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Instrument+Serif:ital@1&family=JetBrains+Mono:wght@400..600&family=Manrope:wght@400..700&display=swap"
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Playfair+Display:ital,wght@1,500..600&family=JetBrains+Mono:wght@400..600&family=Manrope:wght@400..700&display=swap"
+      onload="this.onload=null;this.rel='stylesheet'"
     />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Playfair+Display:ital,wght@1,500..600&family=JetBrains+Mono:wght@400..600&family=Manrope:wght@400..700&display=swap"
+      />
+    </noscript>
 
     <!-- Apply the saved or system theme before first paint to avoid a flash -->
     <script>

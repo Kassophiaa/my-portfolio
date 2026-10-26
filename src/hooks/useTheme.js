@@ -28,7 +28,7 @@ export function useTheme() {
     root.style.colorScheme = theme
     document
       .querySelector('meta[name="theme-color"]')
-      ?.setAttribute('content', theme === 'dark' ? '#111113' : '#f5f3ee')
+      ?.setAttribute('content', theme === 'dark' ? '#0d0818' : '#f6f2fc')
   }, [theme])
 
   // Follow the OS setting until the visitor makes an explicit choice.

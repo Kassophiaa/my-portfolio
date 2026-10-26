@@ -106,7 +106,7 @@ export default function ProjectDialog({ project, onClose }) {
             {project.highlights.length > 0 && (
               <div className="project-dialog__highlights">
                 <h4 className="mono">Highlights</h4>
-                <ul className="about__list about__list--check">
+                <ul className="tick-list tick-list--check">
                   {project.highlights.map((item) => (
                     <li key={item}>{item}</li>
                   ))}

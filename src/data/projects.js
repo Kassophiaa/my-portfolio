@@ -1,5 +1,5 @@
 import { todo } from '../lib/content.js'
-import portfolioShot from '../assets/projects/portfolio.jpg'
+import portfolioShot from '../assets/projects/portfolio.webp'
 
 // Projects shown in the Projects section. `draft: true` entries are placeholders
 // and render with a visible "draft slot" style — replace or delete them.
