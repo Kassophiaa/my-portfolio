@@ -416,27 +416,25 @@
   text-underline-offset: 3px;
 }
 
-/* ---- Smaller screens: shorter strap hanging from the stage, smaller card ---- */
+/* Strap runs all the way up to the top of the page (the static fallback just overshoots) */
+.lanyard__strap-static {
+  height: 200vh;
+}
+
+/* ---- Phones / tablets: badge sits first in the hero, smaller card ---- */
 @media (max-width: 959px) {
   .lanyard {
     --badge-w: 236px;
     --card-h: 344px;
-    --clip-y: 70px;
-    height: calc(var(--clip-y) + var(--card-h) + 60px);
+    --clip-y: 28px;
+    height: calc(var(--clip-y) + var(--card-h) + 56px);
   }
+}
 
-  /* Hook the strap hangs from */
-  .lanyard::before {
-    content: '';
-    position: absolute;
-    top: -4px;
-    left: 50%;
-    width: 48px;
-    height: 10px;
-    margin-left: -24px;
-    border-radius: 6px;
-    background: linear-gradient(180deg, #e6e0f2, #8e84a8);
-    box-shadow: 0 2px 6px rgb(0 0 0 / 0.4);
+/* Touch: vertical swipes scroll the page, sideways drags swing the badge */
+@media (pointer: coarse) {
+  .badge {
+    touch-action: pan-y;
   }
 }
 
@@ -449,11 +447,18 @@
   .badge__photo {
     width: 104px;
   }
-}
 
-@media (min-width: 960px) {
-  /* Strap runs all the way up to the top of the page */
-  .lanyard__strap-static {
-    height: 200vh;
+  .badge__face {
+    padding-inline: 14px;
+  }
+
+  .badge__status {
+    gap: 7px;
+    font-size: 0.72rem;
+    white-space: nowrap;
+  }
+
+  .badge__flip-btn {
+    padding: 0 10px;
   }
 }

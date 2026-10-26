@@ -20,7 +20,9 @@ export default function Projects({ projects, index }) {
 
   const filters = useMemo(() => {
     const categories = [...new Set(projects.map((p) => p.category))]
-    const tech = [...new Set(projects.flatMap((p) => p.tech))]
+    // Only offer tech filters that narrow to 2+ projects; one-offs just add clutter.
+    const usage = projects.flatMap((p) => p.tech).reduce((map, t) => map.set(t, (map.get(t) ?? 0) + 1), new Map())
+    const tech = [...usage].filter(([, n]) => n >= 2).sort((a, b) => b[1] - a[1]).map(([t]) => t)
     return [
       ALL,
       ...categories.map((value) => ({ kind: 'category', value })),
@@ -96,7 +98,7 @@ export default function Projects({ projects, index }) {
           </div>
         )}
 
-        {realCount < 2 && (
+        {projects.some((project) => project.draft) && realCount < 2 && (
           <p className="projects-note mono">
             More projects are being added — dashed cards are placeholders.
           </p>

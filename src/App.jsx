@@ -6,7 +6,8 @@ import Skills from './components/Skills.jsx'
 import Education from './components/Education.jsx'
 import Contact from './components/Contact.jsx'
 import Footer from './components/Footer.jsx'
-import { profile, education } from './data/profile.js'
+import SampleNotice from './components/SampleNotice.jsx'
+import { profile, education, SAMPLE_CONTENT } from './data/profile.js'
 import { projects } from './data/projects.js'
 import { skillGroups } from './data/skills.js'
 import { useActiveSection } from './hooks/useActiveSection.js'
@@ -45,6 +46,7 @@ export default function App() {
         <Contact profile={profile} index={5} />
       </main>
       <Footer profile={profile} />
+      {SAMPLE_CONTENT && <SampleNotice />}
     </>
   )
 }

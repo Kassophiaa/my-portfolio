@@ -1,51 +1,52 @@
+/* Bento: first group spans the full width, the rest sit side by side */
 .skills {
   display: grid;
-}
-
-.skill-row {
-  display: grid;
   gap: 18px;
-  padding-block: clamp(22px, 3.5vw, 32px);
 }
 
-.skill-row + .skill-row {
-  border-top: 1px solid var(--border);
-}
-
-.skill-row__head {
+.skill-group {
   display: grid;
-  gap: 6px;
   align-content: start;
+  gap: 18px;
+  padding: clamp(20px, 3vw, 28px);
 }
 
-.skill-row__label {
+.skill-group__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 4px 16px;
+}
+
+.skill-group__label {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  font-size: clamp(1.25rem, 2.6vw, 1.6rem);
+  font-size: clamp(1.15rem, 2.2vw, 1.35rem);
   font-weight: 600;
 }
 
-.skill-row__note {
+.skill-group__note {
   color: var(--text-faint);
-  font-size: 0.92rem;
+  font-size: 0.88rem;
 }
 
-.skill-row__items {
+.skill-group__items {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(112px, 1fr));
-  gap: 12px;
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  gap: 10px;
 }
 
 /* Glass icon tile */
 .skill {
   display: grid;
   justify-items: center;
-  gap: 10px;
-  padding: 18px 10px 14px;
+  gap: 8px;
+  padding: 14px 6px 12px;
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  background: var(--surface);
+  background: var(--surface-2);
   text-align: center;
   transition:
     border-color 0.3s var(--ease),
@@ -56,9 +57,9 @@
 .skill__icon {
   display: grid;
   place-items: center;
-  width: 48px;
-  height: 48px;
-  border-radius: 14px;
+  width: 44px;
+  height: 44px;
+  border-radius: 13px;
   background: var(--violet-wash);
   color: var(--lavender);
   transition:
@@ -75,7 +76,7 @@
 
 .skill__name {
   font-family: var(--font-mono);
-  font-size: 0.8rem;
+  font-size: 0.76rem;
   font-weight: 500;
   line-height: 1.3;
   color: var(--text);
@@ -93,9 +94,17 @@
   box-shadow: 0 0 22px -4px rgb(244 114 182 / 0.55);
 }
 
+.skill-group--live .skill__icon {
+  background: var(--pink-wash);
+  color: var(--pink-text);
+}
+
 @media (min-width: 820px) {
-  .skill-row {
-    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.7fr);
-    gap: 40px;
+  .skills {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .skill-group:first-child {
+    grid-column: 1 / -1;
   }
 }
