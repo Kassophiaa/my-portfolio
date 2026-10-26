@@ -125,7 +125,8 @@ export default function Contact({ profile, index }) {
             </>
           }
         >
-          I’m looking for internship and OJT opportunities. Send a message or email me directly.
+          I’m looking for a software development internship or OJT where I can contribute to real
+          projects and learn from experienced developers. Send a message or email me directly.
         </SectionHeading>
 
         <div className="contact__grid">
@@ -184,8 +185,7 @@ export default function Contact({ profile, index }) {
               <p className="contact__location">
                 <Icon name="pin" size={16} />
                 <span>
-                  Based in <Field value={profile.location} /> — open to on-site or hybrid work
-                  nearby.
+                  Based in: <Field value={profile.location} />
                 </span>
               </p>
             </div>

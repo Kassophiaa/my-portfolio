@@ -332,6 +332,10 @@
   --hue: var(--pink-text);
 }
 
+.cover--generated[data-category='Prototype'] {
+  --hue: var(--lavender);
+}
+
 .cover--draft {
   background: repeating-linear-gradient(
     -45deg,

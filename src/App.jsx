@@ -9,7 +9,7 @@ import Footer from './components/Footer.jsx'
 import SampleNotice from './components/SampleNotice.jsx'
 import { profile, education, SAMPLE_CONTENT } from './data/profile.js'
 import { projects } from './data/projects.js'
-import { skillGroups } from './data/skills.js'
+import { badgeSkills, skillGroups, skillLevels } from './data/skills.js'
 import { useActiveSection } from './hooks/useActiveSection.js'
 import { useReveal } from './hooks/useReveal.js'
 import { useTheme } from './hooks/useTheme.js'
@@ -24,7 +24,6 @@ const sections = [
 ]
 
 const spyIds = ['top', ...sections.map((section) => section.id)]
-const badgeSkills = skillGroups.filter((group) => !group.live).flatMap((group) => group.items)
 
 export default function App() {
   const { theme, toggle } = useTheme()
@@ -41,7 +40,7 @@ export default function App() {
         <Hero profile={profile} skills={badgeSkills} />
         <About profile={profile} index={1} />
         <Projects projects={projects} index={2} />
-        <Skills groups={skillGroups} index={3} />
+        <Skills groups={skillGroups} levels={skillLevels} index={3} />
         <Education education={education} index={4} />
         <Contact profile={profile} index={5} />
       </main>

@@ -1,16 +1,77 @@
 import { todo } from '../lib/content.js'
 import portfolioShot from '../assets/projects/portfolio.webp'
 
-// Projects shown in the Projects section. Entries marked `// SAMPLE` are made-up
-// examples — replace them with your real projects (or delete them).
+// Projects shown in the Projects section. `category` drives the filters and tells
+// visitors what kind of work it is: Academic, Personal, or Prototype.
 // Links left as todo() show as "soon" instead of pointing at a fake URL.
+// Missing `year` is hidden; missing `role` shows a TODO placeholder in the dialog.
 export const projects = [
+  {
+    id: 'daris',
+    title: 'DARIS',
+    category: 'Academic',
+    featured: true,
+    summary:
+      'Academic capstone: a web system for managing disciplinary cases, records, notifications, and workflows.',
+    description: [
+      'My academic capstone project, built with Laravel and MySQL. It brings disciplinary cases, the records that go with them, notifications, and the steps of the process together in one system.',
+    ],
+    highlights: [
+      'Management of disciplinary cases',
+      'Record keeping backed by a MySQL database',
+      'Notifications',
+      'Workflows for handling cases',
+    ],
+    tech: ['Laravel', 'PHP', 'MySQL', 'JavaScript', 'HTML', 'CSS'],
+    role: todo('Your role on this project'),
+    image: null,
+    links: { live: todo('Demo URL'), repo: todo('Repository URL') },
+  },
+  {
+    id: 'studysync',
+    title: 'StudySync',
+    category: 'Personal',
+    summary: 'A study planner for keeping track of tasks, assignments, deadlines, and focus sessions.',
+    description: [
+      'A personal project built with React and TypeScript to keep schoolwork organized in one place.',
+    ],
+    highlights: ['Tasks and assignments', 'Deadline tracking', 'Focus sessions'],
+    tech: ['React', 'TypeScript', 'CSS'],
+    role: todo('Your role on this project'),
+    image: null,
+    links: { live: todo('Demo URL'), repo: todo('Repository URL') },
+  },
+  {
+    id: 'bloom-journal',
+    title: 'Bloom Journal',
+    category: 'Personal',
+    summary: 'A personal journaling app with an aesthetic interface.',
+    description: ['A personal project built with React, focused on a calm, aesthetic journaling experience.'],
+    highlights: ['Personal journal entries', 'Aesthetic, custom-styled interface'],
+    tech: ['React', 'JavaScript', 'CSS'],
+    role: todo('Your role on this project'),
+    image: null,
+    links: { live: todo('Demo URL'), repo: todo('Repository URL') },
+  },
+  {
+    id: 'stocklite',
+    title: 'StockLite',
+    category: 'Prototype',
+    summary: 'An inventory management dashboard concept for tracking products and stock movements.',
+    description: [
+      'A prototype exploring how a lightweight inventory dashboard could work. It is a concept, not a finished product.',
+    ],
+    highlights: ['Product tracking', 'Stock movement tracking'],
+    tech: ['PHP', 'JavaScript', 'Preact', 'CSS'],
+    role: todo('Your role on this project'),
+    image: null,
+    links: { live: todo('Demo URL'), repo: todo('Repository URL') },
+  },
   {
     id: 'portfolio',
     title: 'Personal Portfolio',
     category: 'Personal',
     year: 2026,
-    featured: true,
     summary:
       'This site: a responsive, accessible portfolio with a draggable lanyard ID badge, built with React and Vite.',
     description: [
@@ -31,62 +92,5 @@ export const projects = [
       live: todo('Live URL after deployment'),
       repo: 'https://github.com/fernandezkassandra226-creator/my-portfolio',
     },
-  },
-  {
-    // SAMPLE
-    id: 'library-system',
-    title: 'Campus Library System',
-    category: 'Academic',
-    year: 2025,
-    summary:
-      'A web app for borrowing and returning books, with overdue reminders and a librarian dashboard.',
-    description: [
-      'Built as a team project for our Database Management Systems course. Students search the catalog and reserve books; librarians manage inventory and see what is overdue.',
-    ],
-    highlights: [
-      'Designed the database schema (8 related tables)',
-      'Built the search and reservation pages',
-      'Wrote SQL reports for overdue and popular books',
-    ],
-    tech: ['PHP', 'MySQL', 'JavaScript', 'Bootstrap'],
-    role: 'Database and back-end developer (team of 4)',
-    image: null,
-    links: { live: todo('Demo URL'), repo: todo('Repository URL') },
-  },
-  {
-    // SAMPLE
-    id: 'budget-tracker',
-    title: 'Pocket Budget',
-    category: 'Personal',
-    year: 2025,
-    summary: 'A mobile-friendly expense tracker that groups spending by category and month.',
-    description: [
-      'I built this to keep track of my allowance. Expenses are saved in the browser, so it works offline and needs no account.',
-    ],
-    highlights: [
-      'Monthly totals and category breakdown',
-      'Works offline using localStorage',
-      'Installable on a phone home screen',
-    ],
-    tech: ['React', 'JavaScript', 'CSS'],
-    role: 'Solo project',
-    image: null,
-    links: { live: todo('Demo URL'), repo: todo('Repository URL') },
-  },
-  {
-    // SAMPLE
-    id: 'org-website',
-    title: 'Student Org Website',
-    category: 'Academic',
-    year: 2024,
-    summary: 'An events and announcements site for our IT student organization.',
-    description: [
-      'A static site where officers post upcoming events and members can find past announcements in one place.',
-    ],
-    highlights: ['Responsive layout for phones', 'Simple event list officers can update'],
-    tech: ['HTML', 'CSS', 'JavaScript'],
-    role: 'Front-end developer',
-    image: null,
-    links: { live: todo('Demo URL'), repo: todo('Repository URL') },
   },
 ]

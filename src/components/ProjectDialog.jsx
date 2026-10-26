@@ -60,9 +60,7 @@ export default function ProjectDialog({ project, onClose }) {
           <div className="project-dialog__content">
             <p className="project-card__meta mono">
               <span>{project.category}</span>
-              <span>
-                <Field value={project.year} />
-              </span>
+              {!isMissing(project.year) && <span>{project.year}</span>}
               {project.draft && <span className="project-card__draft">Draft slot</span>}
             </p>
             <h3 id="project-dialog-title" className="project-dialog__title">
