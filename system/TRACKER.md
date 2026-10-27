@@ -44,6 +44,10 @@
 | Personal content | Name, role, CLSU 4th-year BSIT, location (Philippines), about, 4 real projects (DARIS, StudySync, Bloom Journal, StockLite) + this portfolio, skills, coursework, GitHub. Remaining gaps are `todo()` — see Content checklist | Mostly done |
 | Skills levels | Each skill tagged `used` / `familiar` / `learning` in `skills.js`, shown as labelled rows per group; levels are Claude's conservative defaults — **owner to confirm** | Built |
 | Skills layout | One group at a time: tab column beside a single panel (≥ 820 px; rail is sticky), swipeable tab row above it on phones. Arrow/Home/End keys move between tabs (owner asked 2026-10-28: "one column, interactive, not just scrolling") | Built + verified |
+| Hero | Name ≤ 2 lines at all widths; tagline "IT student who builds ___" rotates through `profile.builds` (static under reduced motion; screen readers get full list); heavier intro; GitHub icon button w/ hover label (missing links hidden); hover on facts; desktop "Scroll" cue → #about | Built + verified |
+| About | Count-up stats computed from data (projects on site, skills used, skills learning); "Read more" folds paragraphs 2–3 on < 900 px; interests as hover chips | Built + verified |
+| Section separation | Alternating tinted bands (About, Skills, Contact; `--band` token per theme) + glowing pink/violet divider line on top of every section (owner asked 2026-10-28) | Built + verified |
+| Motion over interaction (2026-10-28) | Owner: "too much interactive, want more animation". Removed: About "Read more", GitHub hover label, hover lifts on hero facts / about stats / interest chips. Added (auto, scroll-triggered): `[data-stagger]` one-by-one reveals (`useReveal` sets `--i`), section titles wipe up from a mask, eyebrow rule grows, section dividers draw from centre + flowing gradient, heading accent words flow pink↔violet, hero name light sweep, drifting hero lights, skill tiles pop in per tab, starfield breathes. All off under reduced motion | Built + verified |
 | Project categories | Academic (DARIS), Personal (StudySync, Bloom Journal, Portfolio), Prototype (StockLite) | Built |
 
 ## 4. Project Structure
@@ -60,7 +64,7 @@
 | `src/components/Hero.jsx` | Loads badge after `load` + idle; cursor glow |
 | `src/components/Skills.jsx` | Tabbed groups (ARIA tabs), glass tiles + line-glyph map (unknown skills show initials) |
 | `src/components/Contact.jsx` | `ContactForm` (mailto), email card, links |
-| `src/hooks/` | `useTheme`, `useActiveSection`, `useReveal`, `useCopy`, `useReducedMotion`, `useScrollFill` (timeline) |
+| `src/hooks/` | `useTheme`, `useActiveSection`, `useReveal` (`[data-reveal]` → `is-visible`, sections → `is-inview`, `[data-stagger]` children get `--i`), `useCopy`, `useReducedMotion`, `useScrollFill` (timeline) |
 | `src/assets/projects/portfolio.webp` | 960px screenshot of the new hero (still shows TODO placeholders) |
 | `index.html` | Meta/OG, non-blocking Google Fonts, pre-paint theme script |
 | `public/robots.txt`, `public/favicon.svg` | SEO + icon |
@@ -129,6 +133,12 @@
 - [x] Bento replaced with tab list + one panel; content animates in on switch
 - [x] Verified: lint + build; Playwright/Edge vs preview at 320/390/768/1440: no overflow, 6 tabs, click + arrow keys switch, focus follows, wraps, no console errors
 
+**Home + About polish (2026-10-28)**
+- [x] Hero: smaller name, rotating tagline, larger/heavier intro, GitHub button, phone button grid, scroll cue
+- [x] About: stats count-up, mobile "Read more", interest chips, larger body text
+- [x] Verified: lint + build; Playwright/Edge at 320/390/768/1024/1440: no overflow, name ≤ 2 lines, word rotates, stats reach 5/21/3, Read more toggles (< 900) / hidden (≥ 900), no console errors; reduced motion: static word + final numbers; dark theme screenshot checked
+- [ ] Owner: review rotating phrases in `profile.builds`
+
 **Deployment**
 - [ ] Choose host (Vercel / Netlify / GitHub Pages) and deploy
 - [ ] Set project `links.live`; record URL here and in README
@@ -166,6 +176,9 @@
 - **2026-10-26** — Mobile/tablet hero: ID badge first, strap from page top, swipe-friendly touch handling. 71/71 checks.
 - **2026-10-27** — Replaced all sample content with owner's real details; skills now show used/familiar/learning levels; screenshot retaken.
 - **2026-10-28** — Skills section switched to tabs (one group visible at a time). Not committed.
+- **2026-10-28** — Home + About layout, type, and interaction pass (see checklist). Not committed.
+- **2026-10-28** — Clear section separation: alternating bands + glowing dividers; checked light/dark 1440 + light 390, no overflow. Not committed.
+- **2026-10-28** — Fewer hover/click extras, more automatic animation (see Requirements). Lint + build; Playwright at 320–1440 with gradual scrolling: staggered items + titles end visible, dividers drawn, skill tiles visible, no overflow/console errors; reduced motion static. Not committed.
 
 ## 10. Next Action
 

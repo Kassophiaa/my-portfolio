@@ -12,6 +12,9 @@ export const profile = {
   intro:
     'I’m a fourth-year IT student at Central Luzon State University looking for a software development internship or OJT where I can gain real-world experience, contribute to projects, and learn from experienced developers.',
 
+  // Hero tagline cycles through these: "IT student who builds ___."
+  builds: ['web applications', 'database-driven systems', 'responsive interfaces', 'practical tools'],
+
   // Short facts shown under the hero buttons
   facts: [
     { label: 'Studying', value: 'BS Information Technology' },
