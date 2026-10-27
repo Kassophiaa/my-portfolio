@@ -25,6 +25,14 @@ const sections = [
 
 const spyIds = ['top', ...sections.map((section) => section.id)]
 
+// About-section numbers, counted from the data files so they stay accurate.
+const allSkills = skillGroups.flatMap((group) => group.items)
+const aboutStats = [
+  { value: projects.filter((project) => !project.draft).length, label: 'Projects on this site' },
+  { value: allSkills.filter((skill) => skill.level === 'used').length, label: 'Skills used in projects' },
+  { value: allSkills.filter((skill) => skill.level === 'learning').length, label: 'Skills I’m learning now' },
+]
+
 export default function App() {
   const { theme, toggle } = useTheme()
   const active = useActiveSection(spyIds)
@@ -38,7 +46,7 @@ export default function App() {
       <Header sections={sections} active={active} theme={theme} onToggleTheme={toggle} />
       <main id="main" tabIndex={-1}>
         <Hero profile={profile} skills={badgeSkills} />
-        <About profile={profile} index={1} />
+        <About profile={profile} stats={aboutStats} index={1} />
         <Projects projects={projects} index={2} />
         <Skills groups={skillGroups} levels={skillLevels} index={3} />
         <Education education={education} index={4} />

@@ -62,17 +62,35 @@ function useAfterLoadIdle() {
   return ready
 }
 
+// Cycles through `words` every few seconds; the first word only under reduced motion.
+function useRotatingWord(words, enabled, delay = 2600) {
+  const [index, setIndex] = useState(0)
+  useEffect(() => {
+    if (!enabled || words.length < 2) return
+    const id = window.setInterval(() => setIndex((i) => (i + 1) % words.length), delay)
+    return () => window.clearInterval(id)
+  }, [words, enabled, delay])
+  return enabled ? words[index % words.length] : words[0]
+}
+
 export default function Hero({ profile, skills }) {
   const hasResume = !isMissing(profile.resume)
+  const links = profile.links.filter((link) => !isMissing(link.href))
+  const builds = profile.builds ?? []
   const reduced = useReducedMotion()
   const physicsReady = useAfterLoadIdle()
   const ref = useRef(null)
   useCursorGlow(ref, !reduced)
+  const word = useRotatingWord(builds, !reduced)
 
   const badgeProps = { profile, skills }
 
   return (
     <section id="top" className="hero" aria-labelledby="hero-title" ref={ref}>
+      <div className="hero__orbs" aria-hidden="true">
+        <span />
+        <span />
+      </div>
       <div className="hero__inner container">
         <div className="hero__copy">
           <p className="hero__status" data-reveal>
@@ -87,16 +105,29 @@ export default function Hero({ profile, skills }) {
             </span>
           </h1>
 
-          <p className="hero__tagline" data-reveal style={{ '--delay': 2 }}>
-            {profile.role.split('·')[0].trim()} <em className="accent-serif">ready to learn</em>{' '}
-            by building real software.
-          </p>
+          {builds.length > 0 ? (
+            <p className="hero__tagline" data-reveal style={{ '--delay': 2 }}>
+              {profile.role.split('·')[0].trim()} who builds{' '}
+              {/* Screen readers get the whole list once instead of a changing word */}
+              <span className="visually-hidden">{builds.join(', ')}.</span>
+              <span className="hero__rotator" aria-hidden="true">
+                <em key={word} className="accent-serif hero__word">
+                  {word}
+                </em>
+              </span>
+            </p>
+          ) : (
+            <p className="hero__tagline" data-reveal style={{ '--delay': 2 }}>
+              {profile.role.split('·')[0].trim()} <em className="accent-serif">ready to learn</em>{' '}
+              by building real software.
+            </p>
+          )}
 
           <p className="hero__intro" data-reveal style={{ '--delay': 3 }}>
             {profile.intro}
           </p>
 
-          <div className="hero__actions" data-reveal style={{ '--delay': 4 }}>
+          <div className="hero__actions" data-reveal data-stagger style={{ '--delay': 4 }}>
             <a className="btn btn--primary" href="#projects">
               View projects <Icon name="arrow" className="icon--shift" />
             </a>
@@ -108,9 +139,27 @@ export default function Hero({ profile, skills }) {
                 <Icon name="download" /> Résumé
               </a>
             )}
+            {links.length > 0 && (
+              <ul className="hero__links" aria-label="Profiles">
+                {links.map((link) => (
+                  <li key={link.id}>
+                    <a
+                      className="icon-button hero__link"
+                      href={link.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      title={link.label}
+                    >
+                      <Icon name={link.id} size={20} />
+                      <span className="visually-hidden">{link.label} (opens in a new tab)</span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
 
-          <dl className="hero__facts" data-reveal style={{ '--delay': 5 }}>
+          <dl className="hero__facts" data-reveal data-stagger style={{ '--delay': 5 }}>
             {profile.facts?.map((fact) => (
               <div key={fact.label} className="hero__fact">
                 <dt>{fact.label}</dt>
@@ -147,6 +196,12 @@ export default function Hero({ profile, skills }) {
           </p>
         </div>
       </div>
+
+      <a className="hero__scroll" href="#about">
+        <span className="hero__scroll-mouse" aria-hidden="true" />
+        <span className="mono">Scroll</span>
+        <span className="visually-hidden"> to About</span>
+      </a>
     </section>
   )
 }

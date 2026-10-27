@@ -131,8 +131,8 @@ function SkillList({ items, compact }) {
   if (compact) {
     return (
       <ul className="project-card__tech">
-        {items.map((item) => (
-          <li key={item.name} className="chip">
+        {items.map((item, i) => (
+          <li key={item.name} className="chip" style={{ '--i': i }}>
             {item.name}
           </li>
         ))}
@@ -141,8 +141,8 @@ function SkillList({ items, compact }) {
   }
   return (
     <ul className="skill-group__items">
-      {items.map((item) => (
-        <li key={item.name} className="skill">
+      {items.map((item, i) => (
+        <li key={item.name} className="skill" style={{ '--i': i }}>
           <span className="skill__icon">
             <SkillGlyph name={item.name} />
           </span>

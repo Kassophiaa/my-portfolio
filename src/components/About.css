@@ -1,22 +1,69 @@
 .about__grid {
   display: grid;
-  gap: clamp(36px, 5vw, 64px);
+  gap: clamp(32px, 5vw, 64px);
+}
+
+.about__main {
+  display: grid;
+  align-content: start;
+  gap: 18px;
+  min-width: 0;
 }
 
 .about__story {
   display: grid;
   gap: 18px;
   max-width: 62ch;
-  font-size: 1.05rem;
+  font-size: clamp(1rem, 0.94rem + 0.3vw, 1.1rem);
+  font-weight: 500;
+  line-height: 1.75;
 }
 
 .about__lead {
   font-family: var(--font-display);
-  font-size: clamp(1.25rem, 2.6vw, 1.55rem);
+  font-size: clamp(1.2rem, 1rem + 1vw, 1.45rem);
   font-weight: 500;
-  line-height: 1.4;
+  line-height: 1.45;
   letter-spacing: -0.015em;
   color: var(--text);
+}
+
+/* Count-up numbers */
+.about__stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin: 10px 0 0;
+}
+
+.about__stat {
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: flex-end;
+  gap: 6px;
+  min-width: 0;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.about__stat dd {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 1.5rem + 2vw, 2.75rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  font-variant-numeric: tabular-nums;
+  color: var(--pink-text);
+}
+
+.about__stat dt {
+  font-size: 0.8rem;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--text-muted);
 }
 
 .about__facts {
@@ -27,7 +74,7 @@
 
 .about__fact {
   display: grid;
-  gap: 12px;
+  gap: 14px;
   padding-block: 20px;
 }
 
@@ -45,6 +92,31 @@
 
 .about__fact dd {
   margin: 0;
+}
+
+.about__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.about__chip {
+  padding: 7px 13px;
+  white-space: normal;
+}
+
+@media (max-width: 480px) {
+  .about__stats {
+    gap: 8px;
+  }
+
+  .about__stat {
+    padding: 14px 12px;
+  }
+
+  .about__stat dt {
+    font-size: 0.74rem;
+  }
 }
 
 @media (min-width: 900px) {

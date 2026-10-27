@@ -68,15 +68,16 @@
 
 .hero__title {
   display: grid;
-  gap: 4px;
-  font-size: clamp(2.6rem, 9vw, 5.6rem);
+  gap: 6px;
+  /* Sized so the full name sits on two lines on desktop, not three */
+  font-size: clamp(2.5rem, 6.2vw, 4.25rem);
   font-weight: 800;
-  line-height: 0.98;
-  letter-spacing: -0.045em;
+  line-height: 1;
+  letter-spacing: -0.04em;
 }
 
 .hero__hello {
-  font-size: 0.42em;
+  font-size: 0.48em;
   font-weight: 500;
   letter-spacing: -0.02em;
   color: var(--text-muted);
@@ -99,23 +100,121 @@
   line-height: 1.25;
   letter-spacing: -0.02em;
   color: var(--text);
-  max-width: 24ch;
 }
 
 .hero__tagline .accent-serif {
   font-size: 1.08em;
 }
 
+/* The rotating word gets its own line so its changing width never reflows the copy */
+.hero__rotator {
+  display: block;
+  min-height: 1.3em;
+}
+
+.hero__tagline .hero__word {
+  display: inline-block;
+  animation:
+    word-in 0.55s var(--ease) both,
+    accent-flow 5s linear infinite;
+}
+
+@keyframes word-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.45em);
+    filter: blur(4px);
+  }
+}
+
 .hero__intro {
-  max-width: 54ch;
-  font-size: 1.05rem;
+  max-width: 52ch;
+  font-size: clamp(1rem, 0.94rem + 0.3vw, 1.125rem);
+  font-weight: 500;
+  line-height: 1.7;
 }
 
 .hero__actions {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   gap: 12px;
   padding-top: 6px;
+}
+
+.hero__links {
+  display: flex;
+  gap: 10px;
+}
+
+.hero__link {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  border-radius: 999px;
+}
+
+/* Name: a band of light sweeps across it once after it appears */
+.hero__name {
+  background: linear-gradient(100deg, var(--text) 42%, var(--pink) 50%, var(--violet) 54%, var(--text) 62%) 100% 0 /
+    260% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: name-shine 2.2s var(--ease) 0.9s both;
+}
+
+@keyframes name-shine {
+  from {
+    background-position: 100% 0;
+  }
+  to {
+    background-position: 0 0;
+  }
+}
+
+/* Two soft lights drifting slowly behind the hero */
+.hero__orbs {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.hero__orbs span {
+  position: absolute;
+  width: clamp(260px, 40vw, 520px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  filter: blur(40px);
+  opacity: 0.5;
+}
+
+.hero__orbs span:first-child {
+  top: 10%;
+  left: -8%;
+  background: radial-gradient(closest-side, rgb(244 114 182 / 0.35), transparent);
+  animation: drift-a 18s ease-in-out infinite alternate;
+}
+
+.hero__orbs span:last-child {
+  bottom: -10%;
+  right: 5%;
+  background: radial-gradient(closest-side, rgb(167 139 250 / 0.4), transparent);
+  animation: drift-b 22s ease-in-out infinite alternate;
+}
+
+@keyframes drift-a {
+  to {
+    transform: translate(18vw, 12vh) scale(1.15);
+  }
+}
+
+@keyframes drift-b {
+  to {
+    transform: translate(-20vw, -14vh) scale(0.9);
+  }
 }
 
 /* Quick facts strip */
@@ -265,8 +364,90 @@
   }
 }
 
-@media (max-width: 420px) {
+/* "Scroll" cue: desktop screens tall enough to have room under the copy */
+.hero__scroll {
+  display: none;
+}
+
+@media (min-width: 960px) and (min-height: 760px) {
+  .hero__scroll {
+    position: absolute;
+    left: 50%;
+    bottom: 24px;
+    display: grid;
+    justify-items: center;
+    gap: 8px;
+    padding: 6px 10px;
+    color: var(--text-faint);
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transform: translateX(-50%);
+    transition: color 0.2s var(--ease);
+  }
+
+  .hero__scroll:hover {
+    color: var(--pink-text);
+  }
+}
+
+.hero__scroll-mouse {
+  position: relative;
+  width: 22px;
+  height: 34px;
+  border: 1.5px solid currentColor;
+  border-radius: 12px;
+}
+
+.hero__scroll-mouse::after {
+  content: '';
+  position: absolute;
+  top: 6px;
+  left: 50%;
+  width: 3px;
+  height: 7px;
+  margin-left: -1.5px;
+  border-radius: 2px;
+  background: var(--pink);
+  animation: scroll-wheel 1.8s var(--ease) infinite;
+}
+
+@keyframes scroll-wheel {
+  60%,
+  100% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+/* Phones: buttons share the row, profile icons sit beside them */
+@media (max-width: 520px) {
+  .hero__copy {
+    gap: 18px;
+  }
+
+  .hero__actions {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
   .hero__actions .btn {
-    flex: 1 1 100%;
+    padding-inline: 14px;
+  }
+
+  .hero__actions .btn--primary {
+    grid-column: 1 / -1;
+  }
+
+  .hero__hint {
+    margin-top: -24px;
+  }
+}
+
+/* Smallest phones: keep the name to two lines */
+@media (max-width: 359px) {
+  .hero__title {
+    font-size: 2.1rem;
   }
 }
