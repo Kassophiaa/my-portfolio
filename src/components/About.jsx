@@ -1,57 +1,7 @@
-import { useEffect, useRef, useState } from 'react'
 import SectionHeading from './SectionHeading.jsx'
-import { useReducedMotion } from '../hooks/useReducedMotion.js'
 import './About.css'
 
-// Counts from 0 up to `target` the first time the element scrolls into view.
-function useCountUp(target, reduced) {
-  const ref = useRef(null)
-  const [value, setValue] = useState(reduced ? target : 0)
-
-  useEffect(() => {
-    const el = ref.current
-    if (reduced || !el) return
-    let frame = 0
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry.isIntersecting) return
-        observer.disconnect()
-        const start = performance.now()
-        const tick = (now) => {
-          const t = Math.min((now - start) / 1100, 1)
-          setValue(Math.round(target * (1 - (1 - t) ** 3)))
-          if (t < 1) frame = requestAnimationFrame(tick)
-        }
-        frame = requestAnimationFrame(tick)
-      },
-      { threshold: 0.6 },
-    )
-    observer.observe(el)
-    return () => {
-      observer.disconnect()
-      cancelAnimationFrame(frame)
-    }
-  }, [target, reduced])
-
-  return [ref, reduced ? target : value]
-}
-
-function Stat({ value, label, reduced }) {
-  const [ref, shown] = useCountUp(value, reduced)
-  return (
-    <div className="about__stat" ref={ref}>
-      <dt>{label}</dt>
-      <dd>
-        {/* The final number is what assistive tech reads; the count-up is visual only */}
-        <span aria-hidden="true">{shown}</span>
-        <span className="visually-hidden">{value}</span>
-      </dd>
-    </div>
-  )
-}
-
-export default function About({ profile, stats = [], index }) {
-  const reduced = useReducedMotion()
+export default function About({ profile, index }) {
   const [lead, ...rest] = profile.about
 
   return (
@@ -76,14 +26,6 @@ export default function About({ profile, stats = [], index }) {
                 <p key={i}>{paragraph}</p>
               ))}
             </div>
-
-            {stats.length > 0 && (
-              <dl className="about__stats" data-reveal data-stagger style={{ '--delay': 1 }}>
-                {stats.map((stat) => (
-                  <Stat key={stat.label} {...stat} reduced={reduced} />
-                ))}
-              </dl>
-            )}
           </div>
 
           <dl className="about__facts glass" data-reveal style={{ '--delay': 2 }}>

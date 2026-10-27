@@ -1,8 +1,122 @@
+/* School card above the year-by-year timeline */
+.edu-school {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 14px 18px;
+  margin-bottom: clamp(28px, 4vw, 40px);
+  padding: clamp(18px, 3vw, 26px);
+}
+
+.edu-school__icon {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  background: var(--pink-wash);
+  color: var(--pink-text);
+}
+
+.edu-school__degree {
+  font-size: clamp(1.1rem, 2.4vw, 1.4rem);
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.edu-school__name {
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.edu-school__status {
+  grid-column: 1 / -1;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  justify-self: start;
+  padding: 6px 12px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-size: 0.78rem;
+  color: var(--text);
+}
+
+@media (min-width: 640px) {
+  .edu-school {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+  }
+
+  .edu-school__status {
+    grid-column: auto;
+  }
+}
+
 .timeline {
   --rail-x: 6px;
   position: relative;
   display: grid;
   gap: 22px;
+}
+
+/* Years glide in from the left, along the rail (leftward offset can't cause page overflow) */
+.reveal-ready .timeline__item[data-reveal] {
+  transform: translateX(-36px);
+  transition-duration: 0.7s;
+}
+
+.reveal-ready .timeline__item[data-reveal].is-visible {
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-ready .timeline__item[data-reveal] {
+    transform: none;
+  }
+
+  .timeline__item.is-current.is-visible::before {
+    display: none;
+  }
+}
+
+.timeline__now {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--pink-gradient);
+  color: var(--on-accent);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  vertical-align: 1px;
+}
+
+/* The current year's node keeps a soft pulse */
+.timeline__item.is-current.is-visible::before {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  left: var(--rail-x);
+  top: 4px;
+  width: 12px;
+  height: 12px;
+  margin-left: -6px;
+  border-radius: 50%;
+  background: var(--pink);
+  animation: node-ping 2s var(--ease) infinite;
+}
+
+@keyframes node-ping {
+  to {
+    transform: scale(3);
+    opacity: 0;
+  }
+}
+
+.timeline__item.is-current .timeline__body {
+  border-color: color-mix(in srgb, var(--pink) 45%, var(--border));
 }
 
 /* Rail + glowing fill driven by --fill (0–1) */
@@ -73,12 +187,17 @@
 }
 
 .timeline__title {
-  font-size: clamp(1.35rem, 3vw, 1.9rem);
+  font-size: clamp(1.2rem, 2.6vw, 1.5rem);
   font-weight: 700;
 }
 
-.timeline__title--small {
-  font-size: 1.2rem;
+.timeline__details {
+  color: var(--text-muted);
+}
+
+.timeline__body .chip {
+  max-width: 100%;
+  white-space: normal;
 }
 
 .timeline__title .text-link {
@@ -92,30 +211,9 @@
   color: var(--text);
 }
 
-.timeline__group {
-  display: grid;
-  gap: 10px;
-  padding-top: 8px;
-}
-
-/* Course names can be long: let them wrap on small phones */
-.timeline__group .chip {
-  max-width: 100%;
-  white-space: normal;
-}
-
 .timeline__item,
 .timeline__body {
   min-width: 0;
-}
-
-.timeline__group h4 {
-  font-family: var(--font-body);
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--pink-text);
 }
 
 @media (min-width: 760px) {

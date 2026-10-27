@@ -54,6 +54,7 @@ export default function Header({ sections, active, theme, onToggleTheme }) {
   }, [open, close])
 
   const nextTheme = theme === 'dark' ? 'light' : 'dark'
+  const current = sections.find((section) => section.id === active)
 
   return (
     <header className={`site-header${scrolled ? ' is-scrolled' : ''}${open ? ' is-open' : ''}`}>
@@ -63,6 +64,13 @@ export default function Header({ sections, active, theme, onToggleTheme }) {
             <span>~</span>/
           </span>
           <span className="brand__text">portfolio</span>
+          {/* Phones: the collapsed nav can't show where you are, so the path does */}
+          {current && (
+            <span key={current.id} className="brand__section" aria-hidden="true">
+              <span className="brand__sep">/</span>
+              {current.id}
+            </span>
+          )}
         </a>
 
         <nav className="nav" aria-label="Primary">
@@ -115,6 +123,8 @@ export default function Header({ sections, active, theme, onToggleTheme }) {
           </button>
         </div>
       </div>
+
+      <span className="site-header__progress" aria-hidden="true" />
 
       <div
         id="mobile-menu"

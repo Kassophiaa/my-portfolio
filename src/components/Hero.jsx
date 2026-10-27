@@ -101,7 +101,7 @@ export default function Hero({ profile, skills }) {
           <h1 id="hero-title" className="hero__title" data-reveal style={{ '--delay': 1 }}>
             <span className="hero__hello">Hi, I’m</span>{' '}
             <span className="hero__name">
-              <Field value={profile.name} />
+              <Field value={profile.heroName ?? profile.name} />
             </span>
           </h1>
 
@@ -110,10 +110,17 @@ export default function Hero({ profile, skills }) {
               {profile.role.split('·')[0].trim()} who builds{' '}
               {/* Screen readers get the whole list once instead of a changing word */}
               <span className="visually-hidden">{builds.join(', ')}.</span>
+              {/* Every phrase sits in the same grid cell, so the line is always as tall as
+                  the longest one and the copy below never jumps */}
               <span className="hero__rotator" aria-hidden="true">
-                <em key={word} className="accent-serif hero__word">
-                  {word}
-                </em>
+                {builds.map((item) => (
+                  <em
+                    key={item}
+                    className={`accent-serif hero__word${item === word ? ' is-active' : ''}`}
+                  >
+                    {item}
+                  </em>
+                ))}
               </span>
             </p>
           ) : (
@@ -158,22 +165,6 @@ export default function Hero({ profile, skills }) {
               </ul>
             )}
           </div>
-
-          <dl className="hero__facts" data-reveal data-stagger style={{ '--delay': 5 }}>
-            {profile.facts?.map((fact) => (
-              <div key={fact.label} className="hero__fact">
-                <dt>{fact.label}</dt>
-                <dd>{fact.value}</dd>
-              </div>
-            ))}
-            <div className="hero__fact">
-              <dt>Based in</dt>
-              <dd>
-                <Icon name="pin" size={14} />
-                <Field value={profile.location} />
-              </dd>
-            </div>
-          </dl>
         </div>
 
         <div className="hero__visual">

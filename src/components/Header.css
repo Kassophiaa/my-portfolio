@@ -14,6 +14,20 @@
   border-bottom-color: var(--border);
 }
 
+/* Reading progress along the bottom edge of the header */
+.site-header__progress {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--violet), var(--pink));
+  box-shadow: 0 0 10px var(--pink);
+  transform: scaleX(var(--scroll, 0));
+  transform-origin: left;
+  pointer-events: none;
+}
+
 .site-header__bar {
   display: flex;
   align-items: center;
@@ -48,6 +62,26 @@
 
 .brand:hover .brand__text {
   color: var(--violet);
+}
+
+.brand__section {
+  color: var(--pink-text);
+  animation: section-in 0.4s var(--ease) both;
+}
+
+/* Narrow phones: "~/skills" instead of "~/portfolio/skills" so the buttons still fit */
+@media (max-width: 379px) {
+  .brand:has(.brand__section) .brand__text,
+  .brand__sep {
+    display: none;
+  }
+}
+
+@keyframes section-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
 }
 
 /* Desktop nav */
@@ -211,7 +245,8 @@
   }
 
   .menu-toggle,
-  .mobile-menu {
+  .mobile-menu,
+  .brand__section {
     display: none;
   }
 }

@@ -43,11 +43,13 @@
 | Sample content | Replaced 2026-10-27; `SAMPLE_CONTENT = false` (flag + `SampleNotice` kept) | Done |
 | Personal content | Name, role, CLSU 4th-year BSIT, location (Philippines), about, 4 real projects (DARIS, StudySync, Bloom Journal, StockLite) + this portfolio, skills, coursework, GitHub. Remaining gaps are `todo()` — see Content checklist | Mostly done |
 | Skills levels | Each skill tagged `used` / `familiar` / `learning` in `skills.js`, shown as labelled rows per group; levels are Claude's conservative defaults — **owner to confirm** | Built |
-| Skills layout | One group at a time: tab column beside a single panel (≥ 820 px; rail is sticky), swipeable tab row above it on phones. Arrow/Home/End keys move between tabs (owner asked 2026-10-28: "one column, interactive, not just scrolling") | Built + verified |
+| Skills layout | One combined set of square glass tiles, no group headings (owner 2026-10-28, from a sample "tech stack" screenshot). Centred wrap (owner: "doesn't have to be a pyramid"): 8 per row ≥ 1024 px, 7 on tablet, 4 on phones, 3 below 360 px. 24 skills incl. C, Preact, npm (added 2026-10-28 from Education/StockLite/this site — owner to confirm). Glowing orb + turning rings behind; tiles rise in one by one, icons spin in. Groups still kept in `skills.js` for editing | Built + verified |
 | Hero | Name ≤ 2 lines at all widths; tagline "IT student who builds ___" rotates through `profile.builds` (static under reduced motion; screen readers get full list); heavier intro; GitHub icon button w/ hover label (missing links hidden); hover on facts; desktop "Scroll" cue → #about | Built + verified |
 | About | Count-up stats computed from data (projects on site, skills used, skills learning); "Read more" folds paragraphs 2–3 on < 900 px; interests as hover chips | Built + verified |
 | Section separation | Alternating tinted bands (About, Skills, Contact; `--band` token per theme) + glowing pink/violet divider line on top of every section (owner asked 2026-10-28) | Built + verified |
 | Motion over interaction (2026-10-28) | Owner: "too much interactive, want more animation". Removed: About "Read more", GitHub hover label, hover lifts on hero facts / about stats / interest chips. Added (auto, scroll-triggered): `[data-stagger]` one-by-one reveals (`useReveal` sets `--i`), section titles wipe up from a mask, eyebrow rule grows, section dividers draw from centre + flowing gradient, heading accent words flow pink↔violet, hero name light sweep, drifting hero lights, skill tiles pop in per tab, starfield breathes. All off under reduced motion | Built + verified |
+| Owner's content doc applied (2026-10-28) | From `Portfolio Content — Kassandra Sophia Fernandez (1).docx`: email + LinkedIn + GitHub `kassophiaa`, location Nueva Ecija, new rotating phrases, 6 hero facts, new About text, skills = 4 groups with no level rows, Education = school card + 4-year timeline (fourth year marked "Now"). About stats now: projects / technologies / years of study | Built + verified |
+| Navigation (2026-10-28) | Header reading-progress bar; floating back-to-top button with progress ring (after 70% of first screen); phones show current section after the logo (`~/portfolio/skills`) | Built + verified |
 | Project categories | Academic (DARIS), Personal (StudySync, Bloom Journal, Portfolio), Prototype (StockLite) | Built |
 
 ## 4. Project Structure
@@ -123,8 +125,9 @@
 - [x] Projects: DARIS (featured), StudySync, Bloom Journal, StockLite + portfolio; dialog hides missing year
 - [x] Skills regrouped by area with level rows; new glyphs (responsive, REST) + aliases
 - [x] `index.html` title/meta with name; `portfolio.webp` retaken (dark, 960×600)
-- [ ] **Email** → `profile.email` (form + copy stay disabled until set)
-- [ ] LinkedIn URL (or remove the entry), badge photo, `public/resume.pdf`
+- [x] **Email** → `profile.email` (2026-10-28)
+- [x] LinkedIn URL (2026-10-28)
+- [ ] Badge photo, `public/resume.pdf`
 - [ ] Per project: role, year, repo/demo links, screenshots
 - [ ] Confirm skill levels (esp. Database Design, CRUD, SQL as "used"; C/C++/Java/Python, XAMPP, Postman as "familiar"; REST API, Python for Data Analysis, Testing as "learning")
 - [ ] Optional: city/province and work arrangement (on-site/hybrid/remote)
@@ -138,6 +141,16 @@
 - [x] About: stats count-up, mobile "Read more", interest chips, larger body text
 - [x] Verified: lint + build; Playwright/Edge at 320/390/768/1024/1440: no overflow, name ≤ 2 lines, word rotates, stats reach 5/21/3, Read more toggles (< 900) / hidden (≥ 900), no console errors; reduced motion: static word + final numbers; dark theme screenshot checked
 - [ ] Owner: review rotating phrases in `profile.builds`
+
+**Content doc applied + navigation (2026-10-28)**
+- [x] Email, LinkedIn, GitHub, location, phrases, facts, About, skills, education from owner's doc
+- [x] New skill glyphs (Laravel, Supabase, Firebase, WordPress, FlutterFlow, Excel, Python, Postman, XAMPP); "VS Code" alias
+- [x] Rotating phrase: all phrases stacked in one grid cell so the line never changes height
+- [x] Education timeline: years slide in from the left, current-year node pulses
+- [x] Verified: lint + build; Playwright/Edge at 320/390/768/1024/1440: no overflow (before + after scroll), phrase rotates with stable height, 6 facts, stats 5/21/4, 4 tabs, 9 tool tiles all with glyphs, 4 years + Now, form enabled, mailto + LinkedIn links, to-top shows/works, progress reaches 1, phone section label, no console errors; reduced motion: timeline not offset
+- [ ] Owner: GitHub in doc (`kassophiaa`) differs from repo owner (`fernandezkassandra226-creator`) — confirm which profile to show
+- [ ] Owner: certificates (doc asks about adding photos) — need the actual certificate files
+- [ ] Owner: wording tweaks made — "your capstone" → "my capstone", fourth year "Learned" → "Learning"
 
 **Deployment**
 - [ ] Choose host (Vercel / Netlify / GitHub Pages) and deploy
@@ -178,8 +191,15 @@
 - **2026-10-28** — Skills section switched to tabs (one group visible at a time). Not committed.
 - **2026-10-28** — Home + About layout, type, and interaction pass (see checklist). Not committed.
 - **2026-10-28** — Clear section separation: alternating bands + glowing dividers; checked light/dark 1440 + light 390, no overflow. Not committed.
+- **2026-10-28** — All site text exported to a Claude Doc for owner to revise: https://claude.ai/artifact/2VsptsmBYZuoZ6ysvV31NX — apply owner's edits back into data files/components when they're done.
 - **2026-10-28** — Fewer hover/click extras, more automatic animation (see Requirements). Lint + build; Playwright at 320–1440 with gradual scrolling: staggered items + titles end visible, dividers drawn, skill tiles visible, no overflow/console errors; reduced motion static. Not committed.
+
+- **2026-10-28** — Skills grid: pyramid dropped for a centred wrap; added C, Preact, npm (+ glyphs); glow no longer clipped top/bottom. Checked 320–1440 light/dark: 24 tiles with glyphs, no overflow/console errors. Not committed.
+- **2026-10-28** — Skills redone as one pyramid/honeycomb tile grid over a glowing orb. Checked 320/390/768/1024/1440, light + dark: 21 tiles visible, expected rows, no overlap/overflow/console errors. Not committed.
+- **2026-10-28** — Skills: tabs + intro text removed, all groups shown as a bento. Fixed 8 px header overflow at 320 px (phone section label → `~/skills` below 380 px). Checked 320–1440: 21 tiles visible, no overflow/console errors. Not committed.
+- **2026-10-28** — Owner asked to trim: home greets "Hi, I'm Kassandra" (`profile.heroName`; badge + page title keep full name); removed hero facts strip, About count-up stats, Projects and Contact intro lines. Checked 320–1440: no overflow/console errors. Not committed.
+- **2026-10-28** — Applied owner's revised content doc; added reading progress bar, back-to-top ring, phone section label, education year timeline. All checks pass. Not committed.
 
 ## 10. Next Action
 
-**Owner provides email** (`profile.email`), confirms skill levels, and adds per-project role/year/links — then commit and choose a host.
+**Owner reviews the site** and confirms the GitHub profile; adds photo, résumé, per-project role/year/links, certificates if any — then commit and choose a host.

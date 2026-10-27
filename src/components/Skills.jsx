@@ -1,4 +1,3 @@
-import { useRef, useState } from 'react'
 import Field from './Field.jsx'
 import SectionHeading from './SectionHeading.jsx'
 import './Skills.css'
@@ -41,6 +40,19 @@ const glyphs = {
     </>
   ),
   vite: <path d="M13 3L6 13.5h5L10 21l8-11.5h-5.5L13 3z" />,
+  c: (
+    <>
+      <path d="M12 2.8l8 4.6v9.2l-8 4.6-8-4.6V7.4l8-4.6z" />
+      <path d="M14.8 9.4a3.6 3.6 0 1 0 0 5.2" />
+    </>
+  ),
+  preact: (
+    <>
+      <path d="M12 2.8l8 4.6v9.2l-8 4.6-8-4.6V7.4l8-4.6z" />
+      <ellipse cx="12" cy="12" rx="5.5" ry="2.2" transform="rotate(-35 12 12)" />
+      <ellipse cx="12" cy="12" rx="5.5" ry="2.2" transform="rotate(35 12 12)" />
+    </>
+  ),
   php: (
     <>
       <ellipse cx="12" cy="12" rx="9.5" ry="6" />
@@ -79,8 +91,8 @@ const glyphs = {
   ),
   npm: (
     <>
-      <path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3z" />
-      <path d="M4 7.5l8 4.5 8-4.5M12 12v9" />
+      <rect x="2.5" y="7" width="19" height="10" rx="2" />
+      <path d="M6 14.5V9.5h4v5M8 9.5v5M12.5 16V9.5h4v4h-2" />
     </>
   ),
   'responsive web design': (
@@ -93,12 +105,64 @@ const glyphs = {
   'rest api fundamentals': (
     <path d="M8 4.5c-2 0-2.5 1-2.5 2.5v2.5c0 1.2-.8 2-2 2.5 1.2.5 2 1.3 2 2.5V17c0 1.5.5 2.5 2.5 2.5M16 4.5c2 0 2.5 1 2.5 2.5v2.5c0 1.2.8 2 2 2.5-1.2.5-2 1.3-2 2.5V17c0 1.5-.5 2.5-2.5 2.5" />
   ),
+  laravel: (
+    <>
+      <path d="M12 3l7.5 4.2v8.6L12 20l-7.5-4.2V7.2L12 3z" />
+      <path d="M4.5 7.2L12 11.5l7.5-4.3M12 11.5V20" />
+    </>
+  ),
+  supabase: <path d="M13.5 3v8.5H20L10.5 21v-8.5H4L13.5 3z" />,
+  firebase: (
+    <>
+      <path d="M12 21c-3.9 0-6.5-2.6-6.5-6 0-4 3.5-6 4.5-11 3 2 4 4.5 3.5 7 1-.5 1.8-1.5 2-2.5 1.6 1.8 3 4 3 6.5 0 3.4-2.6 6-6.5 6z" />
+      <path d="M12 21c-1.7 0-3-1.2-3-2.8 0-1.9 1.6-2.7 2.2-4.7 1.7 1.2 3.8 2.4 3.8 4.7 0 1.6-1.3 2.8-3 2.8z" />
+    </>
+  ),
+  wordpress: (
+    <>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M6.5 8.5l3.8 9.5 1.7-5.2M10 8.5l4.2 9.5 3.3-9.5M5.5 8.5h3M13.5 8.5h3" />
+    </>
+  ),
+  flutterflow: (
+    <>
+      <path d="M14.5 3.5L5 13l3 3L20.5 3.5h-6z" />
+      <path d="M14 13.5L10.5 17l3.5 3.5h5L15.5 17l3.5-3.5h-5z" />
+    </>
+  ),
+  excel: (
+    <>
+      <rect x="3.5" y="3.5" width="17" height="17" rx="2.5" />
+      <path d="M3.5 9h17M3.5 14.5h17M9.5 9v11.5" />
+    </>
+  ),
+  python: (
+    <>
+      <path d="M12 3c-3.5 0-4 1.5-4 3v2.5h4.5V9.5H6c-1.8 0-3 1.4-3 4s1.2 4 3 4h2V15c0-1.4 1.1-2.5 2.5-2.5h4c1.4 0 2.5-1.1 2.5-2.5V6c0-1.5-1.5-3-5-3z" />
+      <path d="M12 21c3.5 0 4-1.5 4-3v-2.5h-4.5v-1H18c1.8 0 3-1.4 3-4s-1.2-4-3-4h-2V9" />
+      <path d="M10.5 5.6v.01M13.5 18.4v.01" />
+    </>
+  ),
+  postman: (
+    <>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M8 16l2-4.5 6-4-4 6L8 16zM12 13.5l-1.5-2" />
+    </>
+  ),
+  xampp: (
+    <>
+      <rect x="4" y="4" width="16" height="6.5" rx="1.5" />
+      <rect x="4" y="13.5" width="16" height="6.5" rx="1.5" />
+      <path d="M7.5 7.25h.01M7.5 16.75h.01M11 7.25h5.5M11 16.75h5.5" />
+    </>
+  ),
 }
 
 // Skills that share another skill's glyph.
 const aliases = {
   github: 'git',
   'github desktop': 'git',
+  'vs code': 'visual studio code',
   sql: 'mysql',
   'database design': 'mysql',
 }
@@ -127,57 +191,8 @@ function SkillGlyph({ name }) {
   )
 }
 
-function SkillList({ items, compact }) {
-  if (compact) {
-    return (
-      <ul className="project-card__tech">
-        {items.map((item, i) => (
-          <li key={item.name} className="chip" style={{ '--i': i }}>
-            {item.name}
-          </li>
-        ))}
-      </ul>
-    )
-  }
-  return (
-    <ul className="skill-group__items">
-      {items.map((item, i) => (
-        <li key={item.name} className="skill" style={{ '--i': i }}>
-          <span className="skill__icon">
-            <SkillGlyph name={item.name} />
-          </span>
-          <span className="skill__name">{item.name}</span>
-        </li>
-      ))}
-    </ul>
-  )
-}
-
-export default function Skills({ groups, levels, index }) {
-  const [activeId, setActiveId] = useState(groups[0]?.id)
-  const tabRefs = useRef([])
-  const activeIndex = Math.max(
-    0,
-    groups.findIndex((group) => group.id === activeId),
-  )
-  const group = groups[activeIndex]
-
-  // Arrow keys move between tabs (works for the vertical rail and the mobile row).
-  const onKeyDown = (event) => {
-    const last = groups.length - 1
-    const next = {
-      ArrowDown: activeIndex === last ? 0 : activeIndex + 1,
-      ArrowRight: activeIndex === last ? 0 : activeIndex + 1,
-      ArrowUp: activeIndex === 0 ? last : activeIndex - 1,
-      ArrowLeft: activeIndex === 0 ? last : activeIndex - 1,
-      Home: 0,
-      End: last,
-    }[event.key]
-    if (next === undefined) return
-    event.preventDefault()
-    setActiveId(groups[next].id)
-    tabRefs.current[next]?.focus()
-  }
+export default function Skills({ groups, index }) {
+  const items = groups.flatMap((group) => group.items)
 
   return (
     <section id="skills" className="section" aria-labelledby="skills-title">
@@ -191,77 +206,29 @@ export default function Skills({ groups, levels, index }) {
               What I <em className="accent-serif">work with</em>
             </>
           }
-        >
-          An honest snapshot — no percentage bars. Each group shows what I’ve used in projects,
-          what I’m familiar with, and what I’m currently learning.
-        </SectionHeading>
+        />
 
-        <div className="skills" data-reveal>
-          <div
-            className="skill-tabs"
-            role="tablist"
-            aria-label="Skill groups"
-            aria-orientation="vertical"
-            onKeyDown={onKeyDown}
-          >
-            {groups.map((item, i) => {
-              const selected = i === activeIndex
-              return (
-                <button
-                  key={item.id}
-                  ref={(el) => (tabRefs.current[i] = el)}
-                  type="button"
-                  role="tab"
-                  id={`skill-tab-${item.id}`}
-                  aria-selected={selected}
-                  aria-controls="skill-panel"
-                  tabIndex={selected ? 0 : -1}
-                  className="skill-tab"
-                  onClick={() => setActiveId(item.id)}
-                >
-                  <span className="skill-tab__label">{item.label}</span>
-                  <span className="filter__count" aria-label={`${item.items.length} skills`}>
-                    {item.items.length}
-                  </span>
-                </button>
-              )
-            })}
+        <div className="skills-stage">
+          <div className="skills-stage__orb" aria-hidden="true">
+            <span />
+            <span />
+            <span />
           </div>
-
-          {group && (
-            <div
-              id="skill-panel"
-              className="skill-group glass"
-              role="tabpanel"
-              aria-labelledby={`skill-tab-${group.id}`}
-            >
-              {/* Keyed so the content replays its entrance when the tab changes */}
-              <div key={group.id} className="skill-group__body">
-                <div className="skill-group__head">
-                  <h3 className="skill-group__label">{group.label}</h3>
-                  {group.note && <p className="skill-group__note">{group.note}</p>}
-                </div>
-                {group.items.length > 0 ? (
-                  levels.map((level) => {
-                    const items = group.items.filter((item) => item.level === level.id)
-                    if (items.length === 0) return null
-                    return (
-                      <div key={level.id} className={`skill-level skill-level--${level.id}`}>
-                        <h4 className="skill-level__label mono">
-                          {level.live && <span className="pulse-dot" aria-hidden="true" />}
-                          {level.label}
-                        </h4>
-                        <SkillList items={items} compact={group.compact} />
-                      </div>
-                    )
-                  })
-                ) : (
-                  <p>
-                    <Field label="Add skills for this group" />
-                  </p>
-                )}
-              </div>
-            </div>
+          {items.length > 0 ? (
+            <ul className="skills-grid" data-reveal data-stagger>
+              {items.map((name) => (
+                <li key={name} className="skill">
+                  <span className="skill__icon">
+                    <SkillGlyph name={name} />
+                  </span>
+                  <span className="skill__name">{name}</span>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>
+              <Field label="Add your skills in src/data/skills.js" />
+            </p>
           )}
         </div>
       </div>

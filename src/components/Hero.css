@@ -108,12 +108,18 @@
 
 /* The rotating word gets its own line so its changing width never reflows the copy */
 .hero__rotator {
-  display: block;
-  min-height: 1.3em;
+  display: grid;
+  align-items: start;
 }
 
 .hero__tagline .hero__word {
-  display: inline-block;
+  grid-area: 1 / 1;
+  justify-self: start;
+  visibility: hidden;
+}
+
+.hero__tagline .hero__word.is-active {
+  visibility: visible;
   animation:
     word-in 0.55s var(--ease) both,
     accent-flow 5s linear infinite;
@@ -214,91 +220,6 @@
 @keyframes drift-b {
   to {
     transform: translate(-20vw, -14vh) scale(0.9);
-  }
-}
-
-/* Quick facts strip */
-.hero__facts {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  margin: 8px 0 0;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  background: var(--surface);
-  overflow: hidden;
-}
-
-.hero__fact {
-  display: grid;
-  gap: 4px;
-  min-width: 0;
-  padding: 12px 16px;
-}
-
-/* Hairline dividers between cells */
-.hero__fact:nth-child(even) {
-  border-left: 1px solid var(--border);
-}
-
-.hero__fact:nth-child(n + 3) {
-  border-top: 1px solid var(--border);
-}
-
-.hero__fact dt {
-  font-size: 0.66rem;
-  font-weight: 700;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--pink-text);
-}
-
-.hero__fact dd {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  margin: 0;
-  font-size: 0.88rem;
-  font-weight: 600;
-  line-height: 1.35;
-  color: var(--text);
-}
-
-.hero__fact dd .icon {
-  flex: none;
-  color: var(--lavender);
-}
-
-@media (min-width: 640px) {
-  .hero__facts {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-
-  .hero__fact:nth-child(n) {
-    border-top: 0;
-    border-left: 0;
-  }
-
-  .hero__fact + .hero__fact {
-    border-left: 1px solid var(--border);
-  }
-}
-
-/* Two columns on wide screens leaves the copy narrower: fall back to 2×2 */
-@media (min-width: 960px) and (max-width: 1239px) {
-  .hero__facts {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .hero__fact:nth-child(odd) {
-    border-left: 0;
-  }
-
-  .hero__fact:nth-child(even) {
-    border-left: 1px solid var(--border);
-  }
-
-  .hero__fact:nth-child(n + 3) {
-    border-top: 1px solid var(--border);
   }
 }
 

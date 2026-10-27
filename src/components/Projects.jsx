@@ -46,10 +46,7 @@ export default function Projects({ projects, index }) {
               Things I’ve <em className="accent-serif">built</em>
             </>
           }
-        >
-          Academic projects, personal projects, and prototypes. Open a project for details,
-          technologies, and links.
-        </SectionHeading>
+        />
 
         <div className="filters" role="group" aria-label="Filter projects" data-reveal>
           {filters.map((item) => {
