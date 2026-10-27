@@ -1,0 +1,66 @@
+.to-top {
+  position: fixed;
+  right: max(16px, env(safe-area-inset-right));
+  bottom: max(16px, env(safe-area-inset-bottom));
+  z-index: 40;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--bg) 80%, transparent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: var(--text);
+  box-shadow: 0 10px 30px -12px rgb(0 0 0 / 0.6);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(16px) scale(0.8);
+  transition:
+    opacity 0.35s var(--ease),
+    transform 0.45s var(--ease-spring),
+    visibility 0s linear 0.35s;
+}
+
+.to-top.is-shown {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition:
+    opacity 0.35s var(--ease),
+    transform 0.45s var(--ease-spring);
+}
+
+.to-top__ring {
+  position: absolute;
+  inset: 0;
+  transform: rotate(-90deg);
+  fill: none;
+  stroke-width: 2.5;
+}
+
+.to-top__ring circle {
+  stroke: var(--border);
+}
+
+.to-top__ring .to-top__fill {
+  stroke: var(--pink);
+  stroke-linecap: round;
+  stroke-dasharray: 100;
+  stroke-dashoffset: calc(100 - var(--scroll, 0) * 100);
+}
+
+.to-top__icon {
+  transform: rotate(-90deg);
+  transition: transform 0.3s var(--ease);
+}
+
+.to-top:hover .to-top__icon {
+  transform: rotate(-90deg) translateX(3px);
+}
+
+@media print {
+  .to-top {
+    display: none;
+  }
+}

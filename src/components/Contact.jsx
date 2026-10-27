@@ -124,10 +124,7 @@ export default function Contact({ profile, index }) {
               Let’s talk about an <em className="accent-serif">internship.</em>
             </>
           }
-        >
-          I’m looking for a software development internship or OJT where I can contribute to real
-          projects and learn from experienced developers. Send a message or email me directly.
-        </SectionHeading>
+        />
 
         <div className="contact__grid">
           <ContactForm email={profile.email} />
