@@ -43,6 +43,7 @@
 | Sample content | Replaced 2026-10-27; `SAMPLE_CONTENT = false` (flag + `SampleNotice` kept) | Done |
 | Personal content | Name, role, CLSU 4th-year BSIT, location (Philippines), about, 4 real projects (DARIS, StudySync, Bloom Journal, StockLite) + this portfolio, skills, coursework, GitHub. Remaining gaps are `todo()` — see Content checklist | Mostly done |
 | Skills levels | Each skill tagged `used` / `familiar` / `learning` in `skills.js`, shown as labelled rows per group; levels are Claude's conservative defaults — **owner to confirm** | Built |
+| Skills layout | One group at a time: tab column beside a single panel (≥ 820 px; rail is sticky), swipeable tab row above it on phones. Arrow/Home/End keys move between tabs (owner asked 2026-10-28: "one column, interactive, not just scrolling") | Built + verified |
 | Project categories | Academic (DARIS), Personal (StudySync, Bloom Journal, Portfolio), Prototype (StockLite) | Built |
 
 ## 4. Project Structure
@@ -57,7 +58,7 @@
 | `src/index.css` | **All color tokens** (dark + `[data-theme='light']`), base, `.glass`, buttons, `.tick-list`, `.pulse-dot`, motion |
 | `src/components/badge/` | `BadgeCard` (faces), `StaticLanyard` (fallback/reduced motion), `LanyardBadge` (lazy physics chunk), `Badge.css` |
 | `src/components/Hero.jsx` | Loads badge after `load` + idle; cursor glow |
-| `src/components/Skills.jsx` | Glass tiles + line-glyph map (unknown skills show initials) |
+| `src/components/Skills.jsx` | Tabbed groups (ARIA tabs), glass tiles + line-glyph map (unknown skills show initials) |
 | `src/components/Contact.jsx` | `ContactForm` (mailto), email card, links |
 | `src/hooks/` | `useTheme`, `useActiveSection`, `useReveal`, `useCopy`, `useReducedMotion`, `useScrollFill` (timeline) |
 | `src/assets/projects/portfolio.webp` | 960px screenshot of the new hero (still shows TODO placeholders) |
@@ -124,6 +125,10 @@
 - [ ] Confirm skill levels (esp. Database Design, CRUD, SQL as "used"; C/C++/Java/Python, XAMPP, Postman as "familiar"; REST API, Python for Data Analysis, Testing as "learning")
 - [ ] Optional: city/province and work arrangement (on-site/hybrid/remote)
 
+**Skills tabs (2026-10-28)** — checkpoint before it: commit `71d36e4`
+- [x] Bento replaced with tab list + one panel; content animates in on switch
+- [x] Verified: lint + build; Playwright/Edge vs preview at 320/390/768/1440: no overflow, 6 tabs, click + arrow keys switch, focus follows, wraps, no console errors
+
 **Deployment**
 - [ ] Choose host (Vercel / Netlify / GitHub Pages) and deploy
 - [ ] Set project `links.live`; record URL here and in README
@@ -160,6 +165,7 @@
 - **2026-10-26** — Layout pass (spacing, section heads, featured project, skills bento, hero facts) + sample content + self-hosted fonts. 69/69 checks; Lighthouse median 92.
 - **2026-10-26** — Mobile/tablet hero: ID badge first, strap from page top, swipe-friendly touch handling. 71/71 checks.
 - **2026-10-27** — Replaced all sample content with owner's real details; skills now show used/familiar/learning levels; screenshot retaken.
+- **2026-10-28** — Skills section switched to tabs (one group visible at a time). Not committed.
 
 ## 10. Next Action
 
