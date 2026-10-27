@@ -1,14 +1,88 @@
-/* Bento: first group spans the full width, the rest sit side by side */
+/* Tabs: one group at a time. Phones get a swipeable row above the panel,
+   wider screens a vertical rail beside it. */
 .skills {
   display: grid;
-  gap: 18px;
+  gap: 16px;
+}
+
+.skill-tabs {
+  display: flex;
+  gap: 8px;
+  margin-inline: calc(var(--gutter) * -1);
+  /* Room for the focus ring, which the scroll container would otherwise clip */
+  padding: 6px var(--gutter) 8px;
+  scroll-padding-inline: var(--gutter);
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  scrollbar-width: none;
+}
+
+.skill-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.skill-tab {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  min-height: 44px;
+  padding: 0 8px 0 14px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  font-weight: 600;
+  text-align: left;
+  white-space: nowrap;
+  cursor: pointer;
+  scroll-snap-align: start;
+  transition:
+    color 0.2s var(--ease),
+    border-color 0.2s var(--ease),
+    background-color 0.2s var(--ease),
+    transform 0.2s var(--ease);
+}
+
+.skill-tab:hover {
+  color: var(--text);
+  border-color: var(--border-strong);
+}
+
+.skill-tab:active {
+  transform: scale(0.98);
+}
+
+.skill-tab[aria-selected='true'] {
+  color: var(--on-accent);
+  background: var(--pink-gradient);
+  border-color: transparent;
+  box-shadow: 0 8px 22px -12px rgb(244 114 182 / 0.8);
+}
+
+.skill-tab[aria-selected='true'] .filter__count {
+  background: rgb(0 0 0 / 0.16);
+  color: inherit;
 }
 
 .skill-group {
+  padding: clamp(20px, 3vw, 28px);
+}
+
+.skill-group__body {
   display: grid;
   align-content: start;
   gap: 18px;
-  padding: clamp(20px, 3vw, 28px);
+  animation: skill-panel-in 0.4s var(--ease) both;
+}
+
+@keyframes skill-panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
 }
 
 .skill-group__head {
@@ -134,12 +208,31 @@
 
 @media (min-width: 820px) {
   .skills {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: 260px minmax(0, 1fr);
+    align-items: start;
+    gap: 20px;
   }
 
-  /* First group spans the row; so does the last one when it would sit alone */
-  .skill-group:first-child,
-  .skill-group:last-child:nth-child(even) {
-    grid-column: 1 / -1;
+  .skill-tabs {
+    position: sticky;
+    top: calc(var(--header-h) + 32px);
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    overflow: visible;
+  }
+
+  .skill-tab {
+    border-radius: var(--radius);
+    white-space: normal;
+    padding: 10px 10px 10px 16px;
+  }
+
+  .skill-tab:not([aria-selected='true']):hover {
+    transform: translateX(3px);
+  }
+
+  .skill-group {
+    min-height: 100%;
   }
 }

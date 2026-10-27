@@ -1,3 +1,4 @@
+import { useRef, useState } from 'react'
 import Field from './Field.jsx'
 import SectionHeading from './SectionHeading.jsx'
 import './Skills.css'
@@ -153,6 +154,31 @@ function SkillList({ items, compact }) {
 }
 
 export default function Skills({ groups, levels, index }) {
+  const [activeId, setActiveId] = useState(groups[0]?.id)
+  const tabRefs = useRef([])
+  const activeIndex = Math.max(
+    0,
+    groups.findIndex((group) => group.id === activeId),
+  )
+  const group = groups[activeIndex]
+
+  // Arrow keys move between tabs (works for the vertical rail and the mobile row).
+  const onKeyDown = (event) => {
+    const last = groups.length - 1
+    const next = {
+      ArrowDown: activeIndex === last ? 0 : activeIndex + 1,
+      ArrowRight: activeIndex === last ? 0 : activeIndex + 1,
+      ArrowUp: activeIndex === 0 ? last : activeIndex - 1,
+      ArrowLeft: activeIndex === 0 ? last : activeIndex - 1,
+      Home: 0,
+      End: last,
+    }[event.key]
+    if (next === undefined) return
+    event.preventDefault()
+    setActiveId(groups[next].id)
+    tabRefs.current[next]?.focus()
+  }
+
   return (
     <section id="skills" className="section" aria-labelledby="skills-title">
       <div className="container">
@@ -170,34 +196,73 @@ export default function Skills({ groups, levels, index }) {
           what I’m familiar with, and what I’m currently learning.
         </SectionHeading>
 
-        <div className="skills">
-          {groups.map((group, i) => (
-            <div key={group.id} className="skill-group glass" data-reveal style={{ '--delay': i }}>
-              <div className="skill-group__head">
-                <h3 className="skill-group__label">{group.label}</h3>
-                {group.note && <p className="skill-group__note">{group.note}</p>}
+        <div className="skills" data-reveal>
+          <div
+            className="skill-tabs"
+            role="tablist"
+            aria-label="Skill groups"
+            aria-orientation="vertical"
+            onKeyDown={onKeyDown}
+          >
+            {groups.map((item, i) => {
+              const selected = i === activeIndex
+              return (
+                <button
+                  key={item.id}
+                  ref={(el) => (tabRefs.current[i] = el)}
+                  type="button"
+                  role="tab"
+                  id={`skill-tab-${item.id}`}
+                  aria-selected={selected}
+                  aria-controls="skill-panel"
+                  tabIndex={selected ? 0 : -1}
+                  className="skill-tab"
+                  onClick={() => setActiveId(item.id)}
+                >
+                  <span className="skill-tab__label">{item.label}</span>
+                  <span className="filter__count" aria-label={`${item.items.length} skills`}>
+                    {item.items.length}
+                  </span>
+                </button>
+              )
+            })}
+          </div>
+
+          {group && (
+            <div
+              id="skill-panel"
+              className="skill-group glass"
+              role="tabpanel"
+              aria-labelledby={`skill-tab-${group.id}`}
+            >
+              {/* Keyed so the content replays its entrance when the tab changes */}
+              <div key={group.id} className="skill-group__body">
+                <div className="skill-group__head">
+                  <h3 className="skill-group__label">{group.label}</h3>
+                  {group.note && <p className="skill-group__note">{group.note}</p>}
+                </div>
+                {group.items.length > 0 ? (
+                  levels.map((level) => {
+                    const items = group.items.filter((item) => item.level === level.id)
+                    if (items.length === 0) return null
+                    return (
+                      <div key={level.id} className={`skill-level skill-level--${level.id}`}>
+                        <h4 className="skill-level__label mono">
+                          {level.live && <span className="pulse-dot" aria-hidden="true" />}
+                          {level.label}
+                        </h4>
+                        <SkillList items={items} compact={group.compact} />
+                      </div>
+                    )
+                  })
+                ) : (
+                  <p>
+                    <Field label="Add skills for this group" />
+                  </p>
+                )}
               </div>
-              {group.items.length > 0 ? (
-                levels.map((level) => {
-                  const items = group.items.filter((item) => item.level === level.id)
-                  if (items.length === 0) return null
-                  return (
-                    <div key={level.id} className={`skill-level skill-level--${level.id}`}>
-                      <h4 className="skill-level__label mono">
-                        {level.live && <span className="pulse-dot" aria-hidden="true" />}
-                        {level.label}
-                      </h4>
-                      <SkillList items={items} compact={group.compact} />
-                    </div>
-                  )
-                })
-              ) : (
-                <p>
-                  <Field label="Add skills for this group" />
-                </p>
-              )}
             </div>
-          ))}
+          )}
         </div>
       </div>
     </section>
