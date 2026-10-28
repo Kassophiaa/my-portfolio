@@ -31,6 +31,8 @@ export const profile = {
     'Databases',
     'Data analysis (secondary interest)',
   ],
+  // Not shown on the page right now (the hero and Contact already say this);
+  // kept here in case you want an "I'm looking for" list back.
   seeking: [
     'Internship or OJT in software development',
     'Real-world experience contributing to projects',
@@ -42,6 +44,10 @@ export const profile = {
   photo: null,
 
   email: 'kassandrasophiafernandez@gmail.com',
+  // Web3Forms access key (free at https://web3forms.com, sent to the email above).
+  // With it, the contact form delivers messages straight to your inbox; without it
+  // (null), the form opens the visitor's own email app instead. Safe to keep public.
+  contactFormKey: '034398cb-839c-4b82-8167-dc0c55fe585a',
   // Put the PDF in public/ (e.g. public/resume.pdf) and set this to '/resume.pdf'
   resume: null,
 
@@ -60,26 +66,26 @@ export const education = {
     {
       period: 'First year',
       title: 'Programming Fundamentals',
-      text: 'Learned the fundamentals of programming and the C language.',
-      topics: ['C', 'Programming Logic'],
+      text: 'Built a foundation in programming with C, focusing on programming logic and basic problem-solving.',
+      topics: ['C', 'Programming Logic', 'Problem-Solving'],
     },
     {
       period: 'Second year',
-      title: 'PHP and OOP',
-      text: 'Learned PHP and object-oriented programming concepts.',
-      topics: ['PHP', 'Object-Oriented Programming'],
+      title: 'PHP and Object-Oriented Programming',
+      text: 'Learned PHP and object-oriented programming concepts for building dynamic web applications.',
+      topics: ['PHP', 'Object-Oriented Programming', 'Web Development'],
     },
     {
       period: 'Third year',
       title: 'App Development and Data Analysis',
-      text: 'Explored Firebase, FlutterFlow, and Python while learning data analysis.',
-      topics: ['Firebase', 'FlutterFlow', 'Python', 'Data Analysis'],
+      text: 'Explored mobile app development with FlutterFlow and Firebase while learning Python and data analysis fundamentals.',
+      topics: ['FlutterFlow', 'Firebase', 'Python', 'Data Analysis'],
     },
     {
       period: 'Fourth year',
-      title: 'Web Development and Capstone',
-      text: 'Learning React and Laravel while applying web development and database concepts to my capstone project, DARIS.',
-      topics: ['React', 'Laravel', 'PHP', 'MySQL', 'Capstone Development'],
+      title: 'Software Development and Beyond',
+      text: 'Completed DARIS, my capstone project, applying web development and database management skills to build a discipline and reformation information system. Currently exploring new technologies and building personal projects to strengthen my software development skills.',
+      topics: ['React', 'Laravel', 'PHP', 'MySQL', 'Personal Projects'],
     },
   ],
   // Only add certificates you have actually earned: { name, issuer, year, href, image }

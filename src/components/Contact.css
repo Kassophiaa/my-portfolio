@@ -139,6 +139,22 @@
   color: var(--pink-text);
 }
 
+.contact-form__status.is-sent {
+  font-weight: 600;
+  animation: pop-in 0.4s var(--ease-spring);
+}
+
+.contact-form__status.is-error {
+  color: #fb7185;
+}
+
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
 /* ---- Side cards ---- */
 .contact-card {
   display: grid;
@@ -159,7 +175,7 @@
   justify-self: start;
   max-width: 100%;
   font-family: var(--font-display);
-  font-size: clamp(1.25rem, 3vw, 1.6rem);
+  font-size: clamp(1.1rem, 2.4vw, 1.45rem);
   font-weight: 700;
   letter-spacing: -0.02em;
   line-height: 1.2;
