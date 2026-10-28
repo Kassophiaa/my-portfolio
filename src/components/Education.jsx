@@ -66,26 +66,43 @@ export default function Education({ education, index }) {
               </div>
             </li>
           ))}
-
-          {education.certifications.map((cert) => (
-            <li key={cert.name} className="timeline__item" data-reveal>
-              <p className="timeline__period mono">{cert.year}</p>
-              <div className="timeline__body glass">
-                <h3 className="timeline__title">
-                  {cert.href ? (
-                    <a className="text-link" href={cert.href} target="_blank" rel="noreferrer">
-                      {cert.name}
-                      <Icon name="external" size={15} />
-                    </a>
-                  ) : (
-                    cert.name
-                  )}
-                </h3>
-                <p className="timeline__school">{cert.issuer}</p>
-              </div>
-            </li>
-          ))}
         </ol>
+
+        {education.credentials.length > 0 && (
+          <div className="credentials">
+            <h3 className="credentials__title mono">Certificates &amp; activities</h3>
+            <ul className="credentials__list" data-reveal data-stagger>
+              {education.credentials.map((item) => (
+                <li key={`${item.type}-${item.name}`} className="credential glass">
+                  <p className="credential__type mono">{item.type}</p>
+                  <h4 className="credential__name">
+                    {item.href ? (
+                      <a className="text-link" href={item.href} target="_blank" rel="noreferrer">
+                        {item.name}
+                        <Icon name="external" size={14} />
+                        <span className="visually-hidden"> (opens in a new tab)</span>
+                      </a>
+                    ) : (
+                      item.name
+                    )}
+                  </h4>
+                  <p className="credential__meta">
+                    {[item.issuer, item.date].filter(Boolean).join(' · ')}
+                  </p>
+                  {item.skills?.length > 0 && (
+                    <ul className="project-card__tech">
+                      {item.skills.map((skill) => (
+                        <li key={skill} className="chip">
+                          {skill}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
     </section>
   )

@@ -1,3 +1,8 @@
+const photos = import.meta.glob('../assets/profile/*.{png,jpg,jpeg,webp,avif}', {
+  eager: true,
+  import: 'default',
+})
+
 // Shows the "sample content" notice on the site. All sample text has been replaced;
 // anything still missing is a todo() and renders as a visible TODO placeholder.
 export const SAMPLE_CONTENT = false
@@ -9,8 +14,9 @@ export const profile = {
   role: 'IT Student · Aspiring Software Developer',
   location: 'Nueva Ecija, Philippines',
   availability: 'Open to internship / OJT',
+  // The one place (besides Contact) that mentions the internship search.
   intro:
-    'I’m a fourth-year IT student at Central Luzon State University looking for a software development internship or OJT where I can gain real-world experience, contribute to projects, and learn from experienced developers.',
+    'Fourth-year BS Information Technology student at Central Luzon State University, looking for a software development internship or OJT.',
 
   // Hero tagline cycles through these: "IT Student who builds ___."
   builds: [
@@ -19,10 +25,12 @@ export const profile = {
     'data-informed solutions',
   ],
 
+  // Who you are, how you got here, where you're heading. The internship ask lives
+  // in the hero and Contact, so it isn't repeated here.
   about: [
-    'I’m Kassandra, a fourth-year BS Information Technology student at Central Luzon State University. I enjoy turning ideas into practical applications and learning how the pieces of a system work together, from the user interface to the database behind it.',
-    'Most of my learning comes from building and improving projects. My experience includes contributing to DARIS, our academic capstone for managing disciplinary case workflows, as well as developing personal projects for study planning, journaling, and inventory management. These projects have helped me practice web development, database concepts, debugging, and problem-solving.',
-    'I’m looking for a Software Developer OJT where I can apply what I’ve learned, collaborate with a team, receive feedback, and grow into a dependable developer. I’m also interested in data analysis and how information can be used to support better decisions.',
+    'I’m Kassandra. I enjoy turning ideas into practical applications and understanding how the pieces of a system fit together, from the interface people click to the database behind it.',
+    'My path started with C and programming logic, moved through PHP and object-oriented programming, then into app development with FlutterFlow and Firebase. Now I build with React and Laravel, and our capstone, DARIS, brought those skills together in one system.',
+    'Outside class, I build personal projects (a study planner, a journaling app, and an inventory dashboard concept) to practice debugging, databases, and problem-solving. I want to grow into a dependable software developer, and I’m curious about how data analysis can support better decisions.',
   ],
   interests: [
     'Software development',
@@ -39,9 +47,9 @@ export const profile = {
     'A team where I can learn from experienced developers',
   ],
 
-  // Badge photo: import an image from src/assets (e.g. `import photo from '../assets/me.webp'`)
-  // and set `photo: photo`. Square, ~480×480 px, WebP keeps it light.
-  photo: null,
+  // Badge photo: drop one image into src/assets/profile/ (any name). Square works best;
+  // other shapes are cropped to a square around the upper-middle (where a face usually is).
+  photo: Object.values(photos)[0] ?? null,
 
   email: 'kassandrasophiafernandez@gmail.com',
   // Web3Forms access key (free at https://web3forms.com, sent to the email above).
@@ -84,10 +92,20 @@ export const education = {
     {
       period: 'Fourth year',
       title: 'Software Development and Beyond',
-      text: 'Completed DARIS, my capstone project, applying web development and database management skills to build a discipline and reformation information system. Currently exploring new technologies and building personal projects to strengthen my software development skills.',
+      text: 'Completed my DARIS capstone, a discipline and reformation information system. Now exploring software development further by building personal projects and strengthening my technical skills.',
       topics: ['React', 'Laravel', 'PHP', 'MySQL', 'Personal Projects'],
     },
   ],
-  // Only add certificates you have actually earned: { name, issuer, year, href, image }
-  certifications: [],
+  // Certificates, awards, organizations, seminars and workshops. Shown under the
+  // timeline as "Certificates & activities"; the block stays hidden while this is empty.
+  // Only add things you actually completed or took part in. Copy this shape:
+  //   {
+  //     type: 'Certificate',          // Certificate | Award | Organization | Seminar | Workshop
+  //     name: 'Exact title on the certificate',
+  //     issuer: 'Who issued or organized it',
+  //     date: 'Mar 2026',             // or a range for organizations: '2024 – present'
+  //     href: 'https://…',            // verification page or PDF (optional), e.g. '/certificates/x.pdf' in public/
+  //     skills: ['Python'],           // related skills (optional)
+  //   },
+  credentials: [],
 }

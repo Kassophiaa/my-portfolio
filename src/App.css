@@ -92,26 +92,3 @@ main:focus {
   gap: 12px 24px;
 }
 
-.site-footer__top {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  min-height: 44px;
-  font-weight: 600;
-  color: var(--text-muted);
-  text-decoration: none;
-  transition: color 0.2s var(--ease);
-}
-
-.site-footer__top .icon {
-  transform: rotate(-90deg);
-  transition: transform 0.3s var(--ease-spring);
-}
-
-.site-footer__top:hover {
-  color: var(--violet);
-}
-
-.site-footer__top:hover .icon {
-  transform: rotate(-90deg) translateX(4px);
-}

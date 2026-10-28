@@ -1,88 +1,35 @@
-/* Filters */
-.filters {
+/* Horizontal scroller. It spans the full screen width, but its padding lines the
+   first card up with the page content; the next card peeks in from the right. */
+.project-track {
+  --edge: max(var(--gutter), (100% - var(--max)) / 2 + var(--gutter));
+  --gap: 16px;
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 28px;
+  gap: var(--gap);
+  /* Vertical room so card hover lift and shadows aren't clipped */
+  padding: 10px var(--edge) 28px;
+  margin-block: -10px -12px;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--edge);
+  scrollbar-width: none;
 }
 
-.filter {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  min-height: 40px;
-  padding: 0 8px 0 14px;
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  background: var(--surface);
-  color: var(--text-muted);
-  font-size: 0.88rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition:
-    color 0.2s var(--ease),
-    border-color 0.2s var(--ease),
-    background-color 0.2s var(--ease),
-    transform 0.2s var(--ease);
+.project-track::-webkit-scrollbar {
+  display: none;
 }
 
-.filter--tech {
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
-  font-weight: 500;
+.project-track:focus-visible {
+  outline: 2px solid var(--pink-text);
+  outline-offset: -2px;
+  border-radius: var(--radius-lg);
 }
 
-.filter--tech > span[aria-hidden] {
-  margin-right: -6px;
-  color: var(--pink-text);
-}
-
-.filter:hover {
-  color: var(--text);
-  border-color: var(--border-strong);
-}
-
-.filter:active {
-  transform: scale(0.97);
-}
-
-.filter[aria-pressed='true'] {
-  color: var(--on-accent);
-  background: var(--pink-gradient);
-  border-color: transparent;
-  box-shadow: 0 8px 22px -12px rgb(244 114 182 / 0.8);
-}
-
-.filter[aria-pressed='true'] > span[aria-hidden] {
-  color: inherit;
-}
-
-.filter__count {
-  display: inline-grid;
-  place-items: center;
-  min-width: 24px;
-  height: 24px;
-  padding: 0 6px;
-  border-radius: 999px;
-  background: var(--bg-soft);
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  color: var(--text-faint);
-}
-
-.filter[aria-pressed='true'] .filter__count {
-  background: rgb(0 0 0 / 0.16);
-  color: inherit;
-}
-
-/* Grid */
-.project-grid {
+.project-track > li {
   display: grid;
-  gap: 20px;
-}
-
-.project-grid > li {
-  display: grid;
+  /* Phones: one card plus a peek of the next */
+  flex: 0 0 min(86%, 380px);
+  scroll-snap-align: start;
   animation: card-in 0.5s var(--ease) both;
   animation-delay: calc(var(--i) * 70ms);
 }
@@ -90,49 +37,71 @@
 @keyframes card-in {
   from {
     opacity: 0;
-    transform: translateY(16px) scale(0.985);
+    transform: translateX(28px) scale(0.985);
   }
 }
 
 @media (min-width: 680px) {
-  .project-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  .project-track {
+    --gap: 20px;
   }
 
-  .project-grid > li.is-featured {
-    grid-column: 1 / -1;
+  /* Two cards per page width */
+  .project-track > li {
+    flex-basis: calc((100% - var(--gap)) / 2);
   }
 }
 
 @media (min-width: 1000px) {
-  .project-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+  /* Three cards per page width */
+  .project-track > li {
+    flex-basis: calc((100% - 2 * var(--gap)) / 3);
   }
 }
 
-/* Featured project: full-width, screenshot left / details right */
-@media (min-width: 820px) {
-  .is-featured .project-card {
-    flex-direction: row;
-  }
+/* Progress bar, position, previous / next */
+.project-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 12px;
+}
 
-  .is-featured .cover {
-    flex: 0 0 56%;
-    aspect-ratio: auto;
-    min-height: 340px;
-    border-bottom: 0;
-    border-right: 1px solid var(--border);
-  }
+.project-controls.is-static {
+  display: none;
+}
 
-  .is-featured .project-card__body {
-    justify-content: center;
-    gap: 16px;
-    padding: clamp(28px, 3.5vw, 44px);
-  }
+.project-controls__bar {
+  position: relative;
+  flex: 1;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--border);
+  overflow: hidden;
+}
 
-  .is-featured .project-card__open {
-    margin-top: 12px;
-  }
+.project-controls__bar > span {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, var(--violet), var(--pink));
+  transform-origin: left;
+  transition: transform 0.2s linear;
+}
+
+.project-controls__count {
+  min-width: 4.5em;
+  text-align: right;
+  font-size: 0.78rem;
+  color: var(--text-faint);
+}
+
+.project-controls__btn:first-of-type .icon {
+  transform: rotate(180deg);
+}
+
+.project-controls__btn:disabled {
+  opacity: 0.4;
+  cursor: default;
 }
 
 /* Card */
@@ -196,10 +165,6 @@
 
 .project-card__title {
   font-size: clamp(1.3rem, 2.4vw, 1.6rem);
-}
-
-.is-featured .project-card__title {
-  font-size: clamp(1.5rem, 3.2vw, 2.2rem);
 }
 
 .project-card__summary {
@@ -317,13 +282,6 @@
     var(--surface-2);
 }
 
-/* Phones: letter-only placeholder art adds scrolling without information, so cards
-   without a real screenshot skip it (the dialog still shows it) */
-@media (max-width: 679px) {
-  .cover--generated:not(.cover--large) {
-    display: none;
-  }
-}
 
 .cover--generated[data-category='Academic'] {
   --hue: var(--pink-text);
@@ -366,16 +324,6 @@
   bottom: 12px;
   font-size: 0.7rem;
   color: var(--text-faint);
-}
-
-.projects-empty {
-  display: grid;
-  justify-items: start;
-  gap: 14px;
-  padding: 32px;
-  border: 1px dashed var(--border-strong);
-  border-radius: var(--radius-lg);
-  color: var(--text-muted);
 }
 
 .projects-note {

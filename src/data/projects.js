@@ -1,5 +1,14 @@
 import { todo } from '../lib/content.js'
-import portfolioShot from '../assets/projects/portfolio.webp'
+
+// Screenshots: drop an image into src/assets/projects/ named after the project's `id`
+// (e.g. daris.png, studysync.jpg) and it shows up on the card and in the details window.
+// Landscape, about 16:10 (e.g. 1280×800) looks best.
+const screenshots = import.meta.glob('../assets/projects/*.{png,jpg,jpeg,webp,avif}', {
+  eager: true,
+  import: 'default',
+})
+const shot = (id) =>
+  Object.entries(screenshots).find(([path]) => path.split('/').pop().replace(/\.\w+$/, '') === id)?.[1] ?? null
 
 // Projects shown in the Projects section. `category` drives the filters and tells
 // visitors what kind of work it is: Academic, Personal, or Prototype.
@@ -24,7 +33,8 @@ export const projects = [
     ],
     tech: ['Laravel', 'PHP', 'MySQL', 'JavaScript', 'HTML', 'CSS'],
     role: todo('Your role on this project'),
-    image: null,
+    image: shot('daris'),
+    imageAlt: 'Screenshot of DARIS',
     links: { live: todo('Demo URL'), repo: todo('Repository URL') },
   },
   {
@@ -38,7 +48,8 @@ export const projects = [
     highlights: ['Tasks and assignments', 'Deadline tracking', 'Focus sessions'],
     tech: ['React', 'TypeScript', 'CSS'],
     role: todo('Your role on this project'),
-    image: null,
+    image: shot('studysync'),
+    imageAlt: 'Screenshot of StudySync',
     links: { live: todo('Demo URL'), repo: todo('Repository URL') },
   },
   {
@@ -50,7 +61,8 @@ export const projects = [
     highlights: ['Personal journal entries', 'Aesthetic, custom-styled interface'],
     tech: ['React', 'JavaScript', 'CSS'],
     role: todo('Your role on this project'),
-    image: null,
+    image: shot('bloom-journal'),
+    imageAlt: 'Screenshot of Bloom Journal',
     links: { live: todo('Demo URL'), repo: todo('Repository URL') },
   },
   {
@@ -64,7 +76,8 @@ export const projects = [
     highlights: ['Product tracking', 'Stock movement tracking'],
     tech: ['PHP', 'JavaScript', 'Preact', 'CSS'],
     role: todo('Your role on this project'),
-    image: null,
+    image: shot('stocklite'),
+    imageAlt: 'Screenshot of StockLite',
     links: { live: todo('Demo URL'), repo: todo('Repository URL') },
   },
   {
@@ -86,7 +99,7 @@ export const projects = [
     tech: ['React', 'Vite', 'JavaScript', 'CSS'],
     role: 'Design and development',
     // Retake after filling in your real details.
-    image: portfolioShot,
+    image: shot('portfolio'),
     imageAlt: 'Screenshot of the portfolio hero section with the lanyard ID badge',
     links: {
       live: todo('Live URL after deployment'),

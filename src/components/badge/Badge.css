@@ -264,6 +264,11 @@
   pointer-events: none;
 }
 
+/* Portrait photos: keep the face in frame rather than the dead centre */
+.badge__photo img {
+  object-position: 50% 30%;
+}
+
 .badge__monogram {
   display: grid;
   place-items: center;

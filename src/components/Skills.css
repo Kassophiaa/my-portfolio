@@ -136,7 +136,8 @@
   font-weight: 600;
   line-height: 1.2;
   color: var(--text);
-  overflow-wrap: anywhere;
+  /* Long names hyphenate ("Book-keeping") instead of splitting at a random letter */
+  hyphens: auto;
 }
 
 .skill:hover {

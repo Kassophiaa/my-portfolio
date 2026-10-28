@@ -216,6 +216,63 @@
   min-width: 0;
 }
 
+/* Certificates, awards, organizations, seminars, workshops */
+.credentials {
+  display: grid;
+  gap: 16px;
+  margin-top: clamp(36px, 5vw, 52px);
+}
+
+.credentials__title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--pink-text);
+}
+
+.credentials__list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
+  gap: 14px;
+}
+
+.credential {
+  display: grid;
+  align-content: start;
+  gap: 6px;
+  min-width: 0;
+  padding: 18px 20px;
+}
+
+.credential__type {
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+.credential__name {
+  font-size: 1.02rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.credential__name .text-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.credential__meta {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+}
+
+.credential .project-card__tech {
+  margin-top: 6px;
+}
+
 @media (min-width: 760px) {
   .timeline {
     --rail-x: 206px;
