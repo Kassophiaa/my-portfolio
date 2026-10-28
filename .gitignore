@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Private working notes (kept locally, not published)
+system/TRACKER.md
