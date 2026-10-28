@@ -15,7 +15,7 @@ export const skillGroups = [
   {
     id: 'backend',
     label: 'Databases and backend services',
-    items: ['MySQL', 'Supabase', 'Firebase'],
+    items: ['MySQL', 'SQL', 'Supabase', 'Firebase'],
   },
   {
     id: 'apps',
@@ -25,7 +25,7 @@ export const skillGroups = [
   {
     id: 'tools',
     label: 'Tools and other skills',
-    items: ['Git', 'GitHub', 'VS Code', 'Vite', 'npm', 'Figma', 'XAMPP', 'Postman', 'Excel', 'Python'],
+    items: ['Git', 'GitHub', 'VS Code', 'Vite', 'npm', 'Figma', 'XAMPP', 'Postman', 'Python'],
   },
 ]
 

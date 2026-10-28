@@ -149,6 +149,12 @@ const glyphs = {
       <path d="M8 16l2-4.5 6-4-4 6L8 16zM12 13.5l-1.5-2" />
     </>
   ),
+  'basic bookkeeping': (
+    <>
+      <path d="M5 4.5A1.5 1.5 0 0 1 6.5 3H19v15H6.5A1.5 1.5 0 0 0 5 19.5z" />
+      <path d="M5 19.5A1.5 1.5 0 0 0 6.5 21H19v-3M9 7.5h6M9 11h6M9 14.5h3" />
+    </>
+  ),
   xampp: (
     <>
       <rect x="4" y="4" width="16" height="6.5" rx="1.5" />
