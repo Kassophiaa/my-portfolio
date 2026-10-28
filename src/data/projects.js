@@ -90,7 +90,8 @@ export const projects = [
     imageAlt: 'Screenshot of the portfolio hero section with the lanyard ID badge',
     links: {
       live: todo('Live URL after deployment'),
-      repo: 'https://github.com/fernandezkassandra226-creator/my-portfolio',
+      // The repo must be public for visitors to open this link.
+      repo: 'https://github.com/kassophiaa/my-portfolio',
     },
   },
 ]

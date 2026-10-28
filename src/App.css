@@ -16,8 +16,8 @@ main:focus {
   border: 1px solid color-mix(in srgb, var(--pink) 40%, var(--border));
   border-radius: 14px;
   background: color-mix(in srgb, var(--surface-solid) 92%, transparent);
-  backdrop-filter: var(--blur);
   -webkit-backdrop-filter: var(--blur);
+  backdrop-filter: var(--blur);
   box-shadow: 0 16px 40px -18px rgb(0 0 0 / 0.6);
   font-size: 0.8rem;
   line-height: 1.4;

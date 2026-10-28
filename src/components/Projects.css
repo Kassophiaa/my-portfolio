@@ -317,14 +317,11 @@
     var(--surface-2);
 }
 
-/* Phones: the placeholder art doesn't need a full 16:10 frame */
+/* Phones: letter-only placeholder art adds scrolling without information, so cards
+   without a real screenshot skip it (the dialog still shows it) */
 @media (max-width: 679px) {
   .cover--generated:not(.cover--large) {
-    aspect-ratio: 16 / 6;
-  }
-
-  .cover--generated:not(.cover--large) .cover__glyph {
-    font-size: 3.4rem;
+    display: none;
   }
 }
 
@@ -409,8 +406,8 @@
 
 .project-dialog::backdrop {
   background: rgb(9 5 18 / 0.66);
-  backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
 }
 
 @keyframes dialog-in {

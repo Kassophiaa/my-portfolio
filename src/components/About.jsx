@@ -41,16 +41,6 @@ export default function About({ profile, index }) {
                 </ul>
               </dd>
             </div>
-            <div className="about__fact">
-              <dt className="mono">Looking for</dt>
-              <dd>
-                <ul className="tick-list tick-list--check" data-reveal data-stagger>
-                  {profile.seeking.map((item) => (
-                    <li key={item}>{item}</li>
-                  ))}
-                </ul>
-              </dd>
-            </div>
           </dl>
         </div>
       </div>
