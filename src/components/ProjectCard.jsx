@@ -14,6 +14,11 @@ export function ProjectCover({ project, large = false }) {
           width="1280"
           height="800"
         />
+        {project.video && !large && (
+          <span className="cover__badge mono">
+            <Icon name="play" size={12} /> Video demo
+          </span>
+        )}
       </div>
     )
   }
