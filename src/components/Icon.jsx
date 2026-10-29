@@ -65,6 +65,7 @@ const paths = {
     </>
   ),
   send: <path d="M4 12l16-8-6 16-2.5-6.5L4 12z" />,
+  play: <path d="M8 5.5v13l10.5-6.5L8 5.5z" fill="currentColor" />,
   link: (
     <>
       <path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1" />
