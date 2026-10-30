@@ -33,7 +33,8 @@
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  height: var(--header-h);
+  /* The 1px bottom border is part of --header-h, so the hero can fill the rest exactly */
+  height: calc(var(--header-h) - 1px);
 }
 
 /* Brand */
@@ -48,14 +49,6 @@
   padding: 6px 2px;
 }
 
-.brand__mark {
-  color: var(--violet);
-}
-
-.brand__mark span {
-  color: var(--pink-text);
-}
-
 .brand__text {
   transition: color 0.2s var(--ease);
 }
@@ -67,14 +60,6 @@
 .brand__section {
   color: var(--pink-text);
   animation: section-in 0.4s var(--ease) both;
-}
-
-/* Narrow phones: "~/skills" instead of "~/portfolio/skills" so the buttons still fit */
-@media (max-width: 379px) {
-  .brand:has(.brand__section) .brand__text,
-  .brand__sep {
-    display: none;
-  }
 }
 
 @keyframes section-in {

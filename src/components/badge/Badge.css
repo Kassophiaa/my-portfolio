@@ -1,6 +1,6 @@
 .lanyard {
-  --badge-w: 264px;
-  --card-h: 372px;
+  --badge-w: 280px;
+  --card-h: 400px;
   --clip-y: 56px;
   --ring-r: 9px;
   position: relative;
@@ -246,9 +246,9 @@
 }
 
 .badge__photo {
-  width: 124px;
+  width: 172px;
   aspect-ratio: 1;
-  margin: 20px auto 0;
+  margin: 18px auto 0;
   padding: 3px;
   border-radius: 26px;
   background: linear-gradient(145deg, #f9a8d4, #a78bfa);
@@ -274,7 +274,7 @@
   place-items: center;
   background: radial-gradient(circle at 30% 20%, #3b2566, #1a0f30);
   font-family: var(--font-display);
-  font-size: 2.6rem;
+  font-size: 3.2rem;
   font-weight: 800;
   color: var(--lavender);
 }
@@ -306,10 +306,6 @@
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--pink-text);
-}
-
-.badge__tagline {
-  font-size: 0.92rem;
 }
 
 .badge__footer {
@@ -372,20 +368,36 @@
   margin-top: 6px;
 }
 
-.badge__skills {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
+/* OJT details: label on the left, value on the right */
+.badge__ojt {
+  display: grid;
+  margin: 0;
+  padding: 2px 12px;
+  border: 1px solid rgb(196 167 255 / 0.2);
+  border-radius: 10px;
+  background: rgb(167 139 250 / 0.1);
 }
 
-.badge__skills li {
-  padding: 4px 9px;
-  border: 1px solid rgb(196 167 255 / 0.2);
-  border-radius: 7px;
-  background: rgb(167 139 250 / 0.12);
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  color: var(--lavender);
+.badge__ojt > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  padding-block: 7px;
+  font-size: 0.82rem;
+}
+
+.badge__ojt > div + div {
+  border-top: 1px dashed rgb(196 167 255 / 0.2);
+}
+
+.badge__ojt dt {
+  color: var(--text-faint);
+}
+
+.badge__ojt dd {
+  margin: 0;
+  font-weight: 700;
+  color: var(--text);
 }
 
 .badge__links {
@@ -397,12 +409,12 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  min-height: 40px;
+  min-height: 36px;
   padding: 0 12px;
   border: 1px solid rgb(196 167 255 / 0.2);
   border-radius: 10px;
   background: rgb(255 255 255 / 0.03);
-  font-size: 0.88rem;
+  font-size: 0.85rem;
   font-weight: 600;
   color: var(--text);
   text-decoration: none;
@@ -429,10 +441,29 @@
 /* ---- Phones / tablets: badge sits first in the hero, smaller card ---- */
 @media (max-width: 959px) {
   .lanyard {
-    --badge-w: 236px;
-    --card-h: 344px;
+    --badge-w: 256px;
+    --card-h: 384px;
     --clip-y: 28px;
     height: calc(var(--clip-y) + var(--card-h) + 56px);
+  }
+
+  .badge__photo {
+    width: 164px;
+  }
+}
+
+/* Short desktop windows (e.g. a laptop with the browser bars showing): smaller badge
+   so the whole hero still fits on one screen */
+@media (min-width: 960px) and (max-height: 640px) {
+  .lanyard {
+    --badge-w: 256px;
+    --card-h: 360px;
+    --clip-y: 36px;
+    height: calc(var(--clip-y) + var(--card-h) + 64px);
+  }
+
+  .badge__photo {
+    width: 150px;
   }
 }
 
@@ -445,12 +476,12 @@
 
 @media (max-width: 360px) {
   .lanyard {
-    --badge-w: 214px;
-    --card-h: 326px;
+    --badge-w: 236px;
+    --card-h: 384px;
   }
 
   .badge__photo {
-    width: 104px;
+    width: 150px;
   }
 
   .badge__face {

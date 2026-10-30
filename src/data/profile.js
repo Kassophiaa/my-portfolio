@@ -10,10 +10,11 @@ export const SAMPLE_CONTENT = false
 export const profile = {
   name: 'Kassandra Sophia Fernandez',
   // The home screen greets with this; the ID badge and page title keep the full name.
-  heroName: 'Kassandra',
+  heroName: 'Kassy',
   role: 'IT Student · Aspiring Software Developer',
+  // Role line on the ID badge
+  badgeRole: 'BSIT Student · CLSU',
   location: 'Nueva Ecija, Philippines',
-  availability: 'Open to internship / OJT',
   // The one place (besides Contact) that mentions the internship search.
   intro:
     'Fourth-year BS Information Technology student at Central Luzon State University, looking for a software development internship or OJT.',
@@ -28,17 +29,33 @@ export const profile = {
   // Who you are, how you got here, where you're heading. The internship ask lives
   // in the hero and Contact, so it isn't repeated here.
   about: [
-    'I’m Kassandra. I enjoy turning ideas into practical applications and understanding how the pieces of a system fit together, from the interface people click to the database behind it.',
+    'I’m Kassy. I enjoy turning ideas into practical applications and understanding how the pieces of a system fit together, from the interface people click to the logic behind it.',
     'My path started with C and programming logic, moved through PHP and object-oriented programming, then into app development with FlutterFlow and Firebase. Now I build with React and Laravel, and our capstone, DARIS, brought those skills together in one system.',
-    'Outside class, I build personal projects (a study planner, a finance tracker, a meal planner, and a desktop routine planner) to practice debugging, databases, and problem-solving. I want to grow into a dependable software developer, and I’m curious about how data analysis can support better decisions.',
+    'Outside class, I build personal projects (a study planner, a finance tracker, a meal planner, and a desktop routine planner) to practice debugging and problem-solving. I want to grow into a dependable software developer, and I’m curious about how data analysis can support better decisions.',
   ],
   interests: [
-    'Software development',
-    'Building practical applications',
-    'Problem-solving',
-    'Databases',
-    'Data analysis (secondary interest)',
+    'Web Development',
+    'Software Development',
+    'Database Management',
+    'UI/UX Design',
+    'Artificial Intelligence',
+    'Data Analytics',
   ],
+
+  // OJT info. About shows the status and goals; the back of the ID badge shows
+  // hours, start, and setup.
+  ojt: {
+    status: 'Looking for an OJT / internship',
+    hours: '400 hours',
+    start: 'January 2027',
+    setup: 'On-site',
+    // Optional: set a preferred location (e.g. 'Nueva Ecija or nearby') to show it.
+    location: null,
+    goals: [
+      'Real-world experience contributing to projects',
+      'A team where I can learn from experienced developers',
+    ],
+  },
   // Not shown on the page right now (the hero and Contact already say this);
   // kept here in case you want an "I'm looking for" list back.
   seeking: [

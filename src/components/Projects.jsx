@@ -1,50 +1,133 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
-import Icon from './Icon.jsx'
 import SectionHeading from './SectionHeading.jsx'
 import ProjectCard from './ProjectCard.jsx'
 import ProjectDialog from './ProjectDialog.jsx'
 import { useReducedMotion } from '../hooks/useReducedMotion.js'
 import './Projects.css'
 
-// Tracks a horizontal scroller: which card is first in view, how far along it is,
-// and whether it can scroll further either way. Re-measures when `resetKey` changes.
-function useCarousel(resetKey) {
+// Width of one card plus the gap, i.e. one "step" of the row
+function stepOf(el) {
+  const card = el.firstElementChild
+  return card ? card.offsetWidth + parseFloat(getComputedStyle(el).columnGap || 0) : 0
+}
+
+// With this many projects or more, the row loops: it holds three copies of the list
+// and starts on the middle one, so there is always more to scroll to on both sides.
+const LOOP_MIN = 4
+
+// Tracks whether the row can scroll further either way (drives the edge fades).
+// When looping, once the row comes to rest it jumps by exactly one copy of the list
+// back into the middle copy. Every card looks the same in each copy, so the jump
+// can't be seen, and the row never runs out on either side.
+function useCarousel(count, loop) {
   const ref = useRef(null)
-  const [state, setState] = useState({ index: 0, progress: 0, start: true, end: true })
+  const [state, setState] = useState({ start: true, end: true })
 
   const measure = useCallback(() => {
     const el = ref.current
     if (!el) return
     const max = el.scrollWidth - el.clientWidth
-    const first = el.firstElementChild
-    const step = first ? first.offsetWidth + parseFloat(getComputedStyle(el).columnGap || 0) : 1
-    setState({
-      index: Math.round(el.scrollLeft / step),
-      progress: max > 0 ? el.scrollLeft / max : 1,
-      start: el.scrollLeft <= 2,
-      end: el.scrollLeft >= max - 2,
-    })
-  }, [])
+    const start = loop ? false : el.scrollLeft <= 2
+    const end = loop ? false : el.scrollLeft >= max - 2
+    setState((prev) => (prev.start === start && prev.end === end ? prev : { start, end }))
+  }, [loop])
 
   useEffect(() => {
     const el = ref.current
     if (!el) return
-    el.scrollLeft = 0
+    const setWidth = () => stepOf(el) * count
+
+    // Keep the scroll position inside the middle copy (no-op when not looping)
+    const recentre = () => {
+      const set = setWidth()
+      if (!loop || !set || el.classList.contains('is-dragging')) return
+      if (el.scrollLeft < set * 0.5) el.scrollLeft += set
+      else if (el.scrollLeft >= set * 1.5) el.scrollLeft -= set
+    }
+
+    el.scrollLeft = loop ? setWidth() : 0
     let frame = 0
+    let settle = 0
     const onScroll = () => {
       if (!frame) frame = requestAnimationFrame(() => ((frame = 0), measure()))
+      clearTimeout(settle)
+      settle = setTimeout(recentre, 140)
+    }
+    // Card widths change with the window: stay on the same card
+    const onResize = () => {
+      const step = stepOf(el)
+      if (loop && step) el.scrollLeft = (count + (Math.round(el.scrollLeft / step) % count)) * step
+      measure()
     }
     measure()
     el.addEventListener('scroll', onScroll, { passive: true })
-    window.addEventListener('resize', onScroll)
+    window.addEventListener('resize', onResize)
     return () => {
       cancelAnimationFrame(frame)
+      clearTimeout(settle)
       el.removeEventListener('scroll', onScroll)
-      window.removeEventListener('resize', onScroll)
+      window.removeEventListener('resize', onResize)
     }
-  }, [measure, resetKey])
+  }, [measure, count, loop])
 
   return [ref, state]
+}
+
+// Mouse users can grab the row and drag it sideways (touch and trackpads already
+// scroll it natively). A drag never counts as a click on the card underneath.
+function useDragScroll(ref, smooth) {
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    let drag = null
+
+    const onMove = (event) => {
+      if (!drag) return
+      const dx = event.clientX - drag.x
+      if (!drag.moved && Math.abs(dx) < 6) return
+      drag.moved = true
+      el.classList.add('is-dragging')
+      el.scrollLeft = drag.left - dx
+    }
+
+    const onUp = () => {
+      window.removeEventListener('pointermove', onMove)
+      window.removeEventListener('pointerup', onUp)
+      window.removeEventListener('pointercancel', onUp)
+      if (!drag?.moved) return (drag = null)
+      el.classList.remove('is-dragging')
+      // Swallow the click that follows the drag, then settle on the nearest card
+      const swallow = (event) => {
+        event.preventDefault()
+        event.stopPropagation()
+      }
+      el.addEventListener('click', swallow, { capture: true, once: true })
+      setTimeout(() => el.removeEventListener('click', swallow, { capture: true }), 0)
+      const step = stepOf(el)
+      if (step) el.scrollTo({ left: Math.round(el.scrollLeft / step) * step, behavior: smooth ? 'smooth' : 'auto' })
+      drag = null
+    }
+
+    const onDown = (event) => {
+      if (event.pointerType !== 'mouse' || event.button !== 0) return
+      if (el.scrollWidth <= el.clientWidth) return
+      drag = { x: event.clientX, left: el.scrollLeft, moved: false }
+      window.addEventListener('pointermove', onMove)
+      window.addEventListener('pointerup', onUp)
+      window.addEventListener('pointercancel', onUp)
+    }
+
+    // Stop the browser from dragging card images instead of the row
+    const onDragStart = (event) => event.preventDefault()
+
+    el.addEventListener('pointerdown', onDown)
+    el.addEventListener('dragstart', onDragStart)
+    return () => {
+      onUp()
+      el.removeEventListener('pointerdown', onDown)
+      el.removeEventListener('dragstart', onDragStart)
+    }
+  }, [ref, smooth])
 }
 
 export default function Projects({ projects, index }) {
@@ -52,17 +135,20 @@ export default function Projects({ projects, index }) {
 
   const openProject = projects.find((project) => project.id === openId) ?? null
   const realCount = projects.filter((project) => !project.draft).length
-  const [trackRef, carousel] = useCarousel(projects.length)
+  const loop = projects.length >= LOOP_MIN
+  const [trackRef, carousel] = useCarousel(projects.length, loop)
   const reduced = useReducedMotion()
-  const scrollable = !(carousel.start && carousel.end)
+  const scrollable = loop || !(carousel.start && carousel.end)
+  // Copy 1 is the real list; copies 0 and 2 sit either side of it for looping
+  const copies = loop ? [0, 1, 2] : [1]
+  useDragScroll(trackRef, !reduced)
 
-  // Move by one card (prev/next buttons and arrow keys on the track)
+  // Move by one card (arrow keys on the focused row)
   const step = (direction) => {
     const el = trackRef.current
-    const card = el?.firstElementChild
-    if (!card) return
-    const gap = parseFloat(getComputedStyle(el).columnGap || 0)
-    el.scrollBy({ left: direction * (card.offsetWidth + gap), behavior: reduced ? 'auto' : 'smooth' })
+    const size = el && stepOf(el)
+    if (!size) return
+    el.scrollBy({ left: direction * size, behavior: reduced ? 'auto' : 'smooth' })
   }
 
   const onTrackKey = (event) => {
@@ -93,53 +179,37 @@ export default function Projects({ projects, index }) {
         <>
           <ul
             ref={trackRef}
-            className="project-track"
+            className={`project-track${scrollable ? ' is-scrollable' : ''}${carousel.start ? '' : ' can-left'}${carousel.end ? '' : ' can-right'}`}
             tabIndex={scrollable ? 0 : undefined}
-            aria-label="Projects (scroll sideways or use the arrow keys)"
+            aria-label="Projects (scroll sideways, drag, or use the arrow keys)"
             onKeyDown={onTrackKey}
           >
-            {projects.map((project, i) => (
-              <li key={project.id} style={{ '--i': i }}>
-                <ProjectCard project={project} onOpen={() => setOpenId(project.id)} />
-              </li>
-            ))}
+            {copies.map((copy) =>
+              projects.map((project, i) => (
+                <li
+                  key={`${copy}-${project.id}`}
+                  style={{ '--i': i }}
+                  // The extra copies are only there for looping: hidden from screen
+                  // readers and the Tab order, but still clickable
+                  aria-hidden={copy === 1 ? undefined : 'true'}
+                >
+                  <ProjectCard
+                    project={project}
+                    onOpen={() => setOpenId(project.id)}
+                    focusable={copy === 1}
+                  />
+                </li>
+              )),
+            )}
           </ul>
 
-          <div className="container">
-            <div className={`project-controls${scrollable ? '' : ' is-static'}`}>
-              <span className="project-controls__bar" aria-hidden="true">
-                <span style={{ transform: `scaleX(${Math.max(carousel.progress, 0.04)})` }} />
-              </span>
-              <span className="project-controls__count mono" aria-hidden="true">
-                {String(Math.min(carousel.index + 1, projects.length)).padStart(2, '0')} /{' '}
-                {String(projects.length).padStart(2, '0')}
-              </span>
-              <button
-                type="button"
-                className="icon-button project-controls__btn"
-                onClick={() => step(-1)}
-                disabled={carousel.start}
-                aria-label="Previous project"
-              >
-                <Icon name="arrow" size={18} />
-              </button>
-              <button
-                type="button"
-                className="icon-button project-controls__btn"
-                onClick={() => step(1)}
-                disabled={carousel.end}
-                aria-label="Next project"
-              >
-                <Icon name="arrow" size={18} />
-              </button>
-            </div>
-
-            {projects.some((project) => project.draft) && realCount < 2 && (
+          {projects.some((project) => project.draft) && realCount < 2 && (
+            <div className="container">
               <p className="projects-note mono">
                 More projects are being added — dashed cards are placeholders.
               </p>
-            )}
-          </div>
+            </div>
+          )}
         </>
       )}
 

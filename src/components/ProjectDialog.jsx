@@ -31,29 +31,6 @@ function DemoVideo({ project }) {
   )
 }
 
-function ProjectLink({ href, label, icon }) {
-  // null means "doesn't apply" (e.g. a desktop app with no web demo): no button at all.
-  if (href === null) return null
-  if (isMissing(href)) {
-    return (
-      <span className="btn btn--ghost" aria-disabled="true">
-        <Icon name={icon} /> {label}
-        <span className="visually-hidden"> (not available yet)</span>
-        <span className="link-unavailable mono" aria-hidden="true">
-          soon
-        </span>
-      </span>
-    )
-  }
-  return (
-    <a className="btn btn--ghost" href={href} target="_blank" rel="noreferrer">
-      <Icon name={icon} /> {label}
-      <Icon name="external" size={15} className="icon--shift" />
-      <span className="visually-hidden"> (opens in a new tab)</span>
-    </a>
-  )
-}
-
 // Uses the native <dialog> element: focus is trapped, Escape closes,
 // and focus returns to the button that opened it.
 export default function ProjectDialog({ project, onClose }) {
@@ -162,10 +139,6 @@ export default function ProjectDialog({ project, onClose }) {
               </div>
             )}
 
-            <div className="project-dialog__links">
-              <ProjectLink href={project.links.live} label="Live demo" icon="link" />
-              <ProjectLink href={project.links.repo} label="Source code" icon="github" />
-            </div>
           </div>
         </div>
       )}

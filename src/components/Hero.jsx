@@ -73,7 +73,7 @@ function useRotatingWord(words, enabled, delay = 2600) {
   return enabled ? words[index % words.length] : words[0]
 }
 
-export default function Hero({ profile, skills }) {
+export default function Hero({ profile }) {
   const hasResume = !isMissing(profile.resume)
   const links = profile.links.filter((link) => !isMissing(link.href))
   const builds = profile.builds ?? []
@@ -83,7 +83,7 @@ export default function Hero({ profile, skills }) {
   useCursorGlow(ref, !reduced)
   const word = useRotatingWord(builds, !reduced)
 
-  const badgeProps = { profile, skills }
+  const badgeProps = { profile }
 
   return (
     <section id="top" className="hero" aria-labelledby="hero-title" ref={ref}>
@@ -93,11 +93,6 @@ export default function Hero({ profile, skills }) {
       </div>
       <div className="hero__inner container">
         <div className="hero__copy">
-          <p className="hero__status" data-reveal>
-            <span className="pulse-dot" aria-hidden="true" />
-            {profile.availability}
-          </p>
-
           <h1 id="hero-title" className="hero__title" data-reveal style={{ '--delay': 1 }}>
             <span className="hero__hello">Hi, I’m</span>{' '}
             <span className="hero__name">
@@ -175,16 +170,6 @@ export default function Hero({ profile, skills }) {
               <LanyardBadge {...badgeProps} />
             </Suspense>
           )}
-          <p className="hero__hint mono" aria-hidden="true">
-            {reduced ? (
-              'use “Flip” to see the back'
-            ) : (
-              <>
-                <span className="hint-fine">drag the badge · click to flip</span>
-                <span className="hint-touch">swipe sideways to swing · tap to flip</span>
-              </>
-            )}
-          </p>
         </div>
       </div>
 

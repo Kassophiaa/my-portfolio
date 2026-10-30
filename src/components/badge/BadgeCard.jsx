@@ -17,19 +17,24 @@ function FlipButton({ onFlip, children }) {
   )
 }
 
+// OJT rows on the back of the badge (same data as the About section)
+const OJT_ROWS = [
+  ['hours', 'Hours'],
+  ['start', 'Available'],
+  ['setup', 'Setup'],
+]
+
 // The two faces of the ID badge. Purely presentational; motion lives in LanyardBadge.
-export default function BadgeCard({ profile, skills, flipped, onFlip }) {
+export default function BadgeCard({ profile, flipped, onFlip }) {
   const initials = initialsOf(profile.name)
   const links = profile.links.filter((link) => !isMissing(link.href))
-  const year = new Date().getFullYear()
+  const ojtRows = OJT_ROWS.filter(([key]) => !isMissing(profile.ojt?.[key]))
 
   return (
     <div className={`badge__flipper${flipped ? ' is-flipped' : ''}`}>
       <div className="badge__face badge__face--front" inert={flipped}>
         <div className="badge__top">
           <span className="badge__slot" aria-hidden="true" />
-          <span className="badge__brand mono">~/portfolio</span>
-          <span className="badge__year mono">{year}</span>
         </div>
 
         <div className="badge__photo">
@@ -46,10 +51,7 @@ export default function BadgeCard({ profile, skills, flipped, onFlip }) {
           <p className="badge__name">
             <Field value={profile.name} />
           </p>
-          <p className="badge__role">{profile.role.split('·')[0].trim()}</p>
-          <p className="badge__tagline">
-            Ready to learn by <em className="accent-serif">building.</em>
-          </p>
+          <p className="badge__role">{profile.badgeRole ?? profile.role.split('·')[0].trim()}</p>
         </div>
 
         <div className="badge__footer">
@@ -58,7 +60,7 @@ export default function BadgeCard({ profile, skills, flipped, onFlip }) {
             Available for OJT
           </p>
           <FlipButton onFlip={onFlip}>
-            Flip<span className="visually-hidden"> badge to see skills and links</span>
+            Flip<span className="visually-hidden"> badge to see OJT details and links</span>
           </FlipButton>
         </div>
       </div>
@@ -66,16 +68,22 @@ export default function BadgeCard({ profile, skills, flipped, onFlip }) {
       <div className="badge__face badge__face--back" inert={!flipped}>
         <div className="badge__top">
           <span className="badge__slot" aria-hidden="true" />
-          <span className="badge__brand mono">back side</span>
         </div>
 
         <div className="badge__back-body">
-          <p className="badge__label">Works with</p>
-          <ul className="badge__skills">
-            {skills.slice(0, 8).map((skill) => (
-              <li key={skill}>{skill}</li>
-            ))}
-          </ul>
+          {ojtRows.length > 0 && (
+            <>
+              <p className="badge__label">OJT details</p>
+              <dl className="badge__ojt">
+                {ojtRows.map(([key, label]) => (
+                  <div key={key}>
+                    <dt>{label}</dt>
+                    <dd>{profile.ojt[key]}</dd>
+                  </div>
+                ))}
+              </dl>
+            </>
+          )}
 
           <p className="badge__label">Find me</p>
           {links.length > 0 ? (

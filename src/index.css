@@ -321,7 +321,11 @@ textarea {
   position: relative;
   /* Keeps the glow layer above the band background */
   isolation: isolate;
-  padding-block: clamp(64px, 8vw, 104px);
+  --section-pad: clamp(56px, 6vw, 88px);
+  padding-block: var(--section-pad);
+  /* Menu links land on the section's heading (about 40px under the header),
+     not on the empty padding above it */
+  scroll-margin-top: calc(28px - var(--section-pad));
 }
 
 /* Every other section sits on a tinted band (About, Skills, Contact) */
@@ -363,7 +367,7 @@ main > .section::after {
 .section-head {
   display: grid;
   gap: 14px;
-  margin-bottom: clamp(32px, 5vw, 56px);
+  margin-bottom: clamp(24px, 3.5vw, 40px);
 }
 
 .eyebrow {

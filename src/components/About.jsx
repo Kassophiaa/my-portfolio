@@ -1,6 +1,30 @@
 import SectionHeading from './SectionHeading.jsx'
 import './About.css'
 
+// Compact OJT summary for the side card, under "Interested in".
+function OjtFact({ ojt }) {
+  return (
+    <div className="about__fact">
+      {/* Label kept for screen readers only; the status pill says it visually */}
+      <dt className="visually-hidden">On-the-job training</dt>
+      <dd className="about__ojt">
+        <span className="about__ojt-status">
+          <span className="about__ojt-dot" aria-hidden="true" />
+          {ojt.status}
+        </span>
+
+        {ojt.goals?.length > 0 && (
+          <ul className="tick-list tick-list--check about__ojt-goals" aria-label="What I’m looking for">
+            {ojt.goals.map((goal) => (
+              <li key={goal}>{goal}</li>
+            ))}
+          </ul>
+        )}
+      </dd>
+    </div>
+  )
+}
+
 export default function About({ profile, index }) {
   const [lead, ...rest] = profile.about
 
@@ -41,6 +65,8 @@ export default function About({ profile, index }) {
                 </ul>
               </dd>
             </div>
+
+            {profile.ojt && <OjtFact ojt={profile.ojt} />}
           </dl>
         </div>
       </div>

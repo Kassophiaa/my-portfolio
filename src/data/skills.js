@@ -28,6 +28,3 @@ export const skillGroups = [
     items: ['Git', 'GitHub', 'VS Code', 'Vite', 'npm', 'Figma', 'XAMPP', 'Postman', 'Python'],
   },
 ]
-
-// Shown on the back of the hero ID badge. Keep to short names (max 8).
-export const badgeSkills = ['JavaScript', 'PHP', 'React', 'TypeScript', 'Laravel', 'MySQL', 'HTML5', 'CSS3']
