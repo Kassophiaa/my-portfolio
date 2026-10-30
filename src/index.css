@@ -364,6 +364,88 @@ main > .section::after {
   pointer-events: none;
 }
 
+/* ------------------------------------------------------------------
+   Sideways-scrolling card row (Projects, Certificates) — see useCardRow.js.
+   It spans the full screen width, but its padding lines the first card up with
+   the page content; the next card peeks in from the edge. Set --card-w per row.
+   ------------------------------------------------------------------ */
+.card-row {
+  --edge: max(var(--gutter), (100% - var(--max)) / 2 + var(--gutter));
+  --gap: 16px;
+  --card-w: min(86%, 380px);
+  --fade: clamp(24px, 6vw, 72px);
+  --fade-l: 0px;
+  --fade-r: 0px;
+  display: flex;
+  gap: var(--gap);
+  /* Vertical room so card hover lift and shadows aren't clipped */
+  padding: 10px var(--edge) 28px;
+  margin-block: -10px -12px;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--edge);
+  scrollbar-width: none;
+  /* Soft fade on whichever side has more cards, so it's clear the row scrolls */
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent,
+    #000 var(--fade-l),
+    #000 calc(100% - var(--fade-r)),
+    transparent
+  );
+  mask-image: linear-gradient(90deg, transparent, #000 var(--fade-l), #000 calc(100% - var(--fade-r)), transparent);
+}
+
+.card-row::-webkit-scrollbar {
+  display: none;
+}
+
+.card-row:focus-visible {
+  outline: 2px solid var(--pink-text);
+  outline-offset: -2px;
+  border-radius: var(--radius-lg);
+}
+
+.card-row > li {
+  display: grid;
+  flex: 0 0 var(--card-w);
+  scroll-snap-align: start;
+}
+
+.card-row.can-left {
+  --fade-l: var(--fade);
+}
+
+.card-row.can-right {
+  --fade-r: var(--fade);
+}
+
+@media (min-width: 680px) {
+  .card-row {
+    --gap: 20px;
+  }
+}
+
+/* Mouse: grab and drag the row sideways */
+@media (pointer: fine) {
+  .card-row.is-scrollable {
+    cursor: grab;
+  }
+}
+
+.card-row.is-dragging {
+  cursor: grabbing;
+  /* Follow the mouse freely; the row settles on the nearest card when released */
+  scroll-snap-type: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.card-row.is-dragging > li > * {
+  pointer-events: none;
+}
+
 .section-head {
   display: grid;
   gap: 14px;

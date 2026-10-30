@@ -1,35 +1,10 @@
-/* Horizontal scroller. It spans the full screen width, but its padding lines the
-   first card up with the page content; the next card peeks in from the right. */
+/* Projects row: one card + a peek on phones, two per screen at 680px, three at 1000px.
+   The scrolling itself is the shared `.card-row` (index.css). */
 .project-track {
-  --edge: max(var(--gutter), (100% - var(--max)) / 2 + var(--gutter));
-  --gap: 16px;
-  display: flex;
-  gap: var(--gap);
-  /* Vertical room so card hover lift and shadows aren't clipped */
-  padding: 10px var(--edge) 28px;
-  margin-block: -10px -12px;
-  overflow-x: auto;
-  overscroll-behavior-x: contain;
-  scroll-snap-type: x mandatory;
-  scroll-padding-inline: var(--edge);
-  scrollbar-width: none;
-}
-
-.project-track::-webkit-scrollbar {
-  display: none;
-}
-
-.project-track:focus-visible {
-  outline: 2px solid var(--pink-text);
-  outline-offset: -2px;
-  border-radius: var(--radius-lg);
+  --card-w: min(86%, 380px);
 }
 
 .project-track > li {
-  display: grid;
-  /* Phones: one card plus a peek of the next */
-  flex: 0 0 min(86%, 380px);
-  scroll-snap-align: start;
   animation: card-in 0.5s var(--ease) both;
   animation-delay: calc(var(--i) * 70ms);
 }
@@ -43,64 +18,15 @@
 
 @media (min-width: 680px) {
   .project-track {
-    --gap: 20px;
-  }
-
-  /* Two cards per page width */
-  .project-track > li {
-    flex-basis: calc((100% - var(--gap)) / 2);
+    --card-w: calc((100% - var(--gap)) / 2);
   }
 }
 
 @media (min-width: 1000px) {
-  /* Three cards per page width */
-  .project-track > li {
-    flex-basis: calc((100% - 2 * var(--gap)) / 3);
+  .project-track {
+    --card-w: calc((100% - 2 * var(--gap)) / 3);
   }
 }
-
-/* Soft fade on whichever side has more cards, so it's clear the row scrolls */
-.project-track {
-  --fade: clamp(24px, 6vw, 72px);
-  --fade-l: 0px;
-  --fade-r: 0px;
-  -webkit-mask-image: linear-gradient(
-    90deg,
-    transparent,
-    #000 var(--fade-l),
-    #000 calc(100% - var(--fade-r)),
-    transparent
-  );
-  mask-image: linear-gradient(90deg, transparent, #000 var(--fade-l), #000 calc(100% - var(--fade-r)), transparent);
-}
-
-.project-track.can-left {
-  --fade-l: var(--fade);
-}
-
-.project-track.can-right {
-  --fade-r: var(--fade);
-}
-
-/* Mouse: grab and drag the row sideways */
-@media (pointer: fine) {
-  .project-track.is-scrollable {
-    cursor: grab;
-  }
-}
-
-.project-track.is-dragging {
-  cursor: grabbing;
-  /* Follow the mouse freely; the row settles on the nearest card when released */
-  scroll-snap-type: none;
-  user-select: none;
-  -webkit-user-select: none;
-}
-
-.project-track.is-dragging .project-card {
-  pointer-events: none;
-}
-
 /* Card */
 .project-card {
   position: relative;

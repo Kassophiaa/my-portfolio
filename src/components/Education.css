@@ -216,11 +216,17 @@
   min-width: 0;
 }
 
-/* Certificates, awards, organizations, seminars, workshops */
+/* Certificates: a sideways-scrolling row (shared `.card-row`, see index.css) */
 .credentials {
   display: grid;
-  gap: 16px;
-  margin-top: clamp(36px, 5vw, 52px);
+  gap: 14px;
+  margin-top: clamp(40px, 6vw, 64px);
+}
+
+.credentials__head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .credentials__title {
@@ -231,30 +237,61 @@
   color: var(--pink-text);
 }
 
+.credentials__count {
+  padding: 1px 8px;
+  border-radius: 999px;
+  background: var(--pink-wash);
+  color: var(--pink-text);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+/* One card + a peek on phones, then 2 / 3 / 4 per screen */
 .credentials__list {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
-  gap: 14px;
+  --card-w: min(80%, 300px);
+}
+
+@media (min-width: 600px) {
+  .credentials__list {
+    --card-w: calc((100% - var(--gap)) / 2);
+  }
+}
+
+@media (min-width: 900px) {
+  .credentials__list {
+    --card-w: calc((100% - 2 * var(--gap)) / 3);
+  }
+}
+
+@media (min-width: 1200px) {
+  .credentials__list {
+    --card-w: calc((100% - 3 * var(--gap)) / 4);
+  }
 }
 
 .credential {
-  display: grid;
-  align-content: start;
-  gap: 6px;
+  display: flex;
+  flex-direction: column;
   min-width: 0;
-  padding: 18px 20px;
-}
-
-/* Certificate preview: same 3:2 frame for every card, image shown whole */
-.credential {
   overflow: hidden;
+  transition:
+    transform 0.35s var(--ease),
+    border-color 0.35s var(--ease),
+    box-shadow 0.35s var(--ease);
 }
 
+.credential:hover,
+.credential:focus-within {
+  transform: translateY(-4px);
+  border-color: color-mix(in srgb, var(--pink) 45%, var(--border));
+  box-shadow: var(--shadow), var(--glow-shadow);
+}
+
+/* Certificate preview: same 3:2 frame for every card, certificate shown whole */
 .credential__thumb {
   display: block;
-  margin: -18px -20px 8px;
   aspect-ratio: 3 / 2;
-  padding: 12px;
+  padding: 14px;
   border-bottom: 1px solid var(--border);
   background: color-mix(in srgb, var(--surface) 70%, var(--bg-soft));
   overflow: hidden;
@@ -273,6 +310,14 @@
   transform: scale(1.04);
 }
 
+.credential__body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 6px;
+  padding: 14px 18px 18px;
+}
+
 .credential__type {
   font-size: 0.75rem;
   letter-spacing: 0.12em;
@@ -281,7 +326,7 @@
 }
 
 .credential__name {
-  font-size: 1.02rem;
+  font-size: 1rem;
   font-weight: 700;
   line-height: 1.35;
 }
@@ -292,8 +337,11 @@
   vertical-align: -1px;
 }
 
+/* Issuer and tags sit at the bottom, so cards of different heights still line up */
 .credential__meta {
-  font-size: 0.88rem;
+  margin-top: auto;
+  padding-top: 4px;
+  font-size: 0.86rem;
   color: var(--text-muted);
 }
 
