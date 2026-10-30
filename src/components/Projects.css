@@ -59,49 +59,46 @@
   }
 }
 
-/* Progress bar, position, previous / next */
-.project-controls {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-top: 12px;
+/* Soft fade on whichever side has more cards, so it's clear the row scrolls */
+.project-track {
+  --fade: clamp(24px, 6vw, 72px);
+  --fade-l: 0px;
+  --fade-r: 0px;
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent,
+    #000 var(--fade-l),
+    #000 calc(100% - var(--fade-r)),
+    transparent
+  );
+  mask-image: linear-gradient(90deg, transparent, #000 var(--fade-l), #000 calc(100% - var(--fade-r)), transparent);
 }
 
-.project-controls.is-static {
-  display: none;
+.project-track.can-left {
+  --fade-l: var(--fade);
 }
 
-.project-controls__bar {
-  position: relative;
-  flex: 1;
-  height: 2px;
-  border-radius: 2px;
-  background: var(--border);
-  overflow: hidden;
+.project-track.can-right {
+  --fade-r: var(--fade);
 }
 
-.project-controls__bar > span {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(90deg, var(--violet), var(--pink));
-  transform-origin: left;
-  transition: transform 0.2s linear;
+/* Mouse: grab and drag the row sideways */
+@media (pointer: fine) {
+  .project-track.is-scrollable {
+    cursor: grab;
+  }
 }
 
-.project-controls__count {
-  min-width: 4.5em;
-  text-align: right;
-  font-size: 0.78rem;
-  color: var(--text-faint);
+.project-track.is-dragging {
+  cursor: grabbing;
+  /* Follow the mouse freely; the row settles on the nearest card when released */
+  scroll-snap-type: none;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
-.project-controls__btn:first-of-type .icon {
-  transform: rotate(180deg);
-}
-
-.project-controls__btn:disabled {
-  opacity: 0.4;
-  cursor: default;
+.project-track.is-dragging .project-card {
+  pointer-events: none;
 }
 
 /* Card */
@@ -519,22 +516,6 @@
 .project-dialog__highlights {
   display: grid;
   gap: 12px;
-}
-
-.project-dialog__links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  padding-top: 6px;
-}
-
-.link-unavailable {
-  padding: 1px 6px;
-  border-radius: 4px;
-  background: var(--bg-soft);
-  font-size: 0.68rem;
-  font-weight: 500;
-  color: var(--text-faint);
 }
 
 @media (min-width: 600px) {

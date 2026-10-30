@@ -1,3 +1,9 @@
+/* The orb behind the tiles is bigger than the tile block; keep its glow and rings
+   inside the section so they never cross the divider into the next one */
+.skills-section {
+  overflow: clip;
+}
+
 /* One combined set of glass tiles over a glowing orb, wrapped and centred. */
 .skills-stage {
   --tile: 84px;
@@ -5,7 +11,8 @@
   position: relative;
   display: grid;
   justify-items: center;
-  padding-block: clamp(8px, 3vw, 32px);
+  /* No extra room on top: the tiles start right under the heading like other sections */
+  padding-block: 0 clamp(8px, 3vw, 32px);
   /* Sideways only, so the glow can spill softly above and below */
   overflow-x: clip;
 }
@@ -13,7 +20,8 @@
 /* Glow + slowly turning rings behind the tiles */
 .skills-stage__orb {
   position: absolute;
-  top: 50%;
+  /* A little above centre so the outer ring ends before the section's bottom edge */
+  top: calc(50% - 40px);
   left: 50%;
   width: min(560px, 100%);
   aspect-ratio: 1;

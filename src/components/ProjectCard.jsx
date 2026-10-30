@@ -41,7 +41,7 @@ export function ProjectCover({ project, large = false }) {
   )
 }
 
-export default function ProjectCard({ project, onOpen }) {
+export default function ProjectCard({ project, onOpen, focusable = true }) {
   const titleText = textOf(project.title, 'Untitled project')
 
   return (
@@ -79,6 +79,7 @@ export default function ProjectCard({ project, onOpen }) {
           type="button"
           className="project-card__open"
           onClick={onOpen}
+          tabIndex={focusable ? undefined : -1}
           aria-haspopup="dialog"
           aria-label={`View details: ${titleText}`}
         >

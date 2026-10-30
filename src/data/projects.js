@@ -1,5 +1,3 @@
-import { todo } from '../lib/content.js'
-
 // Screenshots and demo videos live in src/assets/projects/ and are picked by file name
 // (without the extension): shot('daris') → daris.png, demo('daris-demo') → daris-demo.mp4.
 // Screenshots: landscape, about 16:10 (e.g. 1280×800). Videos (.mp4 or .webm, name ending
@@ -25,8 +23,7 @@ const demo = (name) => find(videos, name)
 //   highlights   key features (shown as "Key features")
 //   tech, role
 //   next      optional: known limitations / what's planned (shown as "What's next")
-//   video     optional demo recording; links.live is a deployed URL
-// Links left as todo() show as "soon" instead of pointing at a fake URL.
+//   video     optional demo recording
 // Missing `year` or `status` is hidden; missing `role` shows a TODO placeholder in the dialog.
 export const projects = [
   {
@@ -46,12 +43,11 @@ export const projects = [
       'Workflows for handling cases',
     ],
     tech: ['Laravel', 'PHP', 'MySQL', 'JavaScript', 'HTML', 'CSS'],
-    role: todo('Your role on this project'),
+    role: 'Front-end developer',
     status: 'Completed',
     image: shot('daris'),
     imageAlt: 'DARIS dashboard with case totals, cases per month, cases by status, and upcoming hearings',
     video: demo('daris-demo'),
-    links: { live: todo('Demo URL'), repo: todo('Repository URL') },
   },
   {
     id: 'spendwise',
@@ -73,7 +69,7 @@ export const projects = [
       'Supabase migration with row-level security on every user-owned table',
     ],
     tech: ['React', 'TypeScript', 'Vite', 'Recharts', 'Supabase', 'CSS'],
-    role: 'Design and development',
+    role: 'Solo developer',
     status: 'In progress',
     next: [
       'Sign-in and cloud sync with Supabase (data is saved in the browser for now)',
@@ -83,10 +79,6 @@ export const projects = [
     image: shot('spendwise'),
     imageAlt: 'SpendWise overview with total balance, income, expenses, a cash-flow chart, and a spending breakdown',
     video: demo('spendwise-demo'),
-    links: {
-      live: todo('Live URL after deployment'),
-      repo: todo('Repository URL (make the GitHub repo public first)'),
-    },
   },
   {
     id: 'daywall',
@@ -108,16 +100,11 @@ export const projects = [
       'Light on battery: updates once per second with no constant animations',
     ],
     tech: ['React', 'JavaScript', 'Vite', 'CSS'],
-    role: 'Design and development',
+    role: 'Solo developer',
     status: 'Completed',
     image: shot('daywall'),
     imageAlt: 'DayWall wallpaper showing a 24-hour clock ring, the current block, and the day’s timeline',
     video: demo('daywall-demo'),
-    links: {
-      // It's a desktop wallpaper, so the recording is the demo.
-      live: null,
-      repo: todo('Repository URL (make the GitHub repo public first)'),
-    },
   },
   {
     id: 'fintrack',
@@ -140,15 +127,11 @@ export const projects = [
       'Notifications for new advice, new clients, access changes, and ratings',
     ],
     tech: ['PHP 8', 'MySQL', 'mysqli', 'jQuery', 'Bootstrap 5', 'Bootstrap Icons', 'Chart.js'],
-    role: todo('Your role on this project'),
+    role: 'Solo developer',
     image: shot('fintrack-main-page'),
     imageAlt:
       'FinTrack client dashboard with total balance, monthly income, expenses, savings, investments, a six-month income vs. expenses chart, and top spending',
     video: demo('fintrack-live-demo'),
-    links: {
-      live: todo('Demo URL'),
-      repo: 'https://github.com/Kassophiaa/FinTrack',
-    },
   },
   {
     id: 'mealmap',
@@ -171,16 +154,12 @@ export const projects = [
       'Supabase mode with sign-in and row-level security; local demo mode without an account',
     ],
     tech: ['React', 'JavaScript', 'Vite', 'Tailwind CSS', 'React Router', 'Recharts', 'Supabase', 'Vitest'],
-    role: 'Design and development',
+    role: 'Solo developer',
     status: 'Completed',
     image: shot('mealmap-dashboard'),
     imageAlt:
       'MealMap dashboard with today’s meals, recipe, pantry, expiry, and shopping-list figures, and cook-from-pantry suggestions',
     video: demo('mealmap-demo'),
-    links: {
-      live: todo('Demo URL'),
-      repo: todo('Repository URL (make the GitHub repo public first)'),
-    },
   },
   {
     id: 'clsu-merit',
@@ -203,14 +182,10 @@ export const projects = [
       '162 automated tests',
     ],
     tech: ['Python', 'Flask', 'Jinja', 'JavaScript', 'CSS', 'pytest'],
-    role: todo('Your role on this project'),
+    role: 'Solo developer',
     image: shot('clsu-merit-dashboard'),
     imageAlt: 'CLSU Merit dashboard with the overall GWA, total units, and a list of semesters with their GWA and honor',
     video: demo('clsu-merit-demo'),
-    links: {
-      live: todo('Demo URL'),
-      repo: todo('Repository URL (make the GitHub repo public first)'),
-    },
   },
   {
     id: 'studysync',
@@ -233,16 +208,12 @@ export const projects = [
       'JSON backup and restore; responsive layout with mobile bottom navigation',
     ],
     tech: ['React', 'TypeScript', 'Vite', 'React Router', 'Recharts', 'date-fns', 'CSS'],
-    role: 'Design and development',
+    role: 'Solo developer',
     status: 'In progress',
     next: ['Sign-in and cloud sync with Supabase (data is saved in the browser for now)'],
     image: shot('studysync-dashboard'),
     imageAlt:
       'StudySync home dashboard with quick actions, study time today and this week, tasks done, study streak, and upcoming tasks',
     video: demo('studysync-demo'),
-    links: {
-      live: todo('Demo URL'),
-      repo: todo('Repository URL (make the GitHub repo public first)'),
-    },
   },
 ]

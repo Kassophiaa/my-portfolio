@@ -88,7 +88,15 @@ main:focus {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   gap: 12px 24px;
+  text-align: center;
+}
+
+/* Phones: lift the text above the floating back-to-top button (48px + 16px offset) */
+@media (max-width: 640px) {
+  .site-footer {
+    padding-bottom: 80px;
+  }
 }
 

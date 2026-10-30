@@ -10,7 +10,7 @@ import BackToTop from './components/BackToTop.jsx'
 import SampleNotice from './components/SampleNotice.jsx'
 import { profile, education, SAMPLE_CONTENT } from './data/profile.js'
 import { projects } from './data/projects.js'
-import { badgeSkills, skillGroups } from './data/skills.js'
+import { skillGroups } from './data/skills.js'
 import { useActiveSection } from './hooks/useActiveSection.js'
 import { useReveal } from './hooks/useReveal.js'
 import { useScrollProgress } from './hooks/useScrollProgress.js'
@@ -40,7 +40,7 @@ export default function App() {
       </a>
       <Header sections={sections} active={active} theme={theme} onToggleTheme={toggle} />
       <main id="main" tabIndex={-1}>
-        <Hero profile={profile} skills={badgeSkills} />
+        <Hero profile={profile} />
         <About profile={profile} index={1} />
         <Projects projects={projects} index={2} />
         <Skills groups={skillGroups} index={3} />

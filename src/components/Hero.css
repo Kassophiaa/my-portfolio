@@ -47,44 +47,36 @@
 
 .hero__copy {
   display: grid;
-  gap: 22px;
+  gap: 20px;
   min-width: 0;
 }
 
-.hero__status {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  justify-self: start;
-  padding: 7px 14px 7px 12px;
-  border: 1px solid color-mix(in srgb, var(--pink) 35%, var(--border));
-  border-radius: 999px;
-  background: var(--pink-wash);
-  color: var(--pink-text);
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
-  font-weight: 500;
-}
-
+/* "Hi, I'm" and the name share one row, lined up on the text baseline.
+   The name is short, so it can be large without wrapping. */
 .hero__title {
-  display: grid;
-  gap: 6px;
-  /* Sized so the full name sits on two lines on desktop, not three */
-  font-size: clamp(2.5rem, 6.2vw, 4.25rem);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 0.2em;
+  font-size: clamp(3.25rem, 8vw, 5.75rem);
   font-weight: 800;
-  line-height: 1;
-  letter-spacing: -0.04em;
+  line-height: 0.95;
+  letter-spacing: -0.045em;
 }
 
 .hero__hello {
-  font-size: 0.48em;
-  font-weight: 500;
-  letter-spacing: -0.02em;
+  font-size: 0.4em;
+  font-weight: 600;
+  letter-spacing: -0.025em;
   color: var(--text-muted);
 }
 
 .hero__name {
   overflow-wrap: anywhere;
+  /* Room for letters that dip below the line (the "y" in Kassy); the gradient text
+     is only painted inside this box */
+  padding-bottom: 0.14em;
+  margin-bottom: -0.14em;
 }
 
 .hero__name .todo {
@@ -95,15 +87,19 @@
 
 .hero__tagline {
   font-family: var(--font-display);
-  font-size: clamp(1.35rem, 3.2vw, 1.9rem);
-  font-weight: 500;
+  font-size: clamp(1.3rem, 2.6vw, 1.75rem);
+  font-weight: 600;
   line-height: 1.25;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.025em;
   color: var(--text);
 }
 
+/* The rotating phrase is the accent: larger serif italic */
 .hero__tagline .accent-serif {
-  font-size: 1.08em;
+  font-size: 1.16em;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
 }
 
 /* The rotating word gets its own line so its changing width never reflows the copy */
@@ -134,10 +130,12 @@
 }
 
 .hero__intro {
-  max-width: 52ch;
-  font-size: clamp(1rem, 0.94rem + 0.3vw, 1.125rem);
+  max-width: 46ch;
+  font-size: clamp(1.02rem, 0.95rem + 0.35vw, 1.2rem);
   font-weight: 500;
-  line-height: 1.7;
+  line-height: 1.65;
+  color: var(--text-muted);
+  text-wrap: pretty;
 }
 
 .hero__actions {
@@ -228,13 +226,6 @@
   min-width: 0;
 }
 
-.hero__hint {
-  margin-top: -36px;
-  text-align: center;
-  font-size: 0.72rem;
-  color: var(--text-faint);
-}
-
 /* Phones / tablets: ID badge first, then the intro */
 @media (max-width: 959px) {
   .hero {
@@ -259,23 +250,14 @@
   }
 }
 
-.hint-touch {
-  display: none;
-}
-
-@media (hover: none) {
-  .hint-fine {
-    display: none;
-  }
-
-  .hint-touch {
-    display: inline;
-  }
-}
-
+/* Desktop: the hero fills exactly one screen under the header, windowed or full screen
+   (F11). Padding follows the screen height instead of the width so short laptop
+   windows don't push the next section into view. */
 @media (min-width: 960px) {
   .hero {
+    box-sizing: border-box;
     min-height: calc(100svh - var(--header-h));
+    padding-block: clamp(12px, 3svh, 40px);
     display: grid;
     align-items: center;
   }
@@ -291,6 +273,11 @@
 }
 
 @media (min-width: 960px) and (min-height: 760px) {
+  /* Keep the content clear of the cue at the bottom */
+  .hero {
+    padding-bottom: 88px;
+  }
+
   .hero__scroll {
     position: absolute;
     left: 50%;
@@ -342,6 +329,17 @@
   }
 }
 
+/* Short desktop windows: tighter copy so everything stays on one screen */
+@media (min-width: 960px) and (max-height: 700px) {
+  .hero__copy {
+    gap: 16px;
+  }
+
+  .hero__title {
+    font-size: clamp(3rem, 6.5vw, 4.75rem);
+  }
+}
+
 /* Phones: buttons share the row, profile icons sit beside them */
 @media (max-width: 520px) {
   .hero__copy {
@@ -360,15 +358,11 @@
   .hero__actions .btn--primary {
     grid-column: 1 / -1;
   }
-
-  .hero__hint {
-    margin-top: -24px;
-  }
 }
 
-/* Smallest phones: keep the name to two lines */
+/* Smallest phones: keep "Hi, I'm Kassy" on one line */
 @media (max-width: 359px) {
   .hero__title {
-    font-size: 2.1rem;
+    font-size: 2.75rem;
   }
 }

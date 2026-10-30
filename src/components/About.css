@@ -67,6 +67,43 @@
   white-space: normal;
 }
 
+/* OJT summary in the side card, under "Interested in" */
+.about__ojt {
+  display: grid;
+  justify-items: start;
+  gap: 12px;
+}
+
+.about__ojt-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 11px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--pink-wash);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--pink-text);
+}
+
+.about__ojt-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--pink);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--pink) 22%, transparent);
+}
+
+.about__ojt-goals {
+  gap: 6px;
+  font-size: 0.86rem;
+}
+
+.about__ojt-goals li {
+  font-weight: 500;
+  color: var(--text-muted);
+}
 @media (min-width: 900px) {
   .about__grid {
     grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr);

@@ -60,10 +60,7 @@ export default function Header({ sections, active, theme, onToggleTheme }) {
     <header className={`site-header${scrolled ? ' is-scrolled' : ''}${open ? ' is-open' : ''}`}>
       <div className="site-header__bar container">
         <a className="brand" href="#top" onClick={() => close()} title="Back to top">
-          <span className="brand__mark" aria-hidden="true">
-            <span>~</span>/
-          </span>
-          <span className="brand__text">portfolio</span>
+          <span className="brand__text">kassy</span>
           {/* Phones: the collapsed nav can't show where you are, so the path does */}
           {current && (
             <span key={current.id} className="brand__section" aria-hidden="true">

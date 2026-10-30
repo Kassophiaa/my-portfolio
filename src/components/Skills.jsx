@@ -201,7 +201,7 @@ export default function Skills({ groups, index }) {
   const items = groups.flatMap((group) => group.items)
 
   return (
-    <section id="skills" className="section" aria-labelledby="skills-title">
+    <section id="skills" className="section skills-section" aria-labelledby="skills-title">
       <div className="container">
         <SectionHeading
           index={index}

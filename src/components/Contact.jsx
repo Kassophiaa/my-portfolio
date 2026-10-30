@@ -148,13 +148,13 @@ function ContactForm({ email, formKey }) {
             {state === 'sending' ? 'Sending…' : 'Send message'}{' '}
             <Icon name="send" className="icon--shift" />
           </button>
-          <p className="contact-form__note">
-            {!enabled
-              ? 'The form turns on once an email address is added.'
-              : direct
-                ? 'Your message goes straight to my inbox.'
+          {!(enabled && direct) && (
+            <p className="contact-form__note">
+              {!enabled
+                ? 'The form turns on once an email address is added.'
                 : 'Opens your email app with the message ready to send.'}
-          </p>
+            </p>
+          )}
         </div>
       </fieldset>
       <p className={`contact-form__status is-${state}`} role="status">
