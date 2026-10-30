@@ -1,6 +1,6 @@
 import Field from './Field.jsx'
 import Icon from './Icon.jsx'
-import { isMissing, textOf } from '../lib/content.js'
+import { textOf } from '../lib/content.js'
 
 const CARD_TECH = 3
 
@@ -48,11 +48,11 @@ export default function ProjectCard({ project, onOpen, focusable = true }) {
     <article className={`project-card glass${project.draft ? ' project-card--draft' : ''}`}>
       <ProjectCover project={project} />
       <div className="project-card__body">
-        <p className="project-card__meta mono">
-          <span>{project.category}</span>
-          {!isMissing(project.year) && <span>{project.year}</span>}
-          {project.draft && <span className="project-card__draft">Draft slot</span>}
-        </p>
+        {project.draft && (
+          <p className="project-card__meta mono">
+            <span className="project-card__draft">Draft slot</span>
+          </p>
+        )}
         <h3 className="project-card__title">
           <Field value={project.title} />
         </h3>

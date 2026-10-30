@@ -179,6 +179,11 @@
     --tile: 88px;
     --gap: 12px;
   }
+
+  /* Tiles are wide enough here for 12px names on one line ("FlutterFlow") */
+  .skill__name {
+    font-size: 0.75rem;
+  }
 }
 
 @media (min-width: 1024px) {
