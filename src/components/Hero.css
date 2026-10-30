@@ -51,23 +51,23 @@
   min-width: 0;
 }
 
-/* "Hi, I'm" and the name share one row, lined up on the text baseline.
-   The name is short, so it can be large without wrapping. */
+/* "Hi, I'm Kassy" as one line at one size: the greeting light and soft, the name bold.
+   Optical size 24 gives Bricolage its cleaner text shapes; at big sizes the browser
+   would otherwise pick its quirky display cut (spiky K, curly y). */
 .hero__title {
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
-  gap: 0 0.2em;
-  font-size: clamp(3.25rem, 8vw, 5.75rem);
+  gap: 0 0.25em;
+  font-size: clamp(2.75rem, 6.4vw, 4.75rem);
   font-weight: 800;
-  line-height: 0.95;
-  letter-spacing: -0.045em;
+  font-variation-settings: 'opsz' 24;
+  line-height: 1;
+  letter-spacing: -0.03em;
 }
 
 .hero__hello {
-  font-size: 0.4em;
-  font-weight: 600;
-  letter-spacing: -0.025em;
+  font-weight: 500;
   color: var(--text-muted);
 }
 
@@ -336,7 +336,7 @@
   }
 
   .hero__title {
-    font-size: clamp(3rem, 6.5vw, 4.75rem);
+    font-size: clamp(2.5rem, 5.6vw, 4rem);
   }
 }
 
@@ -363,6 +363,6 @@
 /* Smallest phones: keep "Hi, I'm Kassy" on one line */
 @media (max-width: 359px) {
   .hero__title {
-    font-size: 2.75rem;
+    font-size: 2.3rem;
   }
 }

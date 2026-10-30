@@ -27,7 +27,7 @@ const OJT_ROWS = [
 // The two faces of the ID badge. Purely presentational; motion lives in LanyardBadge.
 export default function BadgeCard({ profile, flipped, onFlip }) {
   const initials = initialsOf(profile.name)
-  const links = profile.links.filter((link) => !isMissing(link.href))
+  const links = profile.links.filter((link) => !isMissing(link.href) && link.badge !== false)
   const ojtRows = OJT_ROWS.filter(([key]) => !isMissing(profile.ojt?.[key]))
 
   return (
