@@ -19,32 +19,69 @@
   pointer-events: none;
 }
 
+/* Woven lanyard in three layers: a light edge binding, a deep violet → pink band
+   just inside it, and "BSIT ✦" printed along the middle (follows the swing). */
+.lanyard {
+  --strap-w: 20px;
+  --strap-band: 16px;
+  --strap-top: #6d28d9;
+  --strap-bottom: #db2777;
+  --strap-edge: #f9a8d4;
+}
+
+.lanyard__edge,
 .lanyard__strap {
   fill: none;
-  stroke: url(#strap-gradient);
-  stroke-width: 13;
-  stroke-linecap: round;
+  stroke-linecap: butt;
   stroke-linejoin: round;
-  filter: drop-shadow(0 0 8px rgb(167 139 250 / 0.4));
 }
 
-.lanyard__stitch {
-  fill: none;
-  stroke: rgb(255 255 255 / 0.4);
-  stroke-width: 1;
-  stroke-dasharray: 3 5;
+.lanyard__edge {
+  stroke: var(--strap-edge);
+  stroke-width: var(--strap-w);
+  filter: drop-shadow(0 0 10px rgb(219 39 119 / 0.35));
 }
 
+.lanyard__strap {
+  stroke: url(#strap-gradient);
+  stroke-width: var(--strap-band);
+}
+
+.lanyard__print {
+  fill: rgb(255 255 255 / 0.92);
+  font-family: var(--font-mono);
+  font-size: 8.5px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+}
+
+/* Still version (loading / reduced motion): a straight strap with the same print */
 .lanyard__strap-static {
   position: absolute;
   left: 50%;
   bottom: calc(100% - var(--clip-y));
-  width: 13px;
+  width: var(--strap-w);
   height: var(--clip-y);
-  margin-left: -6.5px;
-  border-radius: 7px;
-  background: linear-gradient(var(--violet), var(--pink));
-  box-shadow: 0 0 14px rgb(167 139 250 / 0.4);
+  margin-left: calc(var(--strap-w) / -2);
+  overflow: hidden;
+  border-inline: 2px solid var(--strap-edge);
+  background: linear-gradient(var(--strap-top), var(--strap-bottom));
+  box-shadow: 0 0 14px rgb(219 39 119 / 0.35);
+}
+
+.lanyard__strap-print {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  translate: -50% 0;
+  writing-mode: vertical-rl;
+  white-space: nowrap;
+  color: rgb(255 255 255 / 0.92);
+  font-family: var(--font-mono);
+  font-size: 8.5px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.22em;
 }
 
 /* ---- Badge ---- */
