@@ -79,6 +79,8 @@ export const profile = {
   links: [
     { id: 'github', label: 'GitHub', href: 'https://github.com/kassophiaa' },
     { id: 'linkedin', label: 'LinkedIn', href: 'https://www.linkedin.com/in/kassophiaa/' },
+    // badge: false keeps it off the ID badge (only room for two links there)
+    { id: 'instagram', label: 'Instagram', href: 'https://www.instagram.com/kassophiaa/', badge: false },
   ],
 }
 

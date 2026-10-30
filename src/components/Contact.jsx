@@ -228,7 +228,7 @@ export default function Contact({ profile, index }) {
             </div>
 
             <div className="contact-card glass" data-reveal style={{ '--delay': 2 }}>
-              <p className="contact-card__label">Elsewhere</p>
+              <p className="contact-card__label">Find me online</p>
               <ul className="contact-links">
                 {profile.links.map((link) => (
                   <ContactLink key={link.id} link={link} />
