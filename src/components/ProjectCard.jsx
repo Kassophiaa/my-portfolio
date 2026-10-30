@@ -2,6 +2,8 @@ import Field from './Field.jsx'
 import Icon from './Icon.jsx'
 import { isMissing, textOf } from '../lib/content.js'
 
+const CARD_TECH = 3
+
 export function ProjectCover({ project, large = false }) {
   if (project.image) {
     return (
@@ -58,12 +60,19 @@ export default function ProjectCard({ project, onOpen }) {
           <Field value={project.summary} />
         </p>
         {project.tech.length > 0 && (
+          // Cards show the first few; the full list is in the details window.
           <ul className="project-card__tech" aria-label="Technologies">
-            {project.tech.map((tech) => (
+            {project.tech.slice(0, CARD_TECH).map((tech) => (
               <li key={tech} className="chip">
                 {tech}
               </li>
             ))}
+            {project.tech.length > CARD_TECH && (
+              <li className="chip chip--more">
+                +{project.tech.length - CARD_TECH}
+                <span className="visually-hidden"> more</span>
+              </li>
+            )}
           </ul>
         )}
         <button

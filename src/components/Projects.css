@@ -136,8 +136,8 @@
   display: flex;
   flex-direction: column;
   flex: 1;
-  gap: 12px;
-  padding: 20px 22px 22px;
+  gap: 8px;
+  padding: 16px 18px 16px;
 }
 
 .project-card__meta {
@@ -164,17 +164,37 @@
 }
 
 .project-card__title {
-  font-size: clamp(1.3rem, 2.4vw, 1.6rem);
+  font-size: clamp(1.2rem, 2.2vw, 1.4rem);
 }
 
+/* Same height on every card: long summaries are cut at three lines (full text in the dialog) */
 .project-card__summary {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  overflow: hidden;
+  font-size: 0.95rem;
+  line-height: 1.55;
   color: var(--text-muted);
 }
 
 .project-card__tech {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: 5px;
+  margin-top: 2px;
+}
+
+.project-card .project-card__tech .chip {
+  padding: 3px 9px;
+  font-size: 0.72rem;
+}
+
+.chip--more {
+  border-style: dashed;
+  background: transparent;
+  color: var(--text-faint);
 }
 
 .project-card__open {
@@ -183,8 +203,9 @@
   justify-content: space-between;
   gap: 12px;
   margin-top: auto;
-  padding: 12px 0 0;
+  padding: 10px 0 0;
   border: 0;
+  border-top: 1px solid var(--border);
   background: none;
   font-weight: 700;
   font-size: 0.9rem;
@@ -202,8 +223,8 @@
 .project-card__arrow {
   display: grid;
   place-items: center;
-  width: 40px;
-  height: 40px;
+  width: 34px;
+  height: 34px;
   flex: none;
   border-radius: 50%;
   background: var(--pink-gradient);
@@ -250,7 +271,7 @@
 /* Cover */
 .cover {
   position: relative;
-  aspect-ratio: 16 / 10;
+  aspect-ratio: 16 / 9;
   overflow: hidden;
   border-bottom: 1px solid var(--border);
   background: var(--surface-2);
