@@ -137,8 +137,9 @@ export default function Hero({ profile }) {
               Get in touch
             </a>
             {hasResume && (
-              <a className="btn btn--ghost" href={profile.resume} download>
-                <Icon name="download" /> Résumé
+              <a className="btn btn--ghost" href={profile.resume} download title="Download resume (PDF)">
+                <Icon name="download" /> Resume
+                <span className="visually-hidden"> (PDF download)</span>
               </a>
             )}
             {links.length > 0 && (

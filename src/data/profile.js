@@ -73,8 +73,9 @@ export const profile = {
   // With it, the contact form delivers messages straight to your inbox; without it
   // (null), the form opens the visitor's own email app instead. Safe to keep public.
   contactFormKey: '034398cb-839c-4b82-8167-dc0c55fe585a',
-  // Put the PDF in public/ (e.g. public/resume.pdf) and set this to '/resume.pdf'
-  resume: null,
+  // PDF in public/, exported from src/assets/resume_OJT.docx (re-export after editing it).
+  // Shows "Resume" download buttons in the hero and in Contact.
+  resume: '/Kassandra_Fernandez_Resume.pdf',
 
   links: [
     { id: 'github', label: 'GitHub', href: 'https://github.com/kassophiaa' },

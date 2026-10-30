@@ -97,14 +97,7 @@ export default function BadgeCard({ profile, flipped, onFlip }) {
                   </a>
                 </li>
               ))}
-              {!isMissing(profile.resume) && (
-                <li>
-                  <a href={profile.resume} download>
-                    <Icon name="download" size={16} />
-                    Résumé
-                  </a>
-                </li>
-              )}
+              {/* No room for a Resume button here; the hero and Contact have one */}
             </ul>
           ) : (
             <Field label="Add your links" />
