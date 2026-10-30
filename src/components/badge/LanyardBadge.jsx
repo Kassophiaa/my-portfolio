@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import BadgeCard from './BadgeCard.jsx'
+import { STRAP_PRINT } from './strap.js'
 import './Badge.css'
 
 // Lightweight 2D rope + pendulum simulation (Verlet integration, fixed timestep).
@@ -154,8 +155,8 @@ export default function LanyardBadge(props) {
         d += ` Q${p.x.toFixed(1)} ${p.y.toFixed(1)} ${((p.x + n.x) / 2).toFixed(1)} ${((p.y + n.y) / 2).toFixed(1)}`
       }
       d += ` L${ring.x.toFixed(1)} ${ring.y.toFixed(1)}`
-      path.setAttribute('d', d)
-      path.nextSibling?.setAttribute('d', d)
+      // The strap is drawn in layers (edge binding, band, printed text); all share one shape
+      for (const layer of path.parentNode.querySelectorAll('[data-strap]')) layer.setAttribute('d', d)
     }
 
     function frame(now) {
@@ -294,12 +295,16 @@ export default function LanyardBadge(props) {
         <defs>
           {/* userSpaceOnUse: a near-vertical path has a zero-width bounding box */}
           <linearGradient id="strap-gradient" gradientUnits="userSpaceOnUse" x1="0" y1="-500" x2="0" y2="120">
-            <stop offset="0%" style={{ stopColor: 'var(--violet)' }} />
-            <stop offset="100%" style={{ stopColor: 'var(--pink)' }} />
+            <stop offset="0%" style={{ stopColor: 'var(--strap-top)' }} />
+            <stop offset="100%" style={{ stopColor: 'var(--strap-bottom)' }} />
           </linearGradient>
         </defs>
-        <path ref={pathRef} className="lanyard__strap" />
-        <path className="lanyard__stitch" />
+        {/* Woven lanyard: light edge binding, gradient band, then "BSIT" printed along it */}
+        <path data-strap className="lanyard__edge" />
+        <path data-strap ref={pathRef} id="lanyard-strap" className="lanyard__strap" />
+        <text className="lanyard__print" dy="0.35em">
+          <textPath href="#lanyard-strap">{STRAP_PRINT}</textPath>
+        </text>
       </svg>
       <div className="badge" ref={badgeRef} role="group" aria-label="ID badge — drag to swing, click to flip">
         <span className="badge__ring" aria-hidden="true" />

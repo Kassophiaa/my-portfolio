@@ -50,7 +50,8 @@
   --radius-sm: 10px;
   --radius: 16px;
   --radius-lg: 20px;
-  --gutter: clamp(16px, 4vw, 40px);
+  /* Side margin: 20px on phones, growing to 40px */
+  --gutter: clamp(20px, 4vw, 40px);
   --max: 1180px;
   --header-h: 68px;
   --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
@@ -366,27 +367,31 @@ main > .section::after {
 
 /* ------------------------------------------------------------------
    Sideways-scrolling card row (Projects, Certificates) — see useCardRow.js.
-   It spans the full screen width, but its padding lines the first card up with
-   the page content; the next card peeks in from the edge. Set --card-w per row.
+   It sits inside the page margins like the rest of the content (plus a little
+   padding for hover room), fades out at both ends, and shows a slice of the
+   next card so it's clear it scrolls. Set --card-w per row.
    ------------------------------------------------------------------ */
 .card-row {
-  --edge: max(var(--gutter), (100% - var(--max)) / 2 + var(--gutter));
-  --gap: 16px;
-  --card-w: min(86%, 380px);
-  --fade: clamp(24px, 6vw, 72px);
+  --row-pad: clamp(12px, 2vw, 24px);
+  --gap: 20px;
+  --card-w: min(80%, 340px);
+  --fade: clamp(20px, 4vw, 48px);
   --fade-l: 0px;
   --fade-r: 0px;
   display: flex;
   gap: var(--gap);
-  /* Vertical room so card hover lift and shadows aren't clipped */
-  padding: 10px var(--edge) 28px;
-  margin-block: -10px -12px;
+  width: min(100% - 2 * var(--gutter) + 2 * var(--row-pad), var(--max) - 2 * var(--gutter) + 2 * var(--row-pad));
+  margin-inline: auto;
+  /* Vertical room so card hover lift and shadows aren't clipped; the negative
+     margins cancel it, so the row takes up only as much space as its cards */
+  padding: 10px var(--row-pad) 28px;
+  margin-block: -10px -28px;
   overflow-x: auto;
   overscroll-behavior-x: contain;
   scroll-snap-type: x mandatory;
-  scroll-padding-inline: var(--edge);
+  scroll-padding-inline: var(--row-pad);
   scrollbar-width: none;
-  /* Soft fade on whichever side has more cards, so it's clear the row scrolls */
+  /* Soft fade on whichever side has more cards */
   -webkit-mask-image: linear-gradient(
     90deg,
     transparent,
@@ -413,6 +418,11 @@ main > .section::after {
   scroll-snap-align: start;
 }
 
+/* The hovered card sits above its neighbours when it grows */
+.card-row > li:has(:hover, :focus-visible) {
+  z-index: 2;
+}
+
 .card-row.can-left {
   --fade-l: var(--fade);
 }
@@ -423,10 +433,41 @@ main > .section::after {
 
 @media (min-width: 680px) {
   .card-row {
-    --gap: 20px;
+    --gap: 28px;
   }
 }
 
+/* Carousel feel: cards shrink and fade a little as they slide toward either end,
+   and are full size in the middle. Tied to the row's own scroll position, so it
+   follows dragging and swiping exactly. Browsers without scroll-driven
+   animations (or with reduced motion) simply show the cards as they are. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .card-row > li {
+      animation: card-row-edge linear both;
+      animation-timeline: view(inline);
+    }
+  }
+}
+
+@keyframes card-row-edge {
+  entry 0% {
+    opacity: 0.35;
+    transform: scale(0.86);
+  }
+  entry 100% {
+    opacity: 1;
+    transform: none;
+  }
+  exit 0% {
+    opacity: 1;
+    transform: none;
+  }
+  exit 100% {
+    opacity: 0.35;
+    transform: scale(0.86);
+  }
+}
 /* Mouse: grab and drag the row sideways */
 @media (pointer: fine) {
   .card-row.is-scrollable {

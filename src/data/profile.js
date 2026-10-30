@@ -115,86 +115,84 @@ export const education = {
       topics: ['React', 'Laravel', 'PHP', 'MySQL', 'Personal Projects'],
     },
   ],
-  // Certificates, awards, organizations, seminars and workshops. Shown under the
-  // timeline as "Certificates & activities"; the block stays hidden while this is empty.
-  // Only add things you actually completed or took part in. Copy this shape:
-  //   {
-  //     type: 'Certificate',          // Certificate | Award | Organization | Seminar | Workshop
-  //     name: 'Exact title on the certificate',
-  //     issuer: 'Who issued or organized it',
-  //     date: 'Mar 2026',             // or a range for organizations: '2024 – present'
-  //     href: 'https://…',            // verification page or PDF (optional), e.g. '/certificates/x.pdf' in public/
-  //     skills: ['Python'],           // related skills (optional)
-  //   },
-  // Files live in public/certificates/ (thumbnails in thumbs/). Newest first.
+  // Certificates, shown under the timeline as a scrolling row; click one to view it.
+  // Only add things you actually completed. To add one: put the original in
+  // public/certificates/, make the two .webp images from it, then copy an entry below.
+  // Certificate files live in public/certificates/:
+  //   <file>              the original PDF/PNG ("Open original" in the viewer)
+  //   thumbs/<slug>.webp  card preview, full/<slug>.webp  large image in the viewer
+  // `verify` is the issuer's own verification page, when there is one. Newest first.
   credentials: [
     {
       type: 'Certificate',
       name: 'AWS Academy Graduate – Cloud Foundations',
-      image: '/certificates/thumbs/aws-cloud-foundations.webp',
       issuer: 'AWS Academy · 20 hours',
       date: 'Oct 2026',
-      href: 'https://www.credly.com/go/YphleYGR',
+      slug: 'aws-cloud-foundations',
+      file: 'aws-cloud-foundations.pdf',
+      verify: { label: 'Verify on Credly', href: 'https://www.credly.com/go/YphleYGR' },
       skills: ['AWS', 'Cloud'],
     },
     {
       type: 'Certificate',
       name: 'Creating Compelling Reports',
-      image: '/certificates/thumbs/cisco-creating-compelling-reports.webp',
       issuer: 'Cisco Networking Academy · DICT-ITU DTC',
       date: 'Mar 2026',
-      href: '/certificates/cisco-creating-compelling-reports.pdf',
+      slug: 'cisco-creating-compelling-reports',
+      file: 'cisco-creating-compelling-reports.pdf',
     },
     {
       type: 'Project certificate',
       name: 'Data Visualization using Plotly',
-      image: '/certificates/thumbs/coursera-plotly.webp',
       issuer: 'Coursera Project Network',
       date: 'Mar 2026',
-      href: 'https://coursera.org/verify/05QE7T8IYY8R',
+      slug: 'coursera-plotly',
+      file: 'coursera-plotly.pdf',
+      verify: { label: 'Verify on Coursera', href: 'https://coursera.org/verify/05QE7T8IYY8R' },
       skills: ['Python', 'Plotly'],
     },
     {
       type: 'Project certificate',
       name: 'Data Visualization using Bokeh',
-      image: '/certificates/thumbs/coursera-bokeh.webp',
       issuer: 'Coursera Project Network',
       date: 'Mar 2026',
-      href: 'https://coursera.org/verify/PLDB16HJIHSB',
+      slug: 'coursera-bokeh',
+      file: 'coursera-bokeh.pdf',
+      verify: { label: 'Verify on Coursera', href: 'https://coursera.org/verify/PLDB16HJIHSB' },
       skills: ['Python', 'Bokeh'],
     },
     {
       type: 'Certificate',
       name: 'Security and Connectivity Support',
-      image: '/certificates/thumbs/cisco-security-and-connectivity-support.webp',
       issuer: 'Cisco Networking Academy · DICT-ITU DTC',
       date: 'Mar 2026',
-      href: '/certificates/cisco-security-and-connectivity-support.pdf',
+      slug: 'cisco-security-and-connectivity-support',
+      file: 'cisco-security-and-connectivity-support.pdf',
     },
     {
       type: 'Certificate',
       name: 'IT Customer Support Basics',
-      image: '/certificates/thumbs/cisco-it-customer-support-basics.webp',
       issuer: 'Cisco Networking Academy · DICT-ITU DTC',
       date: 'Mar 2026',
-      href: '/certificates/cisco-it-customer-support-basics.pdf',
+      slug: 'cisco-it-customer-support-basics',
+      file: 'cisco-it-customer-support-basics.pdf',
     },
     {
       type: 'Course',
       name: 'Data Visualization',
-      image: '/certificates/thumbs/kaggle-data-visualization.webp',
       issuer: 'Kaggle Learn',
       date: 'Mar 2026',
-      href: '/certificates/kaggle-data-visualization.png',
+      slug: 'kaggle-data-visualization',
+      file: 'kaggle-data-visualization.png',
       skills: ['Python'],
     },
     {
       type: 'Course',
       name: 'Pandas',
-      image: '/certificates/thumbs/kaggle-pandas.webp',
       issuer: 'Kaggle Learn',
       date: 'Feb 2026',
-      href: '/certificates/kaggle-pandas.png',
+      slug: 'kaggle-pandas',
+      file: 'kaggle-pandas.png',
       skills: ['Python', 'Pandas'],
     },
   ],

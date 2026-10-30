@@ -1,54 +1,41 @@
-import { useRef } from 'react'
-import Icon from './Icon.jsx'
+import { useRef, useState } from 'react'
+import CertificateViewer from './CertificateViewer.jsx'
+import { certImage } from '../lib/certificates.js'
 import SectionHeading from './SectionHeading.jsx'
 import { useCardRow } from '../hooks/useCardRow.js'
 import { useScrollFill } from '../hooks/useScrollFill.js'
 import './Education.css'
 
-// One certificate card: preview image, type, title link, issuer · date, skills.
+// A card grows on hover. Near either end of the row it grows away from that end,
+// so the enlarged card isn't cut off by the row's edge.
+function growInward(event) {
+  const card = event.currentTarget
+  const row = card.closest('.card-row')
+  if (!row) return
+  const c = card.getBoundingClientRect()
+  const r = row.getBoundingClientRect()
+  const room = c.width * 0.15
+  const x = c.left - r.left < room ? 'left' : r.right - c.right < room ? 'right' : 'center'
+  card.style.transformOrigin = `${x} center`
+}
+
+// One certificate: just its picture, as a button that opens the viewer (where the
+// name and details are). The name stays in the label for screen readers.
 // `focusable` is false on the extra copies used for looping.
-function Credential({ item, focusable }) {
-  const tab = focusable ? undefined : -1
+function Credential({ item, onOpen, focusable }) {
   return (
-    <article className="credential glass">
-      {item.image && (
-        // Decorative duplicate of the title link, so it's skipped by Tab and screen readers
-        <a
-          className="credential__thumb"
-          href={item.href ?? item.image}
-          target="_blank"
-          rel="noreferrer"
-          tabIndex={-1}
-          aria-hidden="true"
-        >
-          <img src={item.image} alt="" loading="lazy" decoding="async" width="800" height="560" />
-        </a>
-      )}
-      <div className="credential__body">
-        <p className="credential__type mono">{item.type}</p>
-        <h4 className="credential__name">
-          {item.href ? (
-            <a className="text-link" href={item.href} target="_blank" rel="noreferrer" tabIndex={tab}>
-              {item.name}
-              <Icon name="external" size={14} />
-              <span className="visually-hidden"> (opens in a new tab)</span>
-            </a>
-          ) : (
-            item.name
-          )}
-        </h4>
-        <p className="credential__meta">{[item.issuer, item.date].filter(Boolean).join(' · ')}</p>
-        {item.skills?.length > 0 && (
-          <ul className="project-card__tech">
-            {item.skills.map((skill) => (
-              <li key={skill} className="chip">
-                {skill}
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
-    </article>
+    <button
+      type="button"
+      className="credential"
+      onClick={onOpen}
+      onPointerEnter={growInward}
+      onFocus={growInward}
+      aria-haspopup="dialog"
+      aria-label={`${item.name}, ${item.issuer}, ${item.date}`}
+      tabIndex={focusable ? undefined : -1}
+    >
+      <img src={certImage(item, 'thumbs')} alt="" loading="lazy" decoding="async" width="800" height="560" />
+    </button>
   )
 }
 
@@ -56,6 +43,7 @@ export default function Education({ education, index }) {
   const timelineRef = useRef(null)
   useScrollFill(timelineRef)
   const certRow = useCardRow(education.credentials.length)
+  const [viewing, setViewing] = useState(null)
   const last = education.years.length - 1
 
   return (
@@ -131,13 +119,19 @@ export default function Education({ education, index }) {
             aria-label="Certificates (scroll sideways, drag, or use the arrow keys)"
           >
             {certRow.copies.map((copy) =>
-              education.credentials.map((item) => (
+              education.credentials.map((item, i) => (
                 <li key={`${copy}-${item.type}-${item.name}`} aria-hidden={copy === 1 ? undefined : 'true'}>
-                  <Credential item={item} focusable={copy === 1} />
+                  <Credential item={item} onOpen={() => setViewing(i)} focusable={copy === 1} />
                 </li>
               )),
             )}
           </ul>
+          <CertificateViewer
+            items={education.credentials}
+            index={viewing}
+            onChange={setViewing}
+            onClose={() => setViewing(null)}
+          />
         </div>
       )}
     </section>
