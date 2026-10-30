@@ -229,7 +229,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: 0.68rem;
+  font-size: 0.75rem;
   color: var(--text-faint);
 }
 
@@ -302,7 +302,7 @@
 
 .badge__role {
   font-family: var(--font-mono);
-  font-size: 0.68rem;
+  font-size: 0.75rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--pink-text);
@@ -331,13 +331,13 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  min-height: 32px;
-  padding: 0 12px;
+  min-height: 40px;
+  padding: 0 14px;
   border: 1px solid var(--border-strong);
   border-radius: 999px;
   background: rgb(255 255 255 / 0.04);
   color: var(--lavender);
-  font-size: 0.74rem;
+  font-size: 0.78rem;
   font-weight: 700;
   cursor: pointer;
   transition: border-color 0.2s var(--ease), color 0.2s var(--ease);
@@ -357,7 +357,7 @@
 }
 
 .badge__label {
-  font-size: 0.68rem;
+  font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.2em;
   text-transform: uppercase;
@@ -409,7 +409,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  min-height: 36px;
+  min-height: 40px;
   padding: 0 12px;
   border: 1px solid rgb(196 167 255 / 0.2);
   border-radius: 10px;
@@ -427,6 +427,10 @@
 }
 
 .badge__contact {
+  /* Bigger tap area without changing how the link looks */
+  display: inline-block;
+  padding-block: 10px;
+  margin-block: -10px;
   font-size: 0.8rem;
   font-weight: 700;
   color: var(--pink-text);
@@ -490,7 +494,7 @@
 
   .badge__status {
     gap: 7px;
-    font-size: 0.72rem;
+    font-size: 0.75rem;
     white-space: nowrap;
   }
 

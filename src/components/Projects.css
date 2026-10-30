@@ -141,7 +141,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 6px 14px;
-  font-size: 0.74rem;
+  font-size: 0.78rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--text-faint);
@@ -185,7 +185,7 @@
 
 .project-card .project-card__tech .chip {
   padding: 3px 9px;
-  font-size: 0.72rem;
+  font-size: 0.75rem;
 }
 
 .chip--more {
@@ -410,7 +410,7 @@
   border-radius: 999px;
   background: rgb(20 12 36 / 0.78);
   color: #f5f0ff;
-  font-size: 0.68rem;
+  font-size: 0.75rem;
   letter-spacing: 0.04em;
 }
 
@@ -502,7 +502,7 @@
 
 .project-dialog__facts dt,
 .project-dialog__highlights h4 {
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   font-weight: 500;
   letter-spacing: 0.08em;
   text-transform: uppercase;

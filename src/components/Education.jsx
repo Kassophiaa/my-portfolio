@@ -70,10 +70,23 @@ export default function Education({ education, index }) {
 
         {education.credentials.length > 0 && (
           <div className="credentials">
-            <h3 className="credentials__title mono">Certificates &amp; activities</h3>
+            <h3 className="credentials__title mono">Certificates</h3>
             <ul className="credentials__list" data-reveal data-stagger>
               {education.credentials.map((item) => (
                 <li key={`${item.type}-${item.name}`} className="credential glass">
+                  {item.image && (
+                    // Decorative duplicate of the title link, so it's skipped by Tab and screen readers
+                    <a
+                      className="credential__thumb"
+                      href={item.href ?? item.image}
+                      target="_blank"
+                      rel="noreferrer"
+                      tabIndex={-1}
+                      aria-hidden="true"
+                    >
+                      <img src={item.image} alt="" loading="lazy" decoding="async" width="800" height="560" />
+                    </a>
+                  )}
                   <p className="credential__type mono">{item.type}</p>
                   <h4 className="credential__name">
                     {item.href ? (

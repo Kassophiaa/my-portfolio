@@ -46,7 +46,7 @@
 }
 
 .field__label {
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -158,13 +158,14 @@
 /* ---- Side cards ---- */
 .contact-card {
   display: grid;
+  align-content: start;
   gap: 14px;
   min-width: 0;
   padding: clamp(20px, 3vw, 28px);
 }
 
 .contact-card__label {
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.2em;
   text-transform: uppercase;
@@ -326,6 +327,14 @@ a.contact-link:focus-visible .contact-link__arrow {
 @media (min-width: 600px) {
   .contact-form__row {
     grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* Tablets: the email and links cards share a row under the form */
+@media (min-width: 600px) and (max-width: 959px) {
+  .contact__side {
+    grid-template-columns: 1fr 1fr;
+    align-items: stretch;
   }
 }
 

@@ -86,7 +86,7 @@
   border-radius: 999px;
   background: var(--pink-gradient);
   color: var(--on-accent);
-  font-size: 0.68rem;
+  font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -245,8 +245,36 @@
   padding: 18px 20px;
 }
 
+/* Certificate preview: same 3:2 frame for every card, image shown whole */
+.credential {
+  overflow: hidden;
+}
+
+.credential__thumb {
+  display: block;
+  margin: -18px -20px 8px;
+  aspect-ratio: 3 / 2;
+  padding: 12px;
+  border-bottom: 1px solid var(--border);
+  background: color-mix(in srgb, var(--surface) 70%, var(--bg-soft));
+  overflow: hidden;
+}
+
+.credential__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 6px;
+  box-shadow: 0 6px 18px -8px rgb(0 0 0 / 0.35);
+  transition: transform 0.4s var(--ease);
+}
+
+.credential:hover .credential__thumb img {
+  transform: scale(1.04);
+}
+
 .credential__type {
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--text-faint);
@@ -258,10 +286,10 @@
   line-height: 1.35;
 }
 
-.credential__name .text-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
+/* Long names wrap like normal text; the "opens in new tab" icon follows the last word */
+.credential__name .text-link .icon {
+  margin-left: 4px;
+  vertical-align: -1px;
 }
 
 .credential__meta {
