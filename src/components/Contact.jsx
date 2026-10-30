@@ -216,8 +216,9 @@ export default function Contact({ profile, index }) {
                   </span>
                 )}
                 {hasResume && (
-                  <a className="btn btn--ghost" href={profile.resume} download>
-                    <Icon name="download" /> Résumé
+                  <a className="btn btn--ghost" href={profile.resume} download title="Download resume (PDF)">
+                    <Icon name="download" /> Download Resume
+                    <span className="visually-hidden"> (PDF)</span>
                   </a>
                 )}
               </div>
