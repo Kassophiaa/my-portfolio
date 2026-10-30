@@ -30,7 +30,7 @@ export const profile = {
   about: [
     'I’m Kassandra. I enjoy turning ideas into practical applications and understanding how the pieces of a system fit together, from the interface people click to the database behind it.',
     'My path started with C and programming logic, moved through PHP and object-oriented programming, then into app development with FlutterFlow and Firebase. Now I build with React and Laravel, and our capstone, DARIS, brought those skills together in one system.',
-    'Outside class, I build personal projects (a study planner, a journaling app, and an inventory dashboard concept) to practice debugging, databases, and problem-solving. I want to grow into a dependable software developer, and I’m curious about how data analysis can support better decisions.',
+    'Outside class, I build personal projects (a study planner, a finance tracker, a meal planner, and a desktop routine planner) to practice debugging, databases, and problem-solving. I want to grow into a dependable software developer, and I’m curious about how data analysis can support better decisions.',
   ],
   interests: [
     'Software development',
