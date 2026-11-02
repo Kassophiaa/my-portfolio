@@ -174,11 +174,6 @@ export default function Hero({ profile }) {
         </div>
       </div>
 
-      <a className="hero__scroll" href="#about">
-        <span className="hero__scroll-mouse" aria-hidden="true" />
-        <span className="mono">Scroll</span>
-        <span className="visually-hidden"> to About</span>
-      </a>
     </section>
   )
 }

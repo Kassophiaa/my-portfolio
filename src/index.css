@@ -329,6 +329,14 @@ textarea {
   scroll-margin-top: calc(28px - var(--section-pad));
 }
 
+@media (max-width: 599px) {
+  #about.section,
+  #education.section,
+  #contact.section {
+    --section-pad: 40px;
+  }
+}
+
 /* Every other section sits on a tinted band (About, Skills, Contact) */
 main > .section:nth-of-type(even) {
   background: var(--band);
