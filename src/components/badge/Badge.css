@@ -198,21 +198,11 @@
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
   overflow: hidden;
-  visibility: visible;
-  transition: box-shadow 0.35s var(--ease), visibility 0s linear 0.4s;
-}
-
-.badge__flipper.is-flipped .badge__face--front {
-  visibility: hidden;
+  transition: box-shadow 0.35s var(--ease);
 }
 
 .badge__face--back {
   transform: rotateY(180deg);
-  visibility: hidden;
-}
-
-.badge__flipper.is-flipped .badge__face--back {
-  visibility: visible;
 }
 
 .badge:hover .badge__face {
