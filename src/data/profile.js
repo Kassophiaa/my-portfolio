@@ -47,7 +47,7 @@ export const profile = {
   ojt: {
     status: 'Looking for an OJT / internship',
     hours: '480 hours',
-    start: 'December 2026/January 2027',
+    start: 'Dec 2026/Jan 2027',
     setup: 'On-site',
     // Optional: set a preferred location (e.g. 'Nueva Ecija or nearby') to show it.
     location: null,
